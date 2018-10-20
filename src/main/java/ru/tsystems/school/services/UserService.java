@@ -1,33 +1,42 @@
 package ru.tsystems.school.services;
 
-import ru.tsystems.school.dao.UserDao;
-import ru.tsystems.school.dao.UserDaoImpl;
-import ru.tsystems.school.entities.User;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import javax.annotation.Resource;
 
+@Service("userService")
+@Transactional
 public class UserService {
 
-    private UserDao userDao = new UserDaoImpl();
+    @Resource(name="sessionFactory")
+    private SessionFactory sessionFactory;
 
-    public void createUser(User user) {
-        userDao.create(user);
-    }
+//    public UserEntity getUser(int id) {
+//
+//    }
 
-    public User readUser(int id) {
-        return userDao.read(id);
-    }
-
-    public void updateUser(User user) {
-        userDao.update(user);
-    }
-
-    public void deleteUser(User user) {
-        userDao.delete(user);
-    }
-
-    public List<User> readAllUser() {
-        return userDao.readAll();
-    }
+//    private UserDao userDao = new UserDaoImpl();
+//
+//    public void createUser(UserEntity user) {
+//        userDao.create(user);
+//    }
+//
+//    public UserEntity readUser(int id) {
+//        return userDao.read(id);
+//    }
+//
+//    public void updateUser(UserEntity user) {
+//        userDao.update(user);
+//    }
+//
+//    public void deleteUser(UserEntity user) {
+//        userDao.delete(user);
+//    }
+//
+//    public List<UserEntity> readAllUser() {
+//        return userDao.readAll();
+//    }
 
 }

@@ -2,48 +2,48 @@ package ru.tsystems.school.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import ru.tsystems.school.entities.User;
-import ru.tsystems.school.services.HibernateUtil;
+import ru.tsystems.school.entities.UserEntity;
+import ru.tsystems.school.util.HibernateUtil;
 
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
     @Override
-    public void create(User user) {
+    public void create(UserEntity userEntity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(user);
+        session.save(userEntity);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public User read(int id) {
-        return HibernateUtil.getSessionFactory().openSession().get(User.class, id);
+    public UserEntity read(int id) {
+        return HibernateUtil.getSessionFactory().openSession().get(UserEntity.class, id);
     }
 
     @Override
-    public void update(User user) {
+    public void update(UserEntity userEntity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(user);
+        session.update(userEntity);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(UserEntity userEntity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(user);
+        session.delete(userEntity);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public List<User> readAll() {
-        List<User> users = (List<User>) HibernateUtil.getSessionFactory().openSession().createCriteria(User.class).list();
+    public List<UserEntity> readAll() {
+        List<UserEntity> users = (List<UserEntity>) HibernateUtil.getSessionFactory().openSession().createCriteria(UserEntity.class).list();
         return users;
     }
 }

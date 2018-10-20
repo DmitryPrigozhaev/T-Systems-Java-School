@@ -1,18 +1,18 @@
 package ru.tsystems.school.dao;
 
-import ru.tsystems.school.entities.User;
+import ru.tsystems.school.entities.UserEntity;
 
 import java.util.List;
 
 public interface UserDao {
 
-    void create(User user);
+    void create(UserEntity userEntity);
 
-    User read(int id);
+    UserEntity read(int id);
 
-    void update(User user);
+    void update(UserEntity userEntity);
 
-    void delete(User user);
+    void delete(UserEntity userEntity);
 
-    List<User> readAll();
+    List<UserEntity> readAll();
 }
