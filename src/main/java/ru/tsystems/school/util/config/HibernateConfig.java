@@ -10,7 +10,8 @@ public class HibernateConfig {
     public static SessionFactory configureSessionFactory() {
         try {
             Configuration configuration = new Configuration()
-                    .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
+                    //.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
+                    .setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver")
                     .setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/railways?useSSL=false")
                     .setProperty("hibernate.connection.username", "root")
                     .setProperty("hibernate.connection.password", "root")

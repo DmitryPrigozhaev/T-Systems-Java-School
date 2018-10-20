@@ -1,6 +1,7 @@
 package ru.tsystems.school.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.school.dao.UserDao;
@@ -14,6 +15,7 @@ import java.util.List;
 public class UserService {
 
     @Autowired
+    @Qualifier("userDaoImpl")
     UserDao userDao;
 
     public List<UserEntity> getAllUsers() {
