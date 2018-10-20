@@ -2,17 +2,11 @@ package ru.tsystems.school.dao;
 
 import ru.tsystems.school.entities.UserEntity;
 
-import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends GenericDao<UserEntity> {
 
-    void create(UserEntity userEntity);
+    UserEntity findByLogin(String login);
 
-    UserEntity read(int id);
+    UserEntity findByEmail(String email);
 
-    void update(UserEntity userEntity);
-
-    void delete(UserEntity userEntity);
-
-    List<UserEntity> readAll();
 }

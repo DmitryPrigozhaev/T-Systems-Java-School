@@ -7,32 +7,52 @@ import java.io.Serializable;
 @Table(name = "users")
 public class UserEntity implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private static final long serialVersionUID = 1960160694995409095L;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "lastName")
+    private Long id;
+    private String firstName;
     private String lastName;
-
-    @Column(name = "login", unique = true)
+    private String email;
     private String login;
-
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "email", unique = true)
-    private String email;
-
-    public String getName() {
-        return name;
+    public UserEntity() {
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+        this.login = "";
+        this.password = "";
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public UserEntity(String firstName, String lastName, String email, String login, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.login = login;
+        this.password = password;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Column(name = "FIRST_NAME", unique = true, length = 50)
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "LAST_NAME", length = 50)
     public String getLastName() {
         return lastName;
     }
@@ -41,22 +61,7 @@ public class UserEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    @Column(name = "EMAIL", unique = true, nullable = false)
     public String getEmail() {
         return email;
     }
@@ -65,26 +70,29 @@ public class UserEntity implements Serializable {
         this.email = email;
     }
 
-    public UserEntity() {
+    @Column(name = "LOGIN", unique = true, nullable = false)
+    public String getLogin() {
+        return login;
     }
 
-    public UserEntity(String name, String lastName, String login, String password, String email) {
-        this.name = name;
-        this.lastName = lastName;
+    public void setLogin(String login) {
         this.login = login;
+    }
+
+    @Column(name = "PASSWORD", nullable = false)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.email = email;
     }
 
     @Override
     public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        StringBuffer sb = new StringBuffer();
+        sb.append("ID: ").append(this.id).append(", firstName: ").append(this.firstName).append(", lastName: ")
+                .append(this.lastName).append(", email: ").append(this.email).append(", login: ").append(this.login);
+        return sb.toString();
     }
 }

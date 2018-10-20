@@ -1,37 +1,81 @@
 package ru.tsystems.school.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.school.dao.UserDao;
-import ru.tsystems.school.dao.UserDaoImpl;
 import ru.tsystems.school.entities.UserEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Service("userService")
-@Transactional
+@Transactional(readOnly = true)
 public class UserService {
 
-    private UserDao userDao = new UserDaoImpl();
+    @Autowired
+    UserDao userDao;
 
-    public void createUser(UserEntity user) {
-        userDao.create(user);
+    public List<UserEntity> getAllUsers() {
+        return userDao.findAll();
     }
 
-    public UserEntity readUser(int id) {
-        return userDao.read(id);
+    //TODO разобраться с методом
+    //добавить нового юзера, если такого не существует
+    @Transactional(readOnly = false)
+    public void addNewUser(UserEntity userEntity) {
+        UserEntity user = new UserEntity();
+        user.setLogin(userEntity.getLogin());
+        user.setEmail(userEntity.getEmail());
+        List<UserEntity> list = userDao.findAllByExample(user);
+        if (list == null || list.isEmpty()) {
+            Long id = (Long) userDao.save(userEntity);
+        } else {
+            System.out.println("Пользователь уже существует!");
+        }
     }
 
-    public void updateUser(UserEntity user) {
-        userDao.update(user);
+    public UserEntity findByLogin(String login) {
+        return userDao.findByLogin(login);
     }
 
-    public void deleteUser(UserEntity user) {
-        userDao.delete(user);
+    public UserEntity findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
-    public List<UserEntity> readAllUser() {
-        return userDao.readAll();
+    public Serializable save(UserEntity entity) {
+        return userDao.save(entity);
     }
 
+    public void saveOrUpdate(UserEntity entity) {
+        userDao.saveOrUpdate(entity);
+    }
+
+    public void delete(UserEntity entity) {
+        userDao.delete(entity);
+    }
+
+    public void deleteAll() {
+        userDao.deleteAll();
+    }
+
+    public List<UserEntity> findAll() {
+        return userDao.findAll();
+    }
+
+    public UserEntity findById(Serializable id) {
+        return userDao.findById(id);
+    }
+
+    public List<UserEntity> findAllByExample(UserEntity entity) {
+        return userDao.findAllByExample(entity);
+    }
+
+    public void clear() {
+        userDao.clear();
+    }
+
+    public void flush() {
+        userDao.flush();
+    }
 }

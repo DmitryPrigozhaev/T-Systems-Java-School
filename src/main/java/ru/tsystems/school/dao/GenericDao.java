@@ -1,15 +1,25 @@
 package ru.tsystems.school.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
-public interface GenericDao<T, PK extends Serializable> {
+public interface GenericDao<E> {
 
-    void create(T entity);
+    Serializable save(E entity);
 
-    T read(PK id);
+    void saveOrUpdate(E entity);
 
-    void update(T entity);
+    void delete(E entity);
 
-    void delete(PK id);
+    void deleteAll();
 
+    List<E> findAll();
+
+    E findById(Serializable id);
+
+    List<E> findAllByExample(E entity);
+
+    void clear();
+
+    void flush();
 }
