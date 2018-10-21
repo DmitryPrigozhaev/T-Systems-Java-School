@@ -13,11 +13,11 @@ public interface GenericDao<E> {
 
     void deleteAll();
 
-    List<E> findAll();
+    List<E> getAll();
 
-    E findById(Serializable id);
+    E getById(Serializable id);
 
-    List<E> findAllByExample(E entity);
+    List<E> getAllByExample(E entity);
 
     void clear();
 

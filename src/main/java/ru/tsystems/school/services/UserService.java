@@ -19,7 +19,7 @@ public class UserService {
     UserDao userDao;
 
     public List<UserEntity> getAllUsers() {
-        return userDao.findAll();
+        return userDao.getAll();
     }
 
     //TODO разобраться с методом
@@ -29,7 +29,7 @@ public class UserService {
         UserEntity user = new UserEntity();
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());
-        List<UserEntity> list = userDao.findAllByExample(user);
+        List<UserEntity> list = userDao.getAllByExample(user);
         if (list == null || list.isEmpty()) {
             Long id = (Long) userDao.save(userEntity);
         } else {
@@ -62,15 +62,15 @@ public class UserService {
     }
 
     public List<UserEntity> findAll() {
-        return userDao.findAll();
+        return userDao.getAll();
     }
 
     public UserEntity findById(Serializable id) {
-        return userDao.findById(id);
+        return userDao.getById(id);
     }
 
     public List<UserEntity> findAllByExample(UserEntity entity) {
-        return userDao.findAllByExample(entity);
+        return userDao.getAllByExample(entity);
     }
 
     public void clear() {

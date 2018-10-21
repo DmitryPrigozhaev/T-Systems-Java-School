@@ -13,65 +13,66 @@ import java.util.List;
 public abstract class AbstractGenericDao<E> implements GenericDao<E> {
 
     private final Class<E> entityClass;
-
-    AbstractGenericDao() {
-        this.entityClass = (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
+    private SessionFactory sessionFactory;
 
     @Autowired
-    SessionFactory sessionFactory;
+    AbstractGenericDao(SessionFactory sessionFactory) {
+        this.entityClass = (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.sessionFactory = sessionFactory;
+    }
 
-    Session getSession() {
+    // извлекает текущий сеанс из фабрики SessionFactory
+    Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 
     @Override
     public Serializable save(E entity) {
-        return getSession().save(entity);
+        return getCurrentSession().save(entity);
     }
 
     @Override
     public void saveOrUpdate(E entity) {
-        getSession().saveOrUpdate(entity);
+        getCurrentSession().saveOrUpdate(entity);
     }
 
     @Override
     public void delete(E entity) {
-        getSession().delete(entity);
+        getCurrentSession().delete(entity);
     }
 
     @Override
     public void deleteAll() {
-        List<E> entities = findAll();
+        List<E> entities = getAll();
         for (E entity : entities) {
-            getSession().delete(entity);
+            getCurrentSession().delete(entity);
         }
     }
 
     @Override
-    public List<E> findAll() {
-        return getSession().createCriteria(this.entityClass).list();
+    public List<E> getAll() {
+        return getCurrentSession().createCriteria(this.entityClass).list();
     }
 
     //TODO разобраться с методом
     @Override
-    public List<E> findAllByExample(E entity) {
+    public List<E> getAllByExample(E entity) {
         Example example = Example.create(entity).ignoreCase().enableLike().excludeZeroes();
-        return getSession().createCriteria(this.entityClass).add(example).list();
+        return getCurrentSession().createCriteria(this.entityClass).add(example).list();
     }
 
     @Override
-    public E findById(Serializable id) {
-        return (E) getSession().get(this.entityClass, id);
+    public E getById(Serializable id) {
+        return (E) getCurrentSession().get(this.entityClass, id);
     }
 
     @Override
     public void clear() {
-        getSession().clear();
+        getCurrentSession().clear();
     }
 
     @Override
     public void flush() {
-        getSession().flush();
+        getCurrentSession().flush();
     }
 }

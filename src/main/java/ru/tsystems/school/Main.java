@@ -11,12 +11,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+        /*
+         *  Попытки тестировать систему
+         */
+
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
 
         UserService userService = new UserService();
 
         UserEntity user = new UserEntity("Вася", "Уткин", "Вася@почта.ру", "ВасяЛогин", "ВасяПароль");
-        //userService.addNewUser(user);
 
         userService.save(user);
     }
