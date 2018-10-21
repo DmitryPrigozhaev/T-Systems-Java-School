@@ -1,10 +1,10 @@
 package ru.tsystems.school.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.school.dao.UserDao;
+import ru.tsystems.school.dao.UserDaoImpl;
 import ru.tsystems.school.entities.UserEntity;
 
 import java.io.Serializable;
@@ -14,27 +14,15 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserService {
 
+    private UserDao userDao;
+
     @Autowired
-    @Qualifier("userDaoImpl")
-    UserDao userDao;
+    public UserService(UserDaoImpl userDaoImpl) {
+        this.userDao = userDaoImpl;
+    }
 
     public List<UserEntity> getAllUsers() {
         return userDao.getAll();
-    }
-
-    //TODO разобраться с методом
-    //добавить нового юзера, если такого не существует
-    @Transactional(readOnly = false)
-    public void addNewUser(UserEntity userEntity) {
-        UserEntity user = new UserEntity();
-        user.setLogin(userEntity.getLogin());
-        user.setEmail(userEntity.getEmail());
-        List<UserEntity> list = userDao.getAllByExample(user);
-        if (list == null || list.isEmpty()) {
-            Long id = (Long) userDao.save(userEntity);
-        } else {
-            System.out.println("Пользователь уже существует!");
-        }
     }
 
     public UserEntity findByLogin(String login) {
