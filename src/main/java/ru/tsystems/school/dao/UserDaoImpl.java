@@ -1,26 +1,21 @@
 package ru.tsystems.school.dao;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.tsystems.school.entities.UserEntity;
+import ru.tsystems.school.entities.User;
 
 @Repository
-public class UserDaoImpl extends AbstractGenericDao<UserEntity> implements UserDao {
+public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
 
-    @Autowired
-    UserDaoImpl(SessionFactory sessionFactory) {
-        super(sessionFactory);
+    // TODO переделать через аннотацию
+    @Override
+    public User getByLogin(String login) {
+        return getCurrentSession().get(User.class, login);
     }
 
+    // TODO переделать через аннотацию
     @Override
-    public UserEntity findByLogin(String login) {
-        return getCurrentSession().get(UserEntity.class, login);
-    }
-
-    @Override
-    public UserEntity findByEmail(String email) {
-        return getCurrentSession().get(UserEntity.class, email);
+    public User getByEmail(String email) {
+        return getCurrentSession().get(User.class, email);
     }
 
 }

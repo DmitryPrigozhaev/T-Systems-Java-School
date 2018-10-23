@@ -15,12 +15,12 @@ import java.util.List;
 public abstract class AbstractGenericDao<E> implements GenericDao<E> {
 
     private final Class<E> entityClass;
-    private SessionFactory sessionFactory;
 
     @Autowired
-    AbstractGenericDao(SessionFactory sessionFactory) {
+    private SessionFactory sessionFactory;
+
+    AbstractGenericDao() {
         this.entityClass = (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        this.sessionFactory = sessionFactory;
     }
 
     // извлекает текущий сеанс из фабрики SessionFactory

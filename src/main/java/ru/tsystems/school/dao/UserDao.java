@@ -1,12 +1,12 @@
 package ru.tsystems.school.dao;
 
-import ru.tsystems.school.entities.UserEntity;
+import ru.tsystems.school.entities.User;
 
 
-public interface UserDao extends GenericDao<UserEntity> {
+public interface UserDao extends GenericDao<User> {
 
-    UserEntity findByLogin(String login);
+    User getByLogin(String login);
 
-    UserEntity findByEmail(String email);
+    User getByEmail(String email);
 
 }

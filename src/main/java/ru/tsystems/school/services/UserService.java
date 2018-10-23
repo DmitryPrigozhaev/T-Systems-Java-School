@@ -4,44 +4,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.school.dao.UserDao;
-import ru.tsystems.school.dao.UserDaoImpl;
-import ru.tsystems.school.entities.UserEntity;
+import ru.tsystems.school.entities.User;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Service("userService")
-@Transactional(readOnly = true)
+@Transactional
 public class UserService {
 
+    @Autowired
     private UserDao userDao;
 
-    @Autowired
-    public UserService(UserDaoImpl userDaoImpl) {
-        this.userDao = userDaoImpl;
-    }
-
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
         return userDao.getAll();
     }
 
-    public UserEntity findByLogin(String login) {
-        return userDao.findByLogin(login);
+    public User getByLogin(String login) {
+        return userDao.getByLogin(login);
     }
 
-    public UserEntity findByEmail(String email) {
-        return userDao.findByEmail(email);
+    public User getByEmail(String email) {
+        return userDao.getByEmail(email);
     }
 
-    public Serializable save(UserEntity entity) {
+    public Serializable save(User entity) {
         return userDao.save(entity);
     }
 
-    public void saveOrUpdate(UserEntity entity) {
+    public void saveOrUpdate(User entity) {
         userDao.saveOrUpdate(entity);
     }
 
-    public void delete(UserEntity entity) {
+    public void delete(User entity) {
         userDao.delete(entity);
     }
 
@@ -49,15 +44,15 @@ public class UserService {
         userDao.deleteAll();
     }
 
-    public List<UserEntity> findAll() {
+    public List<User> getAll() {
         return userDao.getAll();
     }
 
-    public UserEntity findById(Serializable id) {
+    public User getById(Serializable id) {
         return userDao.getById(id);
     }
 
-    public List<UserEntity> findAllByExample(UserEntity entity) {
+    public List<User> getAllByExample(User entity) {
         return userDao.getAllByExample(entity);
     }
 

@@ -1,16 +1,12 @@
 package ru.tsystems.school;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.tsystems.school.entities.UserEntity;
+import ru.tsystems.school.configuration.SpringConfig;
+import ru.tsystems.school.entities.User;
 import ru.tsystems.school.services.UserService;
-import ru.tsystems.school.util.config.SpringConfig;
 
 public class Main {
-
-    @Autowired
-    static UserService userService;
 
     public static void main(String[] args) {
 
@@ -19,9 +15,16 @@ public class Main {
          */
 
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        UserService service = context.getBean(UserService.class);
 
-        userService.save(new UserEntity("Василий", "Петрович", "ВродеПочта", "Вроде Логин", "Вроде пароль"));
+        User user = service.getById((long)1);
+        System.out.println(user);
 
+        service.delete(user);
+
+//        service.save(new User("Василий", "Васильев", "Почта Василия", "Логин Василия", "Пароль Василия"));
+//        service.save(new User("Иван", "Иванов", "Почта Ивана", "Логин Ивана", "Пароль Ивана"));
+//        service.save(new User("Сергей", "Сергеев", "Почта Сергея", "Логин Сергея", "Пароль Сергея"));
 
     }
 }

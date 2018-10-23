@@ -1,4 +1,4 @@
-package ru.tsystems.school.util.config;
+package ru.tsystems.school.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
