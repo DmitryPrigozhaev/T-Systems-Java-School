@@ -4,25 +4,20 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User implements Serializable {
 
     private Long id;
+    private String email;
     private String login;
     private String password;
-    private String email;
     private String firstName;
     private String lastName;
 
     public User() {
-        this.login = "";
-        this.password = "";
-        this.email = "";
-        this.firstName = "";
-        this.lastName = "";
     }
 
-    public User(String firstName, String lastName, String email, String login, String password) {
+    public User(String login, String password, String email, String firstName, String lastName) {
         this.login = login;
         this.password = password;
         this.email = email;
@@ -41,6 +36,15 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "EMAIL", unique = true, nullable = false)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Column(name = "LOGIN", unique = true, nullable = false)
     public String getLogin() {
         return login;
@@ -57,15 +61,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Column(name = "EMAIL", unique = true, nullable = false)
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Column(name = "FIRST_NAME", unique = true, length = 50)
@@ -89,8 +84,12 @@ public class User implements Serializable {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("ID: ").append(this.id).append(",\nfirstName: ").append(this.firstName).append(",\nlastName: ")
-                .append(this.lastName).append(",\nemail: ").append(this.email).append(",\nlogin: ").append(this.login);
+        sb.append("ID: ").append(this.id)
+                .append(",\nEMAIL: ").append(this.email)
+                .append(",\nLOGIN: ").append(this.login)
+                .append("\nPASSWORD: ").append(this.password)
+                .append(",\nFIRST_NAME: ").append(this.firstName)
+                .append(",\nLAST_NAME: ").append(this.lastName);
         return sb.toString();
     }
 }

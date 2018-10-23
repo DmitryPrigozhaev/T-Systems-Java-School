@@ -53,7 +53,8 @@ public abstract class AbstractGenericDao<E> implements GenericDao<E> {
 
     @Override
     public List<E> getAll() {
-        return getCurrentSession().createCriteria(this.entityClass).list();
+//        return getCurrentSession().createCriteria(this.entityClass).list();
+        return getCurrentSession().createQuery("from User").list();
     }
 
     //TODO разобраться с методом

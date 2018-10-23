@@ -1,66 +1,33 @@
 package ru.tsystems.school.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.tsystems.school.dao.UserDao;
 import ru.tsystems.school.entities.User;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Service("userService")
-@Transactional
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    private UserDao userDao;
+    public User getById(Serializable id);
 
-    public List<User> getAllUsers() {
-        return userDao.getAll();
-    }
+    public User getByLogin(String login);
 
-    public User getByLogin(String login) {
-        return userDao.getByLogin(login);
-    }
+    public User getByEmail(String email);
 
-    public User getByEmail(String email) {
-        return userDao.getByEmail(email);
-    }
+    public List<User> getAll();
 
-    public Serializable save(User entity) {
-        return userDao.save(entity);
-    }
+    public List<User> getAllByExample(User entity);
 
-    public void saveOrUpdate(User entity) {
-        userDao.saveOrUpdate(entity);
-    }
+    public Serializable save(User entity);
 
-    public void delete(User entity) {
-        userDao.delete(entity);
-    }
+    public void saveOrUpdate(User entity);
 
-    public void deleteAll() {
-        userDao.deleteAll();
-    }
+    public void delete(User entity);
 
-    public List<User> getAll() {
-        return userDao.getAll();
-    }
+    public void deleteById(Serializable id);
 
-    public User getById(Serializable id) {
-        return userDao.getById(id);
-    }
+    public void deleteAll();
 
-    public List<User> getAllByExample(User entity) {
-        return userDao.getAllByExample(entity);
-    }
+    public void clear();
 
-    public void clear() {
-        userDao.clear();
-    }
-
-    public void flush() {
-        userDao.flush();
-    }
+    public void flush();
 }

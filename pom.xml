@@ -39,6 +39,20 @@
             <version>5.1.0.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.1.0.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.1.0.RELEASE</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -46,15 +60,8 @@
             <version>5.3.6.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.3.6.Final</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
         <!-- Для пула соединений. Без него программа зависала и не закрывала транзакцию. -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>

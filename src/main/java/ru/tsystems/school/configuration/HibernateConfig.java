@@ -29,19 +29,21 @@ public class HibernateConfig {
         dataSource.setUrl(env.getRequiredProperty("datasource.url"));
         dataSource.setUsername(env.getRequiredProperty("datasource.username"));
         dataSource.setPassword(env.getRequiredProperty("datasource.password"));
+
         return dataSource;
     }
 
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
-        properties.put("hibernate.connection.autocommit", env.getRequiredProperty("hibernate.connection.autocommit"));
-        properties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        properties.put("hibernate.c3p0.min_size", env.getRequiredProperty("hibernate.c3p0.min_size"));
-        properties.put("hibernate.c3p0.max_size", env.getRequiredProperty("hibernate.c3p0.max_size"));
-        properties.put("hibernate.c3p0.timeout", env.getRequiredProperty("hibernate.c3p0.timeout"));
-        properties.put("hibernate.c3p0.max_statements", env.getRequiredProperty("hibernate.c3p0.max_statements"));
+        properties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
+        properties.setProperty("hibernate.connection.autocommit", env.getRequiredProperty("hibernate.connection.autocommit"));
+        properties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        properties.setProperty("hibernate.c3p0.min_size", env.getRequiredProperty("hibernate.c3p0.min_size"));
+        properties.setProperty("hibernate.c3p0.max_size", env.getRequiredProperty("hibernate.c3p0.max_size"));
+        properties.setProperty("hibernate.c3p0.timeout", env.getRequiredProperty("hibernate.c3p0.timeout"));
+        properties.setProperty("hibernate.c3p0.max_statements", env.getRequiredProperty("hibernate.c3p0.max_statements"));
+
         return properties;
     }
 
@@ -50,16 +52,18 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan(new String[]{"ru.tsystems.school"});
+        sessionFactory.setPackagesToScan("ru.tsystems.school");
         sessionFactory.setHibernateProperties(getHibernateProperties());
+
         return sessionFactory;
     }
 
     @Bean
     @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
+
         return txManager;
     }
 }

@@ -15,16 +15,12 @@ public class Main {
          */
 
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-        UserService service = context.getBean(UserService.class);
+        UserService service = (UserService) context.getBean("userService");
 
-        User user = service.getById((long)1);
-        System.out.println(user);
+        User user = new User("Логин Василия", "Пароль Василия", "Почта Василия", "Василий", "Васильев");
+        service.save(user);
 
-        service.delete(user);
-
-//        service.save(new User("Василий", "Васильев", "Почта Василия", "Логин Василия", "Пароль Василия"));
-//        service.save(new User("Иван", "Иванов", "Почта Ивана", "Логин Ивана", "Пароль Ивана"));
-//        service.save(new User("Сергей", "Сергеев", "Почта Сергея", "Логин Сергея", "Пароль Сергея"));
+//        service.save(new User("Логин Василия", "Пароль Василия", "Почта Василия", "Василий", "Васильев"));
 
     }
 }
