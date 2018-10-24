@@ -7,27 +7,23 @@ import java.util.List;
 
 public interface UserService {
 
-    public User getById(Serializable id);
+    User getUserById(Serializable id);
 
-    public User getByLogin(String login);
+    User getUserByEmail(String email);
 
-    public User getByEmail(String email);
+    List<User> getAllUsers();
 
-    public List<User> getAll();
+    Serializable saveUser(User entity);
 
-    public List<User> getAllByExample(User entity);
+    void saveOrUpdateUser(User entity);
 
-    public Serializable save(User entity);
+    void deleteUser(User entity);
 
-    public void saveOrUpdate(User entity);
+    void deleteUserById(Serializable id);
 
-    public void delete(User entity);
+    void deleteUserByEmail(String email);
 
-    public void deleteById(Serializable id);
+    void deleteAllUsers();
 
-    public void deleteAll();
-
-    public void clear();
-
-    public void flush();
+    boolean isUserEmailUnique(Long id, String email);
 }

@@ -1,9 +1,13 @@
 package ru.tsystems.school.dao;
 
+import org.hibernate.Criteria;
+
 import java.io.Serializable;
 import java.util.List;
 
 public interface GenericDao<E> {
+
+    E getById(Serializable id);
 
     Serializable save(E entity);
 
@@ -11,15 +15,11 @@ public interface GenericDao<E> {
 
     void delete(E entity);
 
+    void deleteById(Serializable id);
+
     void deleteAll();
 
     List<E> getAll();
 
-    E getById(Serializable id);
-
-    List<E> getAllByExample(E entity);
-
-    void clear();
-
-    void flush();
+    Criteria createEntityCriteria();
 }

@@ -4,12 +4,11 @@ import ru.tsystems.school.entities.User;
 
 import java.io.Serializable;
 
-
 public interface UserDao extends GenericDao<User> {
 
-    User getByLogin(String login);
+    User getUserByEmail(String email);
 
-    User getByEmail(String email);
+    void deleteUserByEmail(String email);
 
     void deleteById(Serializable id);
 

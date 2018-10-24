@@ -10,61 +10,62 @@ import java.io.Serializable;
 import java.util.List;
 
 @Service("userService")
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
 
-    public List<User> getAll() {
-        return userDao.getAll();
-    }
-
-    public User getByLogin(String login) {
-        return userDao.getByLogin(login);
-    }
-
-    public User getByEmail(String email) {
-        return userDao.getByEmail(email);
-    }
-
-    @Transactional(readOnly = false)
-    public Serializable save(User entity) {
-        return userDao.save(entity);
-    }
-
-    @Transactional(readOnly = false)
-    public void saveOrUpdate(User entity) {
-        userDao.saveOrUpdate(entity);
-    }
-
-    @Transactional(readOnly = false)
-    public void delete(User entity) {
-        userDao.delete(entity);
-    }
-
-    @Transactional(readOnly = false)
-    public void deleteById(Serializable id) {
-        userDao.deleteById(id);
-    }
-    @Transactional(readOnly = false)
-    public void deleteAll() {
-        userDao.deleteAll();
-    }
-
-    public User getById(Serializable id) {
+    @Transactional(readOnly = true)
+    @Override
+    public User getUserById(Serializable id) {
         return userDao.getById(id);
     }
 
-    public List<User> getAllByExample(User entity) {
-        return userDao.getAllByExample(entity);
+    @Transactional(readOnly = true)
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.getAll();
     }
 
-    public void clear() {
-        userDao.clear();
+    @Override
+    public Serializable saveUser(User entity) {
+        return userDao.save(entity);
     }
 
-    public void flush() {
-        userDao.flush();
+    @Override
+    public void saveOrUpdateUser(User entity) {
+        userDao.saveOrUpdate(entity);
+    }
+
+    @Override
+    public void deleteUser(User entity) {
+        userDao.delete(entity);
+    }
+
+    @Override
+    public void deleteUserById(Serializable id) {
+        userDao.deleteById(id);
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+        userDao.deleteUserByEmail(email);
+    }
+
+    @Override
+    public void deleteAllUsers() {
+        userDao.deleteAll();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public boolean isUserEmailUnique(Long id, String email) {
+        User user = getUserByEmail(email);
+        return (user == null || ((id != null) && (user.getId() == id)));
     }
 }

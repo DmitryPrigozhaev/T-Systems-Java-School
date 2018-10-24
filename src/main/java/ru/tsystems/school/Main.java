@@ -6,6 +6,8 @@ import ru.tsystems.school.configuration.SpringConfig;
 import ru.tsystems.school.entities.User;
 import ru.tsystems.school.services.UserService;
 
+import java.time.LocalDate;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -13,14 +15,21 @@ public class Main {
         /*
          *  Попытки тестировать систему
          */
-
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         UserService service = (UserService) context.getBean("userService");
+//
+        String date = "1923-12-12";
+        LocalDate localDate = LocalDate.parse(date);
+//
+        User user = new User("Василий@gmail.com", "Пароль_Василия", "Василий", "Васильев", localDate);
+//        User user = new User();
+//        user.setPassword("123");
+//        user.setEmail("123ssda");
 
-        User user = new User("Логин Василия", "Пароль Василия", "Почта Василия", "Василий", "Васильев");
-        service.save(user);
+        System.out.println(user);
+        service.saveUser(user);
 
-//        service.save(new User("Логин Василия", "Пароль Василия", "Почта Василия", "Василий", "Васильев"));
+//        System.out.println(user);
 
     }
 }

@@ -1,23 +1,26 @@
 package ru.tsystems.school.dao;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.tsystems.school.entities.User;
 
 import java.io.Serializable;
 
-@Repository
+@Repository("userDao")
 public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
 
-    // TODO переделать через аннотацию
     @Override
-    public User getByLogin(String login) {
-        return getCurrentSession().get(User.class, login);
+    public User getUserByEmail(String email) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("EMAIL", email));
+        return (User) criteria.uniqueResult();
     }
 
-    // TODO переделать через аннотацию
     @Override
-    public User getByEmail(String email) {
-        return getCurrentSession().get(User.class, email);
+    public void deleteUserByEmail(String email) {
+        User user = getUserByEmail(email);
+        delete(user);
     }
 
     @Override
@@ -27,5 +30,4 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             getCurrentSession().delete(user);
         }
     }
-
 }
