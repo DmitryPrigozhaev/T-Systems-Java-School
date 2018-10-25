@@ -1,10 +1,10 @@
-package ru.tsystems.school;
+package com.railwaycompany;
 
+import com.railwaycompany.configuration.WebMvcConfig;
+import com.railwaycompany.entities.User;
+import com.railwaycompany.services.api.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.tsystems.school.configuration.SpringConfig;
-import ru.tsystems.school.entities.User;
-import ru.tsystems.school.services.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +16,7 @@ public class Main {
         /*
          *  Попытки тестировать систему
          */
-        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(WebMvcConfig.class);
         UserService service = (UserService) context.getBean("userService");
 
         String date = "1923-12-12";

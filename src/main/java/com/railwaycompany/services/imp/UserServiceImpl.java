@@ -1,10 +1,11 @@
-package ru.tsystems.school.services;
+package com.railwaycompany.services.imp;
 
+import com.railwaycompany.dao.api.UserDao;
+import com.railwaycompany.entities.User;
+import com.railwaycompany.services.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tsystems.school.dao.UserDao;
-import ru.tsystems.school.entities.User;
 
 import java.io.Serializable;
 import java.util.List;

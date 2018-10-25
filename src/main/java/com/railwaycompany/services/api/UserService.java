@@ -1,6 +1,6 @@
-package ru.tsystems.school.services;
+package com.railwaycompany.services.api;
 
-import ru.tsystems.school.entities.User;
+import com.railwaycompany.entities.User;
 
 import java.io.Serializable;
 import java.util.List;

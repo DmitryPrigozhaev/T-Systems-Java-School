@@ -1,6 +1,6 @@
-package ru.tsystems.school.dao;
+package com.railwaycompany.dao.api;
 
-import ru.tsystems.school.entities.User;
+import com.railwaycompany.entities.User;
 
 import java.io.Serializable;
 

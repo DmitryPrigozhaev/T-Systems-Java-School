@@ -1,4 +1,4 @@
-package ru.tsystems.school.dao;
+package com.railwaycompany.dao.api;
 
 import org.hibernate.Criteria;
 

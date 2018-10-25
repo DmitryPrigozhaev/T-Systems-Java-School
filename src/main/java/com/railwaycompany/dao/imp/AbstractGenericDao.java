@@ -1,5 +1,6 @@
-package ru.tsystems.school.dao;
+package com.railwaycompany.dao.imp;
 
+import com.railwaycompany.dao.api.GenericDao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -1,4 +1,4 @@
-package ru.tsystems.school.entities;
+package com.railwaycompany.entities;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;

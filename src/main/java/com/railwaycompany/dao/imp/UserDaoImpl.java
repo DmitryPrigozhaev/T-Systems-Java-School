@@ -1,9 +1,10 @@
-package ru.tsystems.school.dao;
+package com.railwaycompany.dao.imp;
 
+import com.railwaycompany.dao.api.UserDao;
+import com.railwaycompany.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import ru.tsystems.school.entities.User;
 
 import java.io.Serializable;
 

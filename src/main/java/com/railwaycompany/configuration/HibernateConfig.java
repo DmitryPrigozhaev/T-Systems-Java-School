@@ -1,4 +1,4 @@
-package ru.tsystems.school.configuration;
+package com.railwaycompany.configuration;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "ru.tsystems.school" })
+@ComponentScan({ "com.railwaycompany" })
 @PropertySource(value = "application.properties")
 public class HibernateConfig {
 
