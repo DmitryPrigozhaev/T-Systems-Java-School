@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 public class AppInitializer implements WebApplicationInitializer {
+
     /*  Либо расширить AbstractAnnotationConfigDispatcherServletInitializer
      *  и переопределить методы:
      *  protected Class<?>[] getRootConfigClasses()

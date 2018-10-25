@@ -100,11 +100,11 @@ public class User implements Serializable {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("ID: ").append(this.id)
-                .append(",\nEMAIL: ").append(this.email)
+                .append("\nEMAIL: ").append(this.email)
                 .append("\nPASSWORD: ").append(this.password)
-                .append(",\nFIRST_NAME: ").append(this.firstName)
-                .append(",\nLAST_NAME: ").append(this.lastName)
-                .append(",\nBIRTH_DATE: ").append(this.birth_date);
+                .append("\nFIRST_NAME: ").append(this.firstName)
+                .append("\nLAST_NAME: ").append(this.lastName)
+                .append("\nBIRTH_DATE: ").append(this.birth_date);
         return sb.toString();
     }
 

@@ -22,7 +22,7 @@ public class SpringConfig {
      *
      *   В представление передаются данные (model) и обратно, если необходимо, посылается ответ от представления.
      */
-
+//
 //    @Bean
 //    public InternalResourceViewResolver viewResolver() {
 //        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
