@@ -1,7 +1,6 @@
 package com.railwaycompany.dao.imp;
 
 import com.railwaycompany.dao.api.GenericDao;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Repository
-public abstract class AbstractGenericDao<E> implements GenericDao<E> {
+public abstract class AbstractGenericDao<E extends Serializable> implements GenericDao<E> {
 
     private final Class<E> entityClass;
 
@@ -30,18 +29,24 @@ public abstract class AbstractGenericDao<E> implements GenericDao<E> {
     }
 
     @Override
-    public E getById(Serializable id) {
-        return (E) getCurrentSession().get(this.entityClass, id);
+    public void create(E entity) {
+        getCurrentSession().persist(entity);
     }
 
     @Override
-    public Serializable save(E entity) {
-        return getCurrentSession().save(entity);
+    public E read(int id) {
+        return getCurrentSession().find(entityClass, id);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<E> readAll() {
+        return getCurrentSession().createCriteria(this.entityClass).list();
     }
 
     @Override
-    public void saveOrUpdate(E entity) {
-        getCurrentSession().saveOrUpdate(entity);
+    public void update(E entity) {
+        getCurrentSession().update(entity);
     }
 
     @Override
@@ -49,22 +54,12 @@ public abstract class AbstractGenericDao<E> implements GenericDao<E> {
         getCurrentSession().delete(entity);
     }
 
-    @Override
+        @Override
     public void deleteAll() {
-        List<E> entities = getAll();
+        List<E> entities = readAll();
         for (E entity : entities) {
             getCurrentSession().delete(entity);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<E> getAll() {
-        return getCurrentSession().createCriteria(this.entityClass).list();
-    }
-
-    @Override
-    public Criteria createEntityCriteria() {
-        return getCurrentSession().createCriteria(entityClass);
-    }
 }

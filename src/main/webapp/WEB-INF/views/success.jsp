@@ -18,7 +18,7 @@
 message : ${success}
 <br/>
 <br/>
-Назад <a href="<c:url value='/list' />">Список всех пользователей</a>
+Назад <a href="<c:url value='list' />">Список всех пользователей</a>
 
 </body>
 

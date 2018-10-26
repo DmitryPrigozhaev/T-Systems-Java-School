@@ -54,7 +54,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan("ru.tsystems.school");
+        sessionFactory.setPackagesToScan("com.railwaycompany");
         sessionFactory.setHibernateProperties(getHibernateProperties());
 
         return sessionFactory;

@@ -17,8 +17,13 @@ import java.util.List;
 import java.util.Locale;
 
 @Controller
-@RequestMapping("/")
 public class AppController {
+
+    /**
+     * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+     * *  *  *  *  *  * Тестирование *  *  *  *  *  *  *  *
+     * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+     */
 
     // TODO разобраться с PathVariable
     // PathVariable  показывает, что параметр метода должен быть связан с переменной из URL-адреса.
@@ -30,7 +35,7 @@ public class AppController {
     MessageSource messageSource;
 
     // метод возвращает список всех существующих users
-    @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"list"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
 
         List<User> users = userService.getAllUsers();
@@ -39,7 +44,7 @@ public class AppController {
     }
 
     // промежуточная стадия добавления user'а
-    @RequestMapping(value = {"/new"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"new"}, method = RequestMethod.GET)
     public String newUser(ModelMap model) {
         User user = new User();
         model.addAttribute("user", user);
@@ -49,7 +54,7 @@ public class AppController {
 
     // метод вызовется при отправке формы методом POST
     // для сохранения user'а в БД. Также проверяет ввод пользователя
-    @RequestMapping(value = {"/new"}, method = RequestMethod.POST)
+    @RequestMapping(value = "new", method = RequestMethod.POST)
     public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
@@ -62,14 +67,14 @@ public class AppController {
             return "registration";
         }
 
-        userService.saveUser(user);
+        userService.addUser(user);
 
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
+        model.addAttribute("success", "User " + user.getFirst_name() + " " + user.getLast_name() + " registered successfully");
         return "success";
     }
 
     // промежуточная стадия редактирования user'а
-    @RequestMapping(value = {"/edit-{email}-user"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.GET)
     public String editUser(@PathVariable String email, ModelMap model) {
         User user = userService.getUserByEmail(email);
         model.addAttribute("user", user);
@@ -79,9 +84,8 @@ public class AppController {
 
     // метод вызовется при отправке формы методом POST
     // для обновления user'а в БД. Также проверяет ввод пользователя
-    @RequestMapping(value = {"/edit-{email}-user"}, method = RequestMethod.POST)
-    public String updateUser(@Valid User user, BindingResult result,
-                             ModelMap model, @PathVariable String email) {
+    @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.POST)
+    public String updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String email) {
 
         if (result.hasErrors()) {
             return "registration";
@@ -94,14 +98,14 @@ public class AppController {
             return "registration";
         }
 
-        userService.saveOrUpdateUser(user);
+        userService.updateUser(user);
 
-        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
+        model.addAttribute("success", "User " + user.getFirst_name() + " " + user.getLast_name() + " updated successfully");
         return "success";
     }
 
     // метод удалит user'а по значению email
-    @RequestMapping(value = {"/delete-{email}-user"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"delete-{email}-user"}, method = RequestMethod.GET)
     public String deleteUser(@PathVariable String email) {
         userService.deleteUserByEmail(email);
         return "redirect:/list";

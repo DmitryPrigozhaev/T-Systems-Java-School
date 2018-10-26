@@ -34,6 +34,12 @@
         </tr>
 
         <tr>
+            <td><label for="password">Password: </label></td>
+            <td><form:input path="password" id="password"/></td>
+            <td><form:errors path="password" cssClass="error"/></td>
+        </tr>
+
+        <tr>
             <td><label for="first_name">First name: </label></td>
             <td><form:input path="first_name" id="first_name"/></td>
             <td><form:errors path="first_name" cssClass="error"/></td>
@@ -52,7 +58,7 @@
         </tr>
 
         <tr>
-            <td colspan="4">
+            <td colspan="5">
                 <c:choose>
                     <c:when test="${edit}">
                         <input type="submit" value="Update"/>
@@ -67,7 +73,7 @@
 </form:form>
 <br/>
 <br/>
-Назад <a href="<c:url value='/list' />">Список всех пользователей</a>
+Назад <a href="<c:url value='list' />">Список всех пользователей</a>
 
 </body>
 <br>

@@ -5,12 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/hello")
-public class Hello {
+public class IndexPageController {
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello() {
+    @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
+    public String getIndexPage() {
         return "index";
     }
-
 }

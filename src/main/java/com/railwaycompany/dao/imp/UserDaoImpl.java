@@ -2,20 +2,25 @@ package com.railwaycompany.dao.imp;
 
 import com.railwaycompany.dao.api.UserDao;
 import com.railwaycompany.entities.User;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-
-import java.io.Serializable;
 
 @Repository("userDao")
 public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
 
+    private static final String FIND_USER_BY_LOGIN = "SELECT u FROM User u WHERE u.email = :email";
+
     @Override
     public User getUserByEmail(String email) {
-        Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("EMAIL", email));
-        return (User) criteria.uniqueResult();
+        Query queryGetUserByEmail = getCurrentSession().createQuery(FIND_USER_BY_LOGIN);
+        queryGetUserByEmail.setParameter("email", email);
+        User user = null;
+        try {
+            user = (User) queryGetUserByEmail.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
@@ -24,11 +29,4 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
         delete(user);
     }
 
-    @Override
-    public void deleteById(Serializable id) {
-        User user = (User) getCurrentSession().load(User.class, id);
-        if (null != user) {
-            getCurrentSession().delete(user);
-        }
-    }
 }

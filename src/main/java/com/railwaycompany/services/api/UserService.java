@@ -2,24 +2,21 @@ package com.railwaycompany.services.api;
 
 import com.railwaycompany.entities.User;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface UserService {
 
-    User getUserById(Serializable id);
+    void addUser(User entity);
+
+    User getUser(int id);
 
     User getUserByEmail(String email);
 
     List<User> getAllUsers();
 
-    Serializable saveUser(User entity);
-
-    void saveOrUpdateUser(User entity);
+    void updateUser(User entity);
 
     void deleteUser(User entity);
-
-    void deleteUserById(Serializable id);
 
     void deleteUserByEmail(String email);
 

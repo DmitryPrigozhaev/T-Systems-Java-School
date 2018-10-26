@@ -1,25 +1,19 @@
 package com.railwaycompany.dao.api;
 
-import org.hibernate.Criteria;
-
 import java.io.Serializable;
 import java.util.List;
 
-public interface GenericDao<E> {
+public interface GenericDao<E extends Serializable> {
 
-    E getById(Serializable id);
+    void create(E entity);
 
-    Serializable save(E entity);
+    E read(int key);
 
-    void saveOrUpdate(E entity);
+    List<E> readAll();
+
+    void update(E entity);
 
     void delete(E entity);
 
-    void deleteById(Serializable id);
-
     void deleteAll();
-
-    List<E> getAll();
-
-    Criteria createEntityCriteria();
 }

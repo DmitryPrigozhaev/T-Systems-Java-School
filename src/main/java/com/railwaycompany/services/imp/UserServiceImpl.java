@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Service("userService")
@@ -17,36 +16,36 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Override
+    public void addUser(User entity) {
+        userDao.create(entity);
+    }
+
     @Transactional(readOnly = true)
     @Override
-    public User getUserById(Serializable id) {
-        return userDao.getById(id);
+    public User getUser(int id) {
+        return userDao.read(id);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers() {
-        return userDao.getAll();
+        return userDao.readAll();
     }
 
     @Override
-    public Serializable saveUser(User entity) {
-        return userDao.save(entity);
-    }
-
-    @Override
-    public void saveOrUpdateUser(User entity) {
-        userDao.saveOrUpdate(entity);
+    public void updateUser(User entity) {
+        userDao.update(entity);
     }
 
     @Override
     public void deleteUser(User entity) {
         userDao.delete(entity);
-    }
-
-    @Override
-    public void deleteUserById(Serializable id) {
-        userDao.deleteById(id);
     }
 
     @Override
@@ -57,11 +56,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAllUsers() {
         userDao.deleteAll();
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
     }
 
     @Override

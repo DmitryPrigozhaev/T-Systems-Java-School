@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -17,18 +16,18 @@ public class User implements Serializable {
     private Long id;
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
-    private LocalDate birth_date;
+    private String first_name;
+    private String last_name;
+    private String birth_date;
 
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, LocalDate birth_date) {
+    public User(String email, String password, String first_name, String last_name, String birth_date) {
         this.email = email;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.birth_date = birth_date;
     }
 
@@ -66,46 +65,45 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "FIRST_NAME", unique = true, length = 50, nullable = false)
-    public String getFirstName() {
-        return firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirst_name(String firstName) {
+        this.first_name = firstName;
     }
 
     @NotNull
     @Column(name = "LAST_NAME", length = 50, nullable = false)
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLast_name(String lastName) {
+        this.last_name = lastName;
     }
 
     @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")
 //    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @Column(name = "BIRTH_DATE", nullable = false)
-    public LocalDate getBirthday() {
+    public String getBirth_date() {
         return birth_date;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirth_date(String birthday) {
         this.birth_date = birthday;
     }
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("ID: ").append(this.id)
-                .append("\nEMAIL: ").append(this.email)
-                .append("\nPASSWORD: ").append(this.password)
-                .append("\nFIRST_NAME: ").append(this.firstName)
-                .append("\nLAST_NAME: ").append(this.lastName)
-                .append("\nBIRTH_DATE: ").append(this.birth_date);
-        return sb.toString();
+        String sb = "ID: " + this.id +
+                "\nEMAIL: " + this.email +
+                "\nPASSWORD: " + this.password +
+                "\nFIRST_NAME: " + this.first_name +
+                "\nLAST_NAME: " + this.last_name +
+                "\nBIRTH_DATE: " + this.birth_date;
+        return sb;
     }
 
     @Override
@@ -116,13 +114,13 @@ public class User implements Serializable {
         return Objects.equals(id, user.id) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(first_name, user.first_name) &&
+                Objects.equals(last_name, user.last_name) &&
                 Objects.equals(birth_date, user.birth_date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, firstName, lastName, birth_date);
+        return Objects.hash(id, email, password, first_name, last_name, birth_date);
     }
 }
