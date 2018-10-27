@@ -39,17 +39,17 @@
 
         <tr>
             <td><label for="first_name">First name: </label></td>
-            <td><form:input path="first_name" id="first_name"/></td>
+            <td><form:input path="firstName" id="first_name"/></td>
         </tr>
 
         <tr>
             <td><label for="last_name">Last name: </label></td>
-            <td><form:input path="last_name" id="last_name"/></td>
+            <td><form:input path="lastName" id="last_name"/></td>
         </tr>
 
         <tr>
             <td><label for="birth_date">Birth date: </label></td>
-            <td><form:input type="date" list="dateList" path="birth_date" id="birth_date"/></td>
+            <td><form:input type="date" list="dateList" path="birthDate" id="birth_date"/></td>
         </tr>
 
         <tr>

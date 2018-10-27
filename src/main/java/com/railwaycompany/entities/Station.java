@@ -10,36 +10,36 @@ public class Station implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "STATION_ID")
-    private Long station_id;
+    private int stationId;
 
     @Column(name = "STATION_NAME", unique = true)
-    private String station_name;
+    private String stationName;
 
     @Column(name = "STATION_STATUS", unique = true)
-    private Boolean station_status;
+    private Boolean stationStatus;
 
 
-    public Long getId() {
-        return station_id;
+    public int getId() {
+        return stationId;
     }
 
-    public void setId(Long station_id) {
-        this.station_id = station_id;
+    public void setId(int station_id) {
+        this.stationId = station_id;
     }
 
     public String getStation_name() {
-        return station_name;
+        return stationName;
     }
 
     public void setStation_name(String station_name) {
-        this.station_name = station_name;
+        this.stationName = station_name;
     }
 
     public boolean getStation_status() {
-        return station_status;
+        return stationStatus;
     }
 
     public void setStation_status(boolean station_status) {
-        this.station_status = station_status;
+        this.stationStatus = station_status;
     }
 }

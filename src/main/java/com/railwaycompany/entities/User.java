@@ -2,7 +2,6 @@ package com.railwaycompany.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
@@ -10,8 +9,8 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private Long id;
+    @Column(name = "USER_ID")
+    private int id;
 
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
@@ -19,32 +18,27 @@ public class User implements Serializable {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "firstName", length = 50, nullable = false)
+    @Column(name = "FIRST_NAME", length = 50, nullable = false)
     private String firstName;
 
-    @Column(name = "lastName", length = 50, nullable = false)
+    @Column(name = "LAST_NAME", length = 50, nullable = false)
     private String lastName;
 
-    @Column(name = "birthDate", nullable = false)
+    @Column(name = "BIRTH_DATE", nullable = false)
     private String birthDate;
 
+    @Column(name = "ROLE")
+    private int role;
+
     public User() {
+        this.role = 1;
     }
 
-    public User(String email, String password, String firstName, String lastName, String birthDate) {
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-    }
-
-
-    public Long getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -84,6 +78,14 @@ public class User implements Serializable {
         return birthDate;
     }
 
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     public void setBirthDate(String birthday) {
         this.birthDate = birthday;
     }
@@ -96,23 +98,5 @@ public class User implements Serializable {
                 "\nfirstName: " + this.firstName +
                 "\nlastName: " + this.lastName +
                 "\nbirthDate: " + this.birthDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(birthDate, user.birthDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, password, firstName, lastName, birthDate);
     }
 }

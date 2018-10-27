@@ -25,16 +25,17 @@
     <h2>Список пользователей</h2>
     <table>
         <tr>
-            <td>ID</td><td>Email</td><td>Password</td><td>First Name</td><td>Last Name</td><td>Birth Date</td>
+            <td>ID</td><td>Email</td><td>Password</td><td>First Name</td><td>Last Name</td><td>Birth Date</td><td>Role</td>
         </tr>
         <c:forEach items="${users}" var="user">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.email}</td>
                 <td>${user.password}</td>
-                <td>${user.first_name}</td>
-                <td>${user.last_name}</td>
-                <td>${user.birth_date}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.birthDate}</td>
+                <td>${user.role}</td>
                 <td><a href="<c:url value='edit-${user.email}-user' />">edit</a> </td>
                 <td><a href="<c:url value='delete-${user.email}-user' />">delete</a> </td>
             </tr>
