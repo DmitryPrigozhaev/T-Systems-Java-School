@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,13 +54,13 @@ public class AppController {
     // метод вызовется при отправке формы методом POST
     // для сохранения user'а в БД. Также проверяет ввод пользователя
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
+    public String saveUser(User user, BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
             return "registration";
         }
 
-        if (!userService.isUserEmailUnique(user.getId(), user.getEmail())) {
+        if (!userService.isUserEmailUnique(user.getEmail())) {
             FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email", new String[]{user.getEmail()}, Locale.getDefault()));
             result.addError(emailError);
             return "registration";
@@ -69,7 +68,7 @@ public class AppController {
 
         userService.addUser(user);
 
-        model.addAttribute("success", "User " + user.getFirst_name() + " " + user.getLast_name() + " registered successfully");
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
         return "success";
     }
 
@@ -85,13 +84,13 @@ public class AppController {
     // метод вызовется при отправке формы методом POST
     // для обновления user'а в БД. Также проверяет ввод пользователя
     @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.POST)
-    public String updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String email) {
+    public String updateUser(User user, BindingResult result, ModelMap model, @PathVariable String email) {
 
         if (result.hasErrors()) {
             return "registration";
         }
 
-        if (!userService.isUserEmailUnique(user.getId(), user.getEmail())) {
+        if (!userService.isUserEmailUnique(user.getEmail())) {
             FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
                     new String[]{user.getEmail()}, Locale.getDefault()));
             result.addError(emailError);
@@ -100,7 +99,7 @@ public class AppController {
 
         userService.updateUser(user);
 
-        model.addAttribute("success", "User " + user.getFirst_name() + " " + user.getLast_name() + " updated successfully");
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
         return "success";
     }
 

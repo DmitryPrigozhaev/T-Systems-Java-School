@@ -22,5 +22,5 @@ public interface UserService {
 
     void deleteAllUsers();
 
-    boolean isUserEmailUnique(Long id, String email);
+    boolean isUserEmailUnique(String email);
 }

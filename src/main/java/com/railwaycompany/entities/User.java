@@ -1,11 +1,6 @@
 package com.railwaycompany.entities;
 
-import org.hibernate.validator.constraints.Email;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,27 +8,38 @@ import java.util.Objects;
 @Table(name = "USERS")
 public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
-    private String first_name;
-    private String last_name;
-    private String birth_date;
+
+    @Column(name = "firstName", length = 50, nullable = false)
+    private String firstName;
+
+    @Column(name = "lastName", length = 50, nullable = false)
+    private String lastName;
+
+    @Column(name = "birthDate", nullable = false)
+    private String birthDate;
 
     public User() {
     }
 
-    public User(String email, String password, String first_name, String last_name, String birth_date) {
+    public User(String email, String password, String firstName, String lastName, String birthDate) {
         this.email = email;
         this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birth_date = birth_date;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", unique = true, nullable = false)
+
     public Long getId() {
         return this.id;
     }
@@ -42,9 +48,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @Email
-    @NotEmpty
-    @Column(name = "EMAIL", unique = true, nullable = false)
     public String getEmail() {
         return email;
     }
@@ -53,8 +56,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    @NotNull
-    @Column(name = "PASSWORD", nullable = false)
     public String getPassword() {
         return password;
     }
@@ -63,47 +64,38 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @NotNull
-    @Column(name = "FIRST_NAME", unique = true, length = 50, nullable = false)
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String firstName) {
-        this.first_name = firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    @NotNull
-    @Column(name = "LAST_NAME", length = 50, nullable = false)
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String lastName) {
-        this.last_name = lastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    @NotNull
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-//    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @Column(name = "BIRTH_DATE", nullable = false)
-    public String getBirth_date() {
-        return birth_date;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth_date(String birthday) {
-        this.birth_date = birthday;
+    public void setBirthDate(String birthday) {
+        this.birthDate = birthday;
     }
 
     @Override
     public String toString() {
-        String sb = "ID: " + this.id +
+        return "ID: " + this.id +
                 "\nEMAIL: " + this.email +
                 "\nPASSWORD: " + this.password +
-                "\nFIRST_NAME: " + this.first_name +
-                "\nLAST_NAME: " + this.last_name +
-                "\nBIRTH_DATE: " + this.birth_date;
-        return sb;
+                "\nfirstName: " + this.firstName +
+                "\nlastName: " + this.lastName +
+                "\nbirthDate: " + this.birthDate;
     }
 
     @Override
@@ -114,13 +106,13 @@ public class User implements Serializable {
         return Objects.equals(id, user.id) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(first_name, user.first_name) &&
-                Objects.equals(last_name, user.last_name) &&
-                Objects.equals(birth_date, user.birth_date);
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(birthDate, user.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, first_name, last_name, birth_date);
+        return Objects.hash(id, email, password, firstName, lastName, birthDate);
     }
 }

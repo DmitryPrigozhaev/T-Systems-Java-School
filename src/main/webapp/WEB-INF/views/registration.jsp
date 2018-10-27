@@ -30,31 +30,26 @@
         <tr>
             <td><label for="email">Email: </label></td>
             <td><form:input path="email" id="email"/></td>
-            <td><form:errors path="email" cssClass="error"/></td>
         </tr>
 
         <tr>
             <td><label for="password">Password: </label></td>
             <td><form:input path="password" id="password"/></td>
-            <td><form:errors path="password" cssClass="error"/></td>
         </tr>
 
         <tr>
             <td><label for="first_name">First name: </label></td>
             <td><form:input path="first_name" id="first_name"/></td>
-            <td><form:errors path="first_name" cssClass="error"/></td>
         </tr>
 
         <tr>
             <td><label for="last_name">Last name: </label></td>
             <td><form:input path="last_name" id="last_name"/></td>
-            <td><form:errors path="last_name" cssClass="error"/></td>
         </tr>
 
         <tr>
             <td><label for="birth_date">Birth date: </label></td>
-            <td><form:input path="birth_date" id="birth_date"/></td>
-            <td><form:errors path="birth_date" cssClass="error"/></td>
+            <td><form:input type="date" list="dateList" path="birth_date" id="birth_date"/></td>
         </tr>
 
         <tr>

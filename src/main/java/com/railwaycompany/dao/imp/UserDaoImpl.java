@@ -2,11 +2,15 @@ package com.railwaycompany.dao.imp;
 
 import com.railwaycompany.dao.api.UserDao;
 import com.railwaycompany.entities.User;
-import org.hibernate.query.Query;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-@Repository("userDao")
+import javax.persistence.Query;
+
+@Repository
 public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
+
+    private static final Logger LOG = Logger.getLogger(UserDaoImpl.class.getName());
 
     private static final String FIND_USER_BY_LOGIN = "SELECT u FROM User u WHERE u.email = :email";
 
@@ -18,7 +22,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
         try {
             user = (User) queryGetUserByEmail.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn(e);
         }
         return user;
     }
@@ -26,7 +30,11 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
     @Override
     public void deleteUserByEmail(String email) {
         User user = getUserByEmail(email);
-        delete(user);
+        try {
+            delete(user);
+        } catch (Exception e) {
+            LOG.warn(e);
+        }
     }
 
 }

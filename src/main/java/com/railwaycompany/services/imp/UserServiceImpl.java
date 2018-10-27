@@ -18,7 +18,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User entity) {
-        userDao.create(entity);
+        if (isUserEmailUnique(entity.getEmail())) {
+            userDao.create(entity);
+        } else {
+            String message = "User with email \"" + entity.getEmail() + "\" is already exist!";
+            //TODO здесь бросить исключение
+        }
     }
 
     @Transactional(readOnly = true)
@@ -59,8 +64,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserEmailUnique(Long id, String email) {
+    public boolean isUserEmailUnique(String email) {
         User user = getUserByEmail(email);
-        return (user == null || ((id != null) && (user.getId() == id)));
+        return (user == null);
     }
 }
