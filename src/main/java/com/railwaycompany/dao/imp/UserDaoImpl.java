@@ -12,11 +12,11 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
 
     private static final Logger LOG = Logger.getLogger(UserDaoImpl.class.getName());
 
-    private static final String FIND_USER_BY_LOGIN = "SELECT u FROM User u WHERE u.email = :email";
+    private static final String FIND_USER_BY_EMAIL = "SELECT u FROM User u WHERE u.email = :email";
 
     @Override
     public User getUserByEmail(String email) {
-        Query queryGetUserByEmail = getCurrentSession().createQuery(FIND_USER_BY_LOGIN);
+        Query queryGetUserByEmail = getCurrentSession().createQuery(FIND_USER_BY_EMAIL);
         queryGetUserByEmail.setParameter("email", email);
         User user = null;
         try {

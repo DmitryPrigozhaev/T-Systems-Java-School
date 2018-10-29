@@ -5,37 +5,48 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "TICKETS")
+@Table(name = "tickets")
 public class Ticket implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TICKET_ID")
-    private int id;
+    @Column(name = "ticket_id")
+    private Long id;
 
-    // TODO правильное отношение?
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "SALE_TIME")
-    private Date saleTime;
-
     @ManyToOne
-    @JoinColumn(name = "TRAIN_NUMBER")
+    @JoinColumn(name = "train_id", nullable = false)
     private Train train;
 
-    @Column(name = "CARRIAGE")
-    private int carriage;
+    @ManyToOne
+    @JoinColumn(name = "from_station", nullable = false)
+    private Station stationFrom;
 
-    @Column(name = "PLACE")
-    private int place;
+    @ManyToOne
+    @JoinColumn(name = "to_station", nullable = false)
+    private Station stationTo;
 
-    public int getId() {
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "sale_time", nullable = false)
+    private Date saleTime;
+
+    @Column(name = "carriage", nullable = false)
+    private Integer carriage;
+
+    @Column(name = "seat", nullable = false)
+    private Integer seat;
+
+    @Column(name = "price", nullable = false)
+    private Float price;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,14 +58,6 @@ public class Ticket implements Serializable {
         this.user = user;
     }
 
-    public Date getSaleTime() {
-        return saleTime;
-    }
-
-    public void setSaleTime(Date saleTime) {
-        this.saleTime = saleTime;
-    }
-
     public Train getTrain() {
         return train;
     }
@@ -63,19 +66,51 @@ public class Ticket implements Serializable {
         this.train = train;
     }
 
-    public int getCarriage() {
+    public Station getStationFrom() {
+        return stationFrom;
+    }
+
+    public void setStationFrom(Station stationFrom) {
+        this.stationFrom = stationFrom;
+    }
+
+    public Station getStationTo() {
+        return stationTo;
+    }
+
+    public void setStationTo(Station stationTo) {
+        this.stationTo = stationTo;
+    }
+
+    public Date getSaleTime() {
+        return saleTime;
+    }
+
+    public void setSaleTime(Date saleTime) {
+        this.saleTime = saleTime;
+    }
+
+    public Integer getCarriage() {
         return carriage;
     }
 
-    public void setCarriage(int carriage) {
+    public void setCarriage(Integer carriage) {
         this.carriage = carriage;
     }
 
-    public int getPlace() {
-        return place;
+    public Integer getSeat() {
+        return seat;
     }
 
-    public void setPlace(int place) {
-        this.place = place;
+    public void setSeat(Integer seat) {
+        this.seat = seat;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

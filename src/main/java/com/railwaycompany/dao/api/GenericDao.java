@@ -7,7 +7,7 @@ public interface GenericDao<E extends Serializable> {
 
     void create(E entity);
 
-    E read(int key);
+    E read(long key);
 
     List<E> readAll();
 

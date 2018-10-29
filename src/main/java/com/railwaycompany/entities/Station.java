@@ -4,42 +4,42 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "STATION")
+@Table(name = "stations")
 public class Station implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "STATION_ID")
-    private int stationId;
+    @Column(name = "station_id")
+    private Long id;
 
-    @Column(name = "STATION_NAME", unique = true)
+    @Column(name = "station_name", unique = true, nullable = false)
     private String stationName;
 
-    @Column(name = "STATION_STATUS", unique = true)
+    @Column(name = "station_status", unique = true, nullable = false)
     private Boolean stationStatus;
 
 
-    public int getId() {
-        return stationId;
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int station_id) {
-        this.stationId = station_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getStation_name() {
+    public String getStationName() {
         return stationName;
     }
 
-    public void setStation_name(String station_name) {
+    public void setStationName(String station_name) {
         this.stationName = station_name;
     }
 
-    public boolean getStation_status() {
+    public boolean getStationStatus() {
         return stationStatus;
     }
 
-    public void setStation_status(boolean station_status) {
+    public void setStationStatus(Boolean station_status) {
         this.stationStatus = station_status;
     }
 }

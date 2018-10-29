@@ -1,12 +1,13 @@
 package com.railwaycompany.services.api;
 
 import com.railwaycompany.entities.User;
+import com.railwaycompany.exceptions.AlreadyRegisteredException;
 
 import java.util.List;
 
 public interface UserService {
 
-    void addUser(User entity);
+    void addUser(User entity) throws AlreadyRegisteredException;
 
     User getUser(int id);
 

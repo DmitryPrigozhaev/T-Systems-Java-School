@@ -4,41 +4,41 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_ID")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-    @Column(name = "EMAIL", unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "FIRST_NAME", length = 50, nullable = false)
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
-    @Column(name = "LAST_NAME", length = 50, nullable = false)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
-    @Column(name = "BIRTH_DATE", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private String birthDate;
 
-    @Column(name = "ROLE")
-    private int role;
+    @Column(name = "role")
+    private Byte role;
 
     public User() {
         this.role = 1;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,16 +78,16 @@ public class User implements Serializable {
         return birthDate;
     }
 
+    public void setBirthDate(String birthday) {
+        this.birthDate = birthday;
+    }
+
     public int getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Byte role) {
         this.role = role;
-    }
-
-    public void setBirthDate(String birthday) {
-        this.birthDate = birthday;
     }
 
     @Override

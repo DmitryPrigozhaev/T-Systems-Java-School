@@ -2,6 +2,7 @@ package com.railwaycompany.services.imp;
 
 import com.railwaycompany.dao.api.UserDao;
 import com.railwaycompany.entities.User;
+import com.railwaycompany.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public void addUser(User entity) {
+    public void addUser(User entity) throws AlreadyRegisteredException {
         if (isUserEmailUnique(entity.getEmail())) {
             userDao.create(entity);
         } else {
             String message = "User with email \"" + entity.getEmail() + "\" is already exist!";
-            //TODO здесь бросить исключение
+            throw new AlreadyRegisteredException(message);
         }
     }
 

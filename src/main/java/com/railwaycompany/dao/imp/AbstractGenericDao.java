@@ -34,7 +34,7 @@ public abstract class AbstractGenericDao<E extends Serializable> implements Gene
     }
 
     @Override
-    public E read(int id) {
+    public E read(long id) {
         return getCurrentSession().find(entityClass, id);
     }
 

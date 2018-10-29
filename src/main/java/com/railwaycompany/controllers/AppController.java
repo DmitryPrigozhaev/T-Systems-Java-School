@@ -1,6 +1,7 @@
 package com.railwaycompany.controllers;
 
 import com.railwaycompany.entities.User;
+import com.railwaycompany.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -54,7 +55,7 @@ public class AppController {
     // метод вызовется при отправке формы методом POST
     // для сохранения user'а в БД. Также проверяет ввод пользователя
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String saveUser(User user, BindingResult result, ModelMap model) {
+    public String saveUser(User user, BindingResult result, ModelMap model) throws AlreadyRegisteredException {
 
         if (result.hasErrors()) {
             return "registration";

@@ -4,44 +4,45 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "TRAINS")
+@Table(name = "trains")
 public class Train implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "TRAIN_ID")
-    private int id;
+    @Column(name = "train_id")
+    private Long id;
 
-    @Column(name = "TRAIN_NUMBER")
-    private int number;
+    // TODO ДИКИЙ ВОПРОС ПРО СВЯЗЬ МАРШРУТ-ПОЕЗД
+    @Column(name = "number")
+    private Integer number;
 
-    @Column(name = "SEATS")
-    private int seats;
+    @Column(name = "seats")
+    private Integer seats;
 
-    @Column(name = "TRAIN_STATUS")
+    @Column(name = "train_status")
     private String status;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public int getSeats() {
+    public Integer getSeats() {
         return seats;
     }
 
-    public void setSeats(int seats) {
+    public void setSeats(Integer seats) {
         this.seats = seats;
     }
 

@@ -5,42 +5,43 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "ROUTE_POINT")
-public class RoutePoint implements Serializable {
+@Table(name = "routes")
+public class Route implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ROUTE_ID")
-    private int id;
+    @Column(name = "route_id")
+    private Long id;
+
+    @Column(name = "route_number")
+    private Integer routeNumber;
 
     @ManyToOne
-    @JoinColumn(name = "TRAIN_NUMBER")
-    private Train train;
-
-    @ManyToOne
-    @JoinColumn(name = "STATION_NAME")
+    @JoinColumn(name = "station_id", nullable = false)
     private Station station;
 
-    @Column(name = "DATE_ARRIVAL")
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "date_arrival")
     private Date dateArrival;
 
-    @Column(name = "DATE_DEPARTURE")
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "date_departure")
     private Date dateDeparture;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Train getTrain() {
-        return train;
+    public Integer getRouteNumber() {
+        return routeNumber;
     }
 
-    public void setTrain(Train train) {
-        this.train = train;
+    public void setRouteNumber(Integer routeNumber) {
+        this.routeNumber = routeNumber;
     }
 
     public Station getStation() {
@@ -66,4 +67,5 @@ public class RoutePoint implements Serializable {
     public void setDateDeparture(Date dateDeparture) {
         this.dateDeparture = dateDeparture;
     }
+
 }

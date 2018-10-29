@@ -2,6 +2,7 @@ package com.railwaycompany.services.imp;
 
 import com.railwaycompany.dao.api.StationDao;
 import com.railwaycompany.entities.Station;
+import com.railwaycompany.exceptions.StationWithSuchNameExistException;
 import com.railwaycompany.services.api.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,22 +16,24 @@ public class StationServiceImpl implements StationService {
     private StationDao stationDao;
 
     @Override
-    public void addStation(String name, boolean status) {
+    public void addStation(String name, boolean status) throws StationWithSuchNameExistException {
         Station station = stationDao.getStationByName(name);
         if (station == null) {
             station = new Station();
-            station.setStation_name(name);
-            station.setStation_status(status);
+            station.setStationName(name);
+            station.setStationStatus(status);
             stationDao.create(station);
         } else {
             String message = "Station \"" + name + "\" is already exist!";
-            // TODO здесь бросить исключение
+            throw new StationWithSuchNameExistException(message);
         }
     }
 
     @Override
     public Station getStation(String name) {
-        return stationDao.getStationByName(name);
+        Station station = stationDao.getStationByName(name);
+        return station;
+        // TODO добавить DTO
     }
 
     @Override
@@ -44,7 +47,13 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
+    public void setStationStatus(String name, boolean status) {
+        Station station = stationDao.getStationByName(name);
+        station.setStationStatus(status);
+    }
+
+    @Override
     public boolean isActiveStation(String name) {
-        return stationDao.getStationStatus(name);
+        return stationDao.getStationStatusByName(name);
     }
 }
