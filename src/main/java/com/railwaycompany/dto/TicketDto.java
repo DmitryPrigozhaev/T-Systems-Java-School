@@ -2,7 +2,7 @@ package com.railwaycompany.dto;
 
 import java.util.Date;
 
-public class TicketData {
+public class TicketDto {
 
     private long id;
     private int trainNumber;
@@ -13,8 +13,8 @@ public class TicketData {
     private Date saleTime;
     private Date dateArrival;
     private Date dateDeparture;
-    private UserData userData;
-    private TrainData trainData;
+    private UserDto userDto;
+    private TrainDto trainDto;
 
     public long getId() {
         return id;
@@ -88,19 +88,19 @@ public class TicketData {
         this.dateDeparture = dateDeparture;
     }
 
-    public UserData getUserData() {
-        return userData;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUserData(UserData userData) {
-        this.userData = userData;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
-    public TrainData getTrainData() {
-        return trainData;
+    public TrainDto getTrainDto() {
+        return trainDto;
     }
 
-    public void setTrainData(TrainData trainData) {
-        this.trainData = trainData;
+    public void setTrainDto(TrainDto trainDto) {
+        this.trainDto = trainDto;
     }
 }

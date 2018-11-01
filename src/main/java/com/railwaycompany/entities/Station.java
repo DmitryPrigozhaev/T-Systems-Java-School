@@ -9,15 +9,11 @@ public class Station implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "station_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "station_name", unique = true, nullable = false)
-    private String stationName;
-
-    @Column(name = "station_status", unique = true, nullable = false)
-    private Boolean stationStatus;
-
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
 
     public Long getId() {
         return id;
@@ -27,19 +23,12 @@ public class Station implements Serializable {
         this.id = id;
     }
 
-    public String getStationName() {
-        return stationName;
+    public String getName() {
+        return name;
     }
 
-    public void setStationName(String station_name) {
-        this.stationName = station_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public boolean getStationStatus() {
-        return stationStatus;
-    }
-
-    public void setStationStatus(Boolean station_status) {
-        this.stationStatus = station_status;
-    }
 }

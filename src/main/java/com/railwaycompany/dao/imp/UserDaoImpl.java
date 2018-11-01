@@ -27,14 +27,4 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
         return user;
     }
 
-    @Override
-    public void deleteUserByEmail(String email) {
-        User user = getUserByEmail(email);
-        try {
-            delete(user);
-        } catch (Exception e) {
-            LOG.warn(e);
-        }
-    }
-
 }

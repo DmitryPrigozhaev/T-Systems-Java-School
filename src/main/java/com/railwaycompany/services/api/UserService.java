@@ -1,5 +1,6 @@
 package com.railwaycompany.services.api;
 
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.exceptions.AlreadyRegisteredException;
 
@@ -7,21 +8,17 @@ import java.util.List;
 
 public interface UserService {
 
-    void addUser(User entity) throws AlreadyRegisteredException;
+    void addUser(User user) throws AlreadyRegisteredException;
 
-    User getUser(int id);
+    UserDto getUserDto(long id);
 
-    User getUserByEmail(String email);
+    UserDto getUserDtoByEmail(String email);
 
-    List<User> getAllUsers();
+    List<UserDto> getAllDtoUsers();
 
-    void updateUser(User entity);
+    void updateUser(User user);
 
-    void deleteUser(User entity);
-
-    void deleteUserByEmail(String email);
-
-    void deleteAllUsers();
+    void deleteUser(User user);
 
     boolean isUserEmailUnique(String email);
 }

@@ -2,6 +2,7 @@ package com.railwaycompany.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -9,7 +10,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "email", unique = true, nullable = false)
@@ -25,14 +26,10 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(name = "birth_date", nullable = false)
-    private String birthDate;
+    private Date birthDate;
 
     @Column(name = "role")
-    private Byte role;
-
-    public User() {
-        this.role = 1;
-    }
+    private Byte role = 1;
 
     public Long getId() {
         return this.id;
@@ -74,15 +71,15 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthday) {
+    public void setBirthDate(Date birthday) {
         this.birthDate = birthday;
     }
 
-    public int getRole() {
+    public Byte getRole() {
         return role;
     }
 
@@ -90,13 +87,4 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "ID: " + this.id +
-                "\nEMAIL: " + this.email +
-                "\nPASSWORD: " + this.password +
-                "\nfirstName: " + this.firstName +
-                "\nlastName: " + this.lastName +
-                "\nbirthDate: " + this.birthDate;
-    }
 }

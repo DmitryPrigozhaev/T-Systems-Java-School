@@ -1,12 +1,14 @@
 package com.railwaycompany.services.imp;
 
 import com.railwaycompany.dao.api.StationDao;
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.exceptions.StationWithSuchNameExistException;
 import com.railwaycompany.services.api.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,12 +18,11 @@ public class StationServiceImpl implements StationService {
     private StationDao stationDao;
 
     @Override
-    public void addStation(String name, boolean status) throws StationWithSuchNameExistException {
+    public void addStation(String name) throws StationWithSuchNameExistException {
         Station station = stationDao.getStationByName(name);
         if (station == null) {
             station = new Station();
-            station.setStationName(name);
-            station.setStationStatus(status);
+            station.setName(name);
             stationDao.create(station);
         } else {
             String message = "Station \"" + name + "\" is already exist!";
@@ -30,15 +31,30 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public Station getStation(String name) {
+    public StationDto getStationDto(String name) {
         Station station = stationDao.getStationByName(name);
-        return station;
-        // TODO добавить DTO
+        StationDto stationDto = null;
+        if (station != null) {
+            stationDto = new StationDto();
+            stationDto.setStationName(station.getName());
+        }
+        return stationDto;
     }
 
     @Override
-    public List<Station> getAllStation() {
-        return stationDao.readAll();
+    public List<StationDto> getAllStationDto() {
+        List<StationDto> stationDtoList = null;
+        List<Station> stationList = stationDao.readAll();
+        if (stationList != null && !stationList.isEmpty()) {
+            stationDtoList = new ArrayList<>();
+            for (Station station : stationList) {
+                StationDto stationDto = new StationDto();
+                stationDto.setId(station.getId());
+                stationDto.setStationName(station.getName());
+                stationDtoList.add(stationDto);
+            }
+        }
+        return stationDtoList;
     }
 
     @Override
@@ -47,13 +63,8 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void setStationStatus(String name, boolean status) {
-        Station station = stationDao.getStationByName(name);
-        station.setStationStatus(status);
+    public boolean isExist(String stationName) {
+        return stationDao.getStationByName(stationName) != null;
     }
 
-    @Override
-    public boolean isActiveStation(String name) {
-        return stationDao.getStationStatusByName(name);
-    }
 }

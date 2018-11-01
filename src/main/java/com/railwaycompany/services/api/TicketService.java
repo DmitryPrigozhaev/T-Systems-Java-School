@@ -1,7 +1,7 @@
 package com.railwaycompany.services.api;
 
-import com.railwaycompany.dto.TicketData;
-import com.railwaycompany.dto.UserData;
+import com.railwaycompany.dto.TicketDto;
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.exceptions.HasNoEmptySeatsException;
 import com.railwaycompany.exceptions.InvalidInputDataException;
@@ -12,8 +12,8 @@ import java.util.Date;
 // TODO дописать TicketService
 public interface TicketService {
 
-    TicketData buyTicket(Long userId, int trainNumber, String stationFromId, String stationToId, Date saleTime,
-                         int place, float price, UserData userData)
+    TicketDto buyTicket(Long userId, int trainNumber, String stationFromId, String stationToId, Date saleTime,
+                        int place, float price, UserDto userDto)
             throws HasNoEmptySeatsException, AlreadyRegisteredException, SalesStopException, InvalidInputDataException;
 
     boolean hasEmptySeats(int trainNumber, String stationNameFrom, String stationNameTo, Date dateDeparture);

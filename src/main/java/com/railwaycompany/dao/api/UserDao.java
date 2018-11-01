@@ -6,6 +6,4 @@ public interface UserDao extends GenericDao<User> {
 
     User getUserByEmail(String email);
 
-    void deleteUserByEmail(String email);
-
 }

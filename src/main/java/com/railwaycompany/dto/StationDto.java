@@ -1,11 +1,9 @@
 package com.railwaycompany.dto;
 
-public class StationData {
+public class StationDto {
 
     private long id;
     private String stationName;
-    private boolean status;
-    // TODO надо добавить расписание?
 
     public long getId() {
         return id;
@@ -23,11 +21,4 @@ public class StationData {
         this.stationName = stationName;
     }
 
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }

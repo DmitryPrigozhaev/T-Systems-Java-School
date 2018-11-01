@@ -1,5 +1,6 @@
 package com.railwaycompany.services.api;
 
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.exceptions.StationWithSuchNameExistException;
 
@@ -7,15 +8,14 @@ import java.util.List;
 
 public interface StationService {
 
-    void addStation(String name, boolean status) throws StationWithSuchNameExistException;
+    void addStation(String name) throws StationWithSuchNameExistException;
 
-    Station getStation(String name);
+    StationDto getStationDto(String name);
 
-    List<Station> getAllStation();
+    List<StationDto> getAllStationDto();
 
     void updateStation(Station station);
 
-    void setStationStatus(String name, boolean status);
+    boolean isExist(String stationName);
 
-    boolean isActiveStation(String name);
 }

@@ -1,21 +1,15 @@
 package com.railwaycompany.dto;
 
-public class UserData {
+import java.util.Date;
 
-    private long id;
+public class UserDto {
+
     private String email;
+    private String password;
     private String firstName;
     private String lastName;
-    private String birthDate;
+    private Date birthDate;
     private Byte role;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -23,6 +17,14 @@ public class UserData {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -41,11 +43,11 @@ public class UserData {
         this.lastName = lastName;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

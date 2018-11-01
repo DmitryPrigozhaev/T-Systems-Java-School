@@ -1,5 +1,6 @@
 package com.railwaycompany.controllers;
 
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.api.UserService;
@@ -8,13 +9,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class AppController {
@@ -38,8 +37,8 @@ public class AppController {
     @RequestMapping(value = {"list"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
 
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+        List<UserDto> usersDtoList = userService.getAllDtoUsers();
+        model.addAttribute("users", usersDtoList);
         return "allusers";
     }
 
@@ -58,12 +57,8 @@ public class AppController {
     public String saveUser(User user, BindingResult result, ModelMap model) throws AlreadyRegisteredException {
 
         if (result.hasErrors()) {
-            return "registration";
-        }
-
-        if (!userService.isUserEmailUnique(user.getEmail())) {
-            FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email", new String[]{user.getEmail()}, Locale.getDefault()));
-            result.addError(emailError);
+            System.out.println("ОШИБКА!");
+            System.out.println(result.getFieldError());
             return "registration";
         }
 
@@ -76,8 +71,8 @@ public class AppController {
     // промежуточная стадия редактирования user'а
     @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.GET)
     public String editUser(@PathVariable String email, ModelMap model) {
-        User user = userService.getUserByEmail(email);
-        model.addAttribute("user", user);
+        UserDto userDto = userService.getUserDtoByEmail(email);
+        model.addAttribute("user", userDto);
         model.addAttribute("edit", true);
         return "registration";
     }
@@ -91,24 +86,10 @@ public class AppController {
             return "registration";
         }
 
-        if (!userService.isUserEmailUnique(user.getEmail())) {
-            FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
-                    new String[]{user.getEmail()}, Locale.getDefault()));
-            result.addError(emailError);
-            return "registration";
-        }
-
         userService.updateUser(user);
 
         model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
         return "success";
-    }
-
-    // метод удалит user'а по значению email
-    @RequestMapping(value = {"delete-{email}-user"}, method = RequestMethod.GET)
-    public String deleteUser(@PathVariable String email) {
-        userService.deleteUserByEmail(email);
-        return "redirect:/list";
     }
 
 }

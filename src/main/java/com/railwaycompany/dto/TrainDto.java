@@ -1,6 +1,6 @@
 package com.railwaycompany.dto;
 
-public class TrainData {
+public class TrainDto {
 
     private long id;
     private int number;

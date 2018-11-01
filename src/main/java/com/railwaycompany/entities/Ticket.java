@@ -10,7 +10,7 @@ public class Ticket implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne

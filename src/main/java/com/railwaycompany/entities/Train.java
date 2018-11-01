@@ -9,18 +9,18 @@ public class Train implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "train_id")
+    @Column(name = "id")
     private Long id;
 
-    // TODO ДИКИЙ ВОПРОС ПРО СВЯЗЬ МАРШРУТ-ПОЕЗД
-    @Column(name = "number")
+    @Column(name = "number", unique = true)
     private Integer number;
 
-    @Column(name = "seats")
-    private Integer seats;
+    @OneToOne
+    @JoinColumn(name = "route_id", unique = true)
+    private Route route;
 
-    @Column(name = "train_status")
-    private String status;
+    @Column(name = "number_of_carriages")
+    private Integer numberOfCarriages;
 
     public Long getId() {
         return id;
@@ -38,19 +38,19 @@ public class Train implements Serializable {
         this.number = number;
     }
 
-    public Integer getSeats() {
-        return seats;
+    public Route getRoute() {
+        return route;
     }
 
-    public void setSeats(Integer seats) {
-        this.seats = seats;
+    public void setRoute(Route routeId) {
+        this.route = routeId;
     }
 
-    public String getStatus() {
-        return status;
+    public Integer getNumberOfCarriages() {
+        return numberOfCarriages;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNumberOfCarriages(Integer numberOfCarriages) {
+        this.numberOfCarriages = numberOfCarriages;
     }
 }

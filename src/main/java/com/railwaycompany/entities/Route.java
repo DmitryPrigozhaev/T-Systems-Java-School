@@ -2,7 +2,6 @@ package com.railwaycompany.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "routes")
@@ -10,23 +9,11 @@ public class Route implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "route_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "route_number")
-    private Integer routeNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "station_id", nullable = false)
-    private Station station;
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "date_arrival")
-    private Date dateArrival;
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "date_departure")
-    private Date dateDeparture;
+    @Column(name = "name")
+    private String name;
 
     public Long getId() {
         return id;
@@ -36,36 +23,11 @@ public class Route implements Serializable {
         this.id = id;
     }
 
-    public Integer getRouteNumber() {
-        return routeNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setRouteNumber(Integer routeNumber) {
-        this.routeNumber = routeNumber;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public Station getStation() {
-        return station;
-    }
-
-    public void setStation(Station station) {
-        this.station = station;
-    }
-
-    public Date getDateArrival() {
-        return dateArrival;
-    }
-
-    public void setDateArrival(Date dateArrival) {
-        this.dateArrival = dateArrival;
-    }
-
-    public Date getDateDeparture() {
-        return dateDeparture;
-    }
-
-    public void setDateDeparture(Date dateDeparture) {
-        this.dateDeparture = dateDeparture;
-    }
-
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TicketDao extends GenericDao<Ticket> {
 
-    int countOfTicketsByTrainId(int trainId);
+    int[] getPurchasedSeatsByCarriageAndTrainId(int trainId, int carriage);
 
     boolean hasBeenRegistered(int trainId, int userId);
 
