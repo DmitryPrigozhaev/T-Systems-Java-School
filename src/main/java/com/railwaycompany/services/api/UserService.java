@@ -2,7 +2,7 @@ package com.railwaycompany.services.api;
 
 import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
-import com.railwaycompany.exceptions.AlreadyRegisteredException;
+import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.railwaycompany.services.api;
 
 import com.railwaycompany.entities.Train;
-import com.railwaycompany.exceptions.TrainWithSuchNumberExistException;
+import com.railwaycompany.services.exceptions.TrainWithSuchNumberExistException;
 
 import java.util.List;
 

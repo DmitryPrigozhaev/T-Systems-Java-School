@@ -1,4 +1,4 @@
-package com.railwaycompany.exceptions;
+package com.railwaycompany.services.exceptions;
 
 public class InvalidInputDataException extends RailwayCompanyExceptions {
     public InvalidInputDataException(String message) {

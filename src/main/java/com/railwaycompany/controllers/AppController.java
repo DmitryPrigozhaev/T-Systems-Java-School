@@ -2,8 +2,8 @@ package com.railwaycompany.controllers;
 
 import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
-import com.railwaycompany.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.api.UserService;
+import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;

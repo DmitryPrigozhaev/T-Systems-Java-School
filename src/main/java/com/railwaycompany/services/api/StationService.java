@@ -2,7 +2,7 @@ package com.railwaycompany.services.api;
 
 import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.entities.Station;
-import com.railwaycompany.exceptions.StationWithSuchNameExistException;
+import com.railwaycompany.services.exceptions.StationWithSuchNameExistException;
 
 import java.util.List;
 

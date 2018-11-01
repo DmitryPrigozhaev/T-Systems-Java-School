@@ -2,10 +2,10 @@ package com.railwaycompany.services.api;
 
 import com.railwaycompany.dto.TicketDto;
 import com.railwaycompany.dto.UserDto;
-import com.railwaycompany.exceptions.AlreadyRegisteredException;
-import com.railwaycompany.exceptions.HasNoEmptySeatsException;
-import com.railwaycompany.exceptions.InvalidInputDataException;
-import com.railwaycompany.exceptions.SalesStopException;
+import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
+import com.railwaycompany.services.exceptions.HasNoEmptySeatsException;
+import com.railwaycompany.services.exceptions.InvalidInputDataException;
+import com.railwaycompany.services.exceptions.SalesStopException;
 
 import java.util.Date;
 
