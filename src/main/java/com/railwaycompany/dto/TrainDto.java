@@ -1,11 +1,13 @@
 package com.railwaycompany.dto;
 
+import com.railwaycompany.entities.Route;
+
 public class TrainDto {
 
     private long id;
     private int number;
-    private int seats;
-    private String status;
+    private Route route;
+    private int numberOfCarriages;
 
     public long getId() {
         return id;
@@ -23,19 +25,19 @@ public class TrainDto {
         this.number = number;
     }
 
-    public int getSeats() {
-        return seats;
+    public Route getRoute() {
+        return route;
     }
 
-    public void setSeats(int seats) {
-        this.seats = seats;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
-    public String getStatus() {
-        return status;
+    public int getNumberOfCarriages() {
+        return numberOfCarriages;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNumberOfCarriages(int numberOfCarriages) {
+        this.numberOfCarriages = numberOfCarriages;
     }
 }

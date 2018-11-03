@@ -6,4 +6,5 @@ public interface TrainDao extends GenericDao<Train> {
 
     Train getTrainByNumber(int number);
 
+    Train getTrainByRouteId(long id);
 }

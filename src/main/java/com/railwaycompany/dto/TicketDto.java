@@ -1,66 +1,60 @@
 package com.railwaycompany.dto;
 
+import com.railwaycompany.entities.Station;
+import com.railwaycompany.entities.Train;
+import com.railwaycompany.entities.User;
+
 import java.util.Date;
 
 public class TicketDto {
 
-    private long id;
-    private int trainNumber;
-    private int carriageNumber;
-    private int seatNumber;
-    private String stationFrom;
-    private String stationTo;
+    private Long id;
+    private User user;
+    private Train train;
+    private Station stationFrom;
+    private Station stationTo;
     private Date saleTime;
-    private Date dateArrival;
-    private Date dateDeparture;
-    private UserDto userDto;
-    private TrainDto trainDto;
+    private Integer carriage;
+    private Integer seat;
+    private Float price;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getTrainNumber() {
-        return trainNumber;
+    public User getUser() {
+        return user;
     }
 
-    public void setTrainNumber(int trainNumber) {
-        this.trainNumber = trainNumber;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getCarriageNumber() {
-        return carriageNumber;
+    public Train getTrain() {
+        return train;
     }
 
-    public void setCarriageNumber(int carriageNumber) {
-        this.carriageNumber = carriageNumber;
+    public void setTrain(Train train) {
+        this.train = train;
     }
 
-    public int getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
-    }
-
-    public String getStationFrom() {
+    public Station getStationFrom() {
         return stationFrom;
     }
 
-    public void setStationFrom(String stationFrom) {
+    public void setStationFrom(Station stationFrom) {
         this.stationFrom = stationFrom;
     }
 
-    public String getStationTo() {
+    public Station getStationTo() {
         return stationTo;
     }
 
-    public void setStationTo(String stationTo) {
+    public void setStationTo(Station stationTo) {
         this.stationTo = stationTo;
     }
 
@@ -72,35 +66,27 @@ public class TicketDto {
         this.saleTime = saleTime;
     }
 
-    public Date getDateArrival() {
-        return dateArrival;
+    public Integer getCarriage() {
+        return carriage;
     }
 
-    public void setDateArrival(Date dateArrival) {
-        this.dateArrival = dateArrival;
+    public void setCarriage(Integer carriage) {
+        this.carriage = carriage;
     }
 
-    public Date getDateDeparture() {
-        return dateDeparture;
+    public Integer getSeat() {
+        return seat;
     }
 
-    public void setDateDeparture(Date dateDeparture) {
-        this.dateDeparture = dateDeparture;
+    public void setSeat(Integer seat) {
+        this.seat = seat;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
-    }
-
-    public TrainDto getTrainDto() {
-        return trainDto;
-    }
-
-    public void setTrainDto(TrainDto trainDto) {
-        this.trainDto = trainDto;
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

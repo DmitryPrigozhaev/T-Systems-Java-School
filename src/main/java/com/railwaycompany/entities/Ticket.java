@@ -42,6 +42,9 @@ public class Ticket implements Serializable {
     @Column(name = "price", nullable = false)
     private Float price;
 
+    @Column(name = "date_departure", nullable = false)
+    private Date dateDeparture;
+
     public Long getId() {
         return id;
     }
@@ -112,5 +115,13 @@ public class Ticket implements Serializable {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Date getDateDeparture() {
+        return dateDeparture;
+    }
+
+    public void setDateDeparture(Date dateDeparture) {
+        this.dateDeparture = dateDeparture;
     }
 }

@@ -14,6 +14,8 @@ public class TrainDaoImpl extends AbstractGenericDao<Train> implements TrainDao 
 
     private static final String GET_TRAIN_BY_NUMBER = "SELECT t FROM Train t WHERE t.number = :number";
 
+    private static final String GET_TRAIN_BY_ROUTE_ID = "SELECT t FROM Train t WHERE t.route.id = :routeId";
+
     @Override
     public Train getTrainByNumber(int number) {
         Query query = getCurrentSession().createQuery(GET_TRAIN_BY_NUMBER);
@@ -28,4 +30,17 @@ public class TrainDaoImpl extends AbstractGenericDao<Train> implements TrainDao 
         return train;
     }
 
+    @Override
+    public Train getTrainByRouteId(long routeId) {
+        Query query = getCurrentSession().createQuery(GET_TRAIN_BY_ROUTE_ID);
+        query.setParameter("routeId", routeId);
+
+        Train train = null;
+        try {
+            train = (Train) query.getSingleResult();
+        } catch (Exception e){
+            LOG.warn(e);
+        }
+        return train;
+    }
 }

@@ -3,9 +3,11 @@ package com.railwaycompany.dao.imp;
 import com.railwaycompany.dao.api.RouteDao;
 import com.railwaycompany.entities.Route;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 
+@Repository
 public class RouteDaoImpl extends AbstractGenericDao<Route> implements RouteDao {
 
     private static final Logger LOG = Logger.getLogger(RouteDaoImpl.class.getName());

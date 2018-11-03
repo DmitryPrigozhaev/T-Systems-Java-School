@@ -3,12 +3,14 @@ package com.railwaycompany.dao.imp;
 import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.entities.RoutePoint;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class RoutePointDaoImpl extends AbstractGenericDao<RoutePoint> implements RoutePointDao {
 
     private static final Logger LOG = Logger.getLogger(RoutePointDaoImpl.class.getName());
@@ -17,7 +19,7 @@ public class RoutePointDaoImpl extends AbstractGenericDao<RoutePoint> implements
 
     private static final String GET_SCHEDULE_BY_STATION_NAME = "SELECT rp FROM RoutePoint rp WHERE rp.station.name = :stationName";
 
-    private static final String GET_SCHEDULE_BY_ROUTE_ID = "SELECT rp FROM RoutePoint rp WHERE rp.route.id = :routeId";
+    private static final String GET_ROUTE_POINTS_BY_ROUTE_ID = "SELECT rp FROM RoutePoint rp WHERE rp.route.id = :routeId";
 
     @Override
     public List<RoutePoint> getStationScheduleByStationId(long stationId) {
@@ -56,8 +58,8 @@ public class RoutePointDaoImpl extends AbstractGenericDao<RoutePoint> implements
     }
 
     @Override
-    public List<RoutePoint> getRouteScheduleByRouteId(long routeId) {
-        Query query = getCurrentSession().createQuery(GET_SCHEDULE_BY_ROUTE_ID);
+    public List<RoutePoint> getRoutePointsByRouteId(long routeId) {
+        Query query = getCurrentSession().createQuery(GET_ROUTE_POINTS_BY_ROUTE_ID);
         query.setParameter("routeId", routeId);
 
         List<RoutePoint> routeSchedule = null;

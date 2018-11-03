@@ -1,21 +1,29 @@
 package com.railwaycompany.services.imp;
 
+import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.dao.api.StationDao;
 import com.railwaycompany.dto.StationDto;
+import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.StationService;
+import com.railwaycompany.services.exceptions.StationWithSuchNameDoesNotExistException;
 import com.railwaycompany.services.exceptions.StationWithSuchNameExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("stationService")
+@Transactional(readOnly = false)
 public class StationServiceImpl implements StationService {
 
     @Autowired
     private StationDao stationDao;
+
+    @Autowired
+    private RoutePointDao routePointDao;
 
     @Override
     public void addStation(String name) throws StationWithSuchNameExistException {
@@ -30,17 +38,23 @@ public class StationServiceImpl implements StationService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public StationDto getStationDto(String name) {
+    public StationDto getStationDto(String name) throws StationWithSuchNameDoesNotExistException {
         Station station = stationDao.getStationByName(name);
         StationDto stationDto = null;
         if (station != null) {
             stationDto = new StationDto();
+            stationDto.setId(station.getId());
             stationDto.setStationName(station.getName());
+        } else {
+            String message = "Station with name " + name + " does not exist";
+            throw new StationWithSuchNameDoesNotExistException(message);
         }
         return stationDto;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<StationDto> getAllStationDto() {
         List<StationDto> stationDtoList = null;
@@ -58,10 +72,21 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
+    public List<RoutePoint> getStationScheduleByStationId(long stationId) {
+        return routePointDao.getStationScheduleByStationId(stationId);
+    }
+
+    @Override
+    public List<RoutePoint> getStationScheduleByStationName(String name) {
+        return routePointDao.getStationScheduleByStationName(name);
+    }
+
+    @Override
     public void updateStation(Station station) {
         stationDao.update(station);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean isExist(String stationName) {
         return stationDao.getStationByName(stationName) != null;

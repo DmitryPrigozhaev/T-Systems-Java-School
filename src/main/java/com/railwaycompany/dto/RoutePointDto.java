@@ -1,39 +1,23 @@
-package com.railwaycompany.entities;
+package com.railwaycompany.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.railwaycompany.entities.Route;
+import com.railwaycompany.entities.Station;
+
 import java.util.Date;
 
-@Entity
-@Table(name = "route_points")
-public class RoutePoint implements Serializable {
+public class RoutePointDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    private long id;
     private Route route;
-
-    @ManyToOne
-    @JoinColumn(name = "station_id", referencedColumnName = "id", nullable = false)
     private Station station;
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "date_arrival")
     private Date dateArrival;
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "date_departure")
     private Date dateDeparture;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

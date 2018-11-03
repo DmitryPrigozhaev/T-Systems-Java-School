@@ -25,6 +25,7 @@ public class User implements Serializable {
     @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 

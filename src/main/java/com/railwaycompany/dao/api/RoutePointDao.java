@@ -10,6 +10,6 @@ public interface RoutePointDao extends GenericDao<RoutePoint> {
 
     List<RoutePoint> getStationScheduleByStationName(String stationName);
 
-    List<RoutePoint> getRouteScheduleByRouteId(long routeId);
+    List<RoutePoint> getRoutePointsByRouteId(long routeId);
 
 }
