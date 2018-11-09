@@ -7,17 +7,17 @@ import java.util.Date;
 
 public class RoutePointDto {
 
-    private long id;
+    private Long id;
     private Route route;
     private Station station;
     private Date dateArrival;
     private Date dateDeparture;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

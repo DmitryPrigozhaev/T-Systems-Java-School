@@ -4,11 +4,9 @@ import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.dao.api.StationDao;
 import com.railwaycompany.dao.api.TicketDao;
 import com.railwaycompany.dao.api.TrainDao;
+import com.railwaycompany.dto.RoutePointDto;
 import com.railwaycompany.dto.TicketDto;
-import com.railwaycompany.entities.Station;
-import com.railwaycompany.entities.Ticket;
-import com.railwaycompany.entities.Train;
-import com.railwaycompany.entities.User;
+import com.railwaycompany.entities.*;
 import com.railwaycompany.services.api.TicketService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.exceptions.CannotBuyTicketException;
@@ -16,11 +14,16 @@ import com.railwaycompany.services.exceptions.InvalidInputDataException;
 import com.railwaycompany.utils.DateConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Service
+@Transactional
 public class TicketServiceImpl implements TicketService {
 
     private static final Logger LOG = Logger.getLogger(TicketServiceImpl.class.getName());
@@ -51,40 +54,105 @@ public class TicketServiceImpl implements TicketService {
         return ticketDto;
     }
 
-    // TODO дописать сервис
     @Override
-    public TicketDto buyTicket(User user, Train train, int carriageNumber, int seatNumber, String stationFromId,
-                               String stationToId, Date saleTime, Date dateArrival, Date dateDeparture, float price)
+    public List<TicketDto> buyTicket(User user, Train train, Route route, List<RoutePointDto> routePointDtoList,
+                                     Station stationFrom, Station stationTo, Date dateDeparture, int carriageNumber, int seatNumber)
             throws AlreadyRegisteredException, CannotBuyTicketException {
-        return null;
+
+        // проверка условия "до отправления поезда не менее 10 минут"
+        if (!DateConverter.hasMoreThanTenMinutes(dateDeparture)) {
+            String message = "Less than 10 minutes left until departure";
+            throw new CannotBuyTicketException(message);
+        }
+
+        // определение маршрута пользователя
+        List<RoutePointDto> userRoute = new ArrayList<>();
+        for (int i = 0; i < routePointDtoList.size(); i++) {
+            if (routePointDtoList.get(i).getStation().getName().equals(stationFrom.getName())) {
+                for (int j = i; j < routePointDtoList.size(); j++) {
+                    userRoute.add(routePointDtoList.get(j));
+                    if (routePointDtoList.get(j).getStation().getName().equals(stationTo.getName()))
+                        break;
+                }
+                break;
+            }
+        }
+
+        Date saleTime = new Date();
+        List<TicketDto> result = new ArrayList<>();
+
+        // покупка билетов по этапам пути
+        Station stationFromTemp;
+        Station stationToTemp;
+        for (int i = 0; i < userRoute.size() - 1; i++) {
+            stationFromTemp = userRoute.get(i).getStation();
+            stationToTemp = userRoute.get(i + 1).getStation();
+            TicketDto ticketPart = buyTicketPart(user, train, stationFromTemp, stationToTemp,
+                    saleTime, dateDeparture, carriageNumber, seatNumber);
+            result.add(ticketPart);
+        }
+
+        return result;
     }
 
-    // TODO дописать сервис
-    private TicketDto buyTicketPart(User user, Train train, Station stationFrom, Station stationTo,
-                                    Date saleTime, int carriageNumber, int seatNumber, float price, Date dateDeparture)
+    @Transactional(propagation = Propagation.MANDATORY)
+    TicketDto buyTicketPart(User user, Train train, Station stationFrom, Station stationTo,
+                            Date saleTime, Date dateDeparture, int carriageNumber, int seatNumber)
             throws AlreadyRegisteredException, CannotBuyTicketException {
 
+        // проверка наличия места в вагоне
         int[] purchasedSeats = getPurchasedSeatsByCarriageAndTrainId(train.getId(), carriageNumber);
         for (int purchasedSeat : purchasedSeats) {
             if (purchasedSeat == seatNumber) {
                 String message = "Place number " + seatNumber + " in the car number " + carriageNumber + " is already taken";
+                LOG.warn(message);
                 throw new CannotBuyTicketException(message);
             }
         }
 
+        // проверка регистрации пользователя на данном этапе маршрута
         if (isRegistered(user, train.getNumber(), stationFrom.getName(), dateDeparture)) {
-            String message = "The user with id " + user.getId() + " already registered";
+            String message = "The user with id " + user.getId() + " already registered on the route \"" +
+                    stationFrom.getName() + " - " + stationTo.getName() + "\"";
+            LOG.warn(message);
             throw new AlreadyRegisteredException(message);
         }
 
-        return null;
+        Ticket ticket = new Ticket();
+        ticket.setUser(user);
+        ticket.setTrain(train);
+        ticket.setStationFrom(stationFrom);
+        ticket.setStationTo(stationTo);
+        ticket.setSaleTime(saleTime);
+        ticket.setCarriage(carriageNumber);
+        ticket.setSeat(seatNumber);
+        ticket.setPrice(getTicketCost());
+        ticket.setDateDeparture(dateDeparture);
+        ticketDao.create(ticket);
+
+        TicketDto ticketDto = new TicketDto();
+        // todo: с id не уверен
+        ticketDto.setId(ticket.getId());
+        ticketDto.setUser(ticket.getUser());
+        ticketDto.setTrain(ticket.getTrain());
+        ticketDto.setStationFrom(ticket.getStationFrom());
+        ticketDto.setStationTo(ticket.getStationTo());
+        ticketDto.setSaleTime(ticket.getSaleTime());
+        ticketDto.setCarriage(ticket.getCarriage());
+        ticketDto.setSeat(ticket.getSeat());
+        ticketDto.setPrice(ticket.getPrice());
+        ticketDto.setDateDeparture(ticket.getDateDeparture());
+
+        return ticketDto;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public int[] getPurchasedSeatsByCarriageAndTrainId(long trainId, int carriageNumber) {
         return ticketDao.getPurchasedSeatsByCarriageAndTrainId(trainId, carriageNumber);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<TicketDto> getAllTicketsByTrainId(long id) {
         List<TicketDto> ticketDtoList = null;
@@ -98,12 +166,14 @@ public class TicketServiceImpl implements TicketService {
         return ticketDtoList;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<TicketDto> getAllTicketsByTrainNumber(int trainNumber) {
         Train train = trainDao.getTrainByNumber(trainNumber);
         return getAllTicketsByTrainId(train.getId());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<TicketDto> getAllTickets() {
         List<TicketDto> ticketDtoList = null;
@@ -117,6 +187,7 @@ public class TicketServiceImpl implements TicketService {
         return ticketDtoList;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean hasEnoughTimeBeforeDeparture(int trainNumber, String stationNameFrom, Date dateDeparture) throws
             InvalidInputDataException {
@@ -141,6 +212,7 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture) {
         Train train = trainDao.getTrainByNumber(trainNumber);
@@ -160,7 +232,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public float getTicketCost(int trainNumber, String stationNameFrom, String stationNameTo) {
+    public float getTicketCost() {
         return 2500.00f;
     }
 }

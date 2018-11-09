@@ -1,5 +1,7 @@
 package com.railwaycompany.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -21,11 +23,13 @@ public class RoutePoint implements Serializable {
     @JoinColumn(name = "station_id", referencedColumnName = "id", nullable = false)
     private Station station;
 
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @Column(name = "date_arrival")
     private Date dateArrival;
 
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @Column(name = "date_departure")
     private Date dateDeparture;
 

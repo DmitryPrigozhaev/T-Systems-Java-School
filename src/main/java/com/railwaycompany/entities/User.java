@@ -1,5 +1,7 @@
 package com.railwaycompany.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -26,6 +28,7 @@ public class User implements Serializable {
     private String lastName;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 

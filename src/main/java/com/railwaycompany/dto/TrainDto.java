@@ -4,24 +4,24 @@ import com.railwaycompany.entities.Route;
 
 public class TrainDto {
 
-    private long id;
-    private int number;
+    private Long id;
+    private Integer number;
     private Route route;
-    private int numberOfCarriages;
+    private Integer numberOfCarriages;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -33,11 +33,11 @@ public class TrainDto {
         this.route = route;
     }
 
-    public int getNumberOfCarriages() {
+    public Integer getNumberOfCarriages() {
         return numberOfCarriages;
     }
 
-    public void setNumberOfCarriages(int numberOfCarriages) {
+    public void setNumberOfCarriages(Integer numberOfCarriages) {
         this.numberOfCarriages = numberOfCarriages;
     }
 }

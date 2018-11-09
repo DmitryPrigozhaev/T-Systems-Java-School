@@ -1,6 +1,5 @@
 package com.railwaycompany.services.api;
 
-import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 
@@ -10,11 +9,11 @@ public interface UserService {
 
     void addUser(User user) throws AlreadyRegisteredException;
 
-    UserDto getUserDto(long id);
+    User getUser(long id);
 
-    UserDto getUserDtoByEmail(String email);
+    User getUserByEmail(String email);
 
-    List<UserDto> getAllDtoUsers();
+    List<User> getAllUsers();
 
     void updateUser(User user);
 

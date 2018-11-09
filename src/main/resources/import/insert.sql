@@ -1,2 +1,3 @@
-INSERT INTO route_point VALUE (2, '2012:12:24 16:32:22', '2012:12:24 18:32:22', 1, 1);
-insert into trains VALUE (2, 22, 540, 'в пути');
+INSERT INTO route_points VALUE (1, null, '1993-09-26 15:00:00', 1, 13);
+INSERT INTO route_points VALUE (2, '1993-09-26 16:30:00', '1993-09-26 17:00:00', 1, 14);
+INSERT INTO route_points VALUE (3, '1993-09-26 18:00:00', null, 1, 16);

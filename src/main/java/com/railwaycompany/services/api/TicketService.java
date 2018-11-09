@@ -1,6 +1,9 @@
 package com.railwaycompany.services.api;
 
+import com.railwaycompany.dto.RoutePointDto;
 import com.railwaycompany.dto.TicketDto;
+import com.railwaycompany.entities.Route;
+import com.railwaycompany.entities.Station;
 import com.railwaycompany.entities.Train;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
@@ -12,9 +15,8 @@ import java.util.List;
 
 public interface TicketService {
 
-    TicketDto buyTicket(User user, Train train, int carriageNumber, int seatNumber,
-                        String stationFromId, String stationToId,
-                        Date saleTime, Date dateArrival, Date dateDeparture, float price)
+    List<TicketDto> buyTicket(User user, Train train, Route route, List<RoutePointDto> routePointDtoList,
+                              Station stationFrom, Station stationTo, Date dateDeparture, int carriageNumber, int seatNumber)
             throws AlreadyRegisteredException, CannotBuyTicketException, InvalidInputDataException;
 
     int[] getPurchasedSeatsByCarriageAndTrainId(long trainId, int carriageNumber);
@@ -29,6 +31,6 @@ public interface TicketService {
 
     boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture);
 
-    float getTicketCost(int trainNumber, String stationNameFrom, String stationNameTo);
+    float getTicketCost();
 
 }

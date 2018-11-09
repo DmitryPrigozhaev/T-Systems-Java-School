@@ -17,6 +17,7 @@ public class TicketDto {
     private Integer carriage;
     private Integer seat;
     private Float price;
+    private Date dateDeparture;
 
     public Long getId() {
         return id;
@@ -88,5 +89,13 @@ public class TicketDto {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Date getDateDeparture() {
+        return dateDeparture;
+    }
+
+    public void setDateDeparture(Date dateDeparture) {
+        this.dateDeparture = dateDeparture;
     }
 }

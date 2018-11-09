@@ -2,7 +2,6 @@ package com.railwaycompany.services.imp;
 
 import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.dao.api.StationDao;
-import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.StationService;
@@ -12,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Service("stationService")
+@Service
 @Transactional(readOnly = false)
 public class StationServiceImpl implements StationService {
 
@@ -26,49 +24,32 @@ public class StationServiceImpl implements StationService {
     private RoutePointDao routePointDao;
 
     @Override
-    public void addStation(String name) throws StationWithSuchNameExistException {
-        Station station = stationDao.getStationByName(name);
-        if (station == null) {
-            station = new Station();
-            station.setName(name);
+    public void addStation(Station station) throws StationWithSuchNameExistException {
+        if (stationDao.getStationByName(station.getName()) == null) {
             stationDao.create(station);
         } else {
-            String message = "Station \"" + name + "\" is already exist!";
+            String message = "Station \"" + station.getName() + "\" is already exist!";
             throw new StationWithSuchNameExistException(message);
         }
     }
 
     @Transactional(readOnly = true)
     @Override
-    public StationDto getStationDto(String name) throws StationWithSuchNameDoesNotExistException {
+    public Station getStationByName(String name) throws StationWithSuchNameDoesNotExistException {
         Station station = stationDao.getStationByName(name);
-        StationDto stationDto = null;
-        if (station != null) {
-            stationDto = new StationDto();
-            stationDto.setId(station.getId());
-            stationDto.setStationName(station.getName());
-        } else {
+
+        if (station == null) {
             String message = "Station with name " + name + " does not exist";
             throw new StationWithSuchNameDoesNotExistException(message);
         }
-        return stationDto;
+
+        return station;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<StationDto> getAllStationDto() {
-        List<StationDto> stationDtoList = null;
-        List<Station> stationList = stationDao.readAll();
-        if (stationList != null && !stationList.isEmpty()) {
-            stationDtoList = new ArrayList<>();
-            for (Station station : stationList) {
-                StationDto stationDto = new StationDto();
-                stationDto.setId(station.getId());
-                stationDto.setStationName(station.getName());
-                stationDtoList.add(stationDto);
-            }
-        }
-        return stationDtoList;
+    public List<Station> getAllStation() {
+        return stationDao.readAll();
     }
 
     @Override
@@ -84,6 +65,11 @@ public class StationServiceImpl implements StationService {
     @Override
     public void updateStation(Station station) {
         stationDao.update(station);
+    }
+
+    @Override
+    public void deleteStation(Station station) {
+        stationDao.delete(station);
     }
 
     @Transactional(readOnly = true)
