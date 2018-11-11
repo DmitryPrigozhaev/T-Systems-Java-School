@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="components/header.jsp"/>
 <jsp:include page="components/navbar.jsp" flush="true"/>
 
@@ -18,32 +19,25 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="basic-login">
-                    <%-- ОБЫЧНАЯ ФОРМА --%>
-                    <%--<form role="form">--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label for="login-username"><i class="icon-user"></i> <b>Username or Email</b></label>--%>
-                            <%--<input class="form-control" id="login-username" type="text" placeholder="">--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label for="login-password"><i class="icon-lock"></i> <b>Password</b></label>--%>
-                            <%--<input class="form-control" id="login-password" type="password" placeholder="">--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label class="checkbox">--%>
-                                <%--<input type="checkbox"> Remember me--%>
-                            <%--</label>--%>
-                            <%--<a href="page-password-reset.html" class="forgot-password">Forgot password?</a>--%>
-                            <%--<button type="submit" class="btn pull-right">Login</button>--%>
-                            <%--<div class="clearfix"></div>--%>
-                        <%--</div>--%>
-                    <%--</form>--%>
-                        <form:form id="loginForm" method="post" action="login" modelAttribute="loginBean">
-                            <form:label path="username">Enter your user-name</form:label>
-                            <form:input id="username" name="username" path="username" /><br>
-                            <form:label path="username">Please enter your password</form:label>
-                            <form:password id="password" name="password" path="password" /><br>
-                            <input type="submit" value="Submit" />
-                        </form:form>
+
+                    <form method="post" action='<spring:url value="/loginAction"/>'>
+                        <div class="form-group">
+                            <label for="username"><i class="icon-user"></i> <b>Email</b></label>
+                            <input class="form-control" name="username" id="username" type="text" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="icon-lock"></i> <b>Password</b></label>
+                            <input class="form-control" name="password" id="password" type="password" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox">
+                                <input type="checkbox"> Remember me
+                            </label>
+                            <a href="page-password-reset.html" class="forgot-password">Forgot password?</a>
+                            <button type="submit" class="btn pull-right">Login</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -52,7 +46,7 @@
         <div class="col-md-4 social-login col-md-offset-4">
             <%--<div class="clearfix"></div>--%>
             <div class="not-member">
-                <p>Not a member? <a href="register">Register here</a></p>
+                <p>Not a member? <a href="registration">Register here</a></p>
             </div>
         </div>
     </div>

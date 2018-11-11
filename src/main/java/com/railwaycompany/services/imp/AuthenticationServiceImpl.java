@@ -42,6 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             } else {
                 throw new UsernameNotFoundException("User with email " + username + " not found");
             }
+
         } else {
             throw new UsernameNotFoundException("Empty or not valid username");
         }

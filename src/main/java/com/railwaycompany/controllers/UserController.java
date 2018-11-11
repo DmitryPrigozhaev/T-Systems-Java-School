@@ -3,6 +3,8 @@ package com.railwaycompany.controllers;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
+import com.railwaycompany.validator.UserValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,38 +18,28 @@ import java.util.List;
 @Controller
 public class UserController {
 
+    private static final Logger LOG = Logger.getLogger(UserController.class);
+
     @Autowired
     UserService userService;
 
 //    @Autowired
 //    private SecurityService securityService;
-//
-//    @Autowired
-//    private UserValidator userValidator;
-//
-//    @RequestMapping(value = "registration", method = RequestMethod.GET)
-//    public String registration(Model model) {
-//        model.addAttribute("userForm", new User());
-//
-//        return "registration";
-//    }
-//
+
+    @Autowired
+    private UserValidator userValidator;
+
+    @RequestMapping(value = "registration", method = RequestMethod.GET)
+    public String registration() {
+        return "registration";
+    }
+
+//    @ResponseBody
 //    @RequestMapping(value = "registration", method = RequestMethod.POST)
-//    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-//        userValidator.validate(userForm, bindingResult);
+//    public String registration(@RequestBody UserDto userDto) {
 //
-//        if (bindingResult.hasErrors()) {
-//            return "registration";
-//        }
-//
-//        try {
-//            userService.saveUser(userForm);
-//        } catch (AlreadyRegisteredException e) {
-//            String message = "User already registered";
-//            LOG.warn(message);
-//        }
-//
-//        securityService.autoLogin(userForm.getEmail(), userForm.getConfirmPassword());
+//        User user = new User();
+//        user.set
 //
 //        return "redirect:/index";
 //    }

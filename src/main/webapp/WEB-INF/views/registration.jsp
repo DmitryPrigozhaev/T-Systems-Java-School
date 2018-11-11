@@ -21,45 +21,45 @@
                     <form:form method="POST" modelAttribute="user" role="form" class="form-horizontal" data-toggle="validator">
                         <%-- EMAIL --%>
                         <div class="form-group">
-                            <label for="Email" class="col-sm-4 control-label">Email</label>
+                            <label for="email" class="col-sm-4 control-label">Email</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="Email" placeholder="Email">
+                                <input type="email" class="form-control" id="email" placeholder="Email">
                             </div>
                         </div>
                         <%-- PASSWORD --%>
                         <div class="form-group">
-                            <label for="Password" class="col-sm-4 control-label">Password</label>
+                            <label for="password" class="col-sm-4 control-label">Password</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="Password" placeholder="Password">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
                             </div>
                         </div>
                         <%-- CONFIRM PASSWORD --%>
                         <div class="form-group">
-                            <label for="ConfirmPassword" class="col-sm-4 control-label">Confirm Password</label>
+                            <label for="confirmPassword" class="col-sm-4 control-label">Confirm Password</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="ConfirmPassword"
+                                <input type="password" class="form-control" id="confirmPassword"
                                        placeholder="Confirm Password">
                             </div>
                         </div>
                         <%-- FIRST NAME --%>
                         <div class="form-group">
-                            <label for="FirstName" class="col-sm-4 control-label">First Name</label>
+                            <label for="firstName" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="FirstName" placeholder="First Name">
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name">
                             </div>
                         </div>
                         <%-- LAST NAME --%>
                         <div class="form-group">
-                            <label for="LastName" class="col-sm-4 control-label">Last Name</label>
+                            <label for="lastName" class="col-sm-4 control-label">Last Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="LastName" placeholder="Last Name">
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
                             </div>
                         </div>
                         <%-- DATE OF BIRTHDAY--%>
                         <div class="form-group">
                             <label for="BirthDate" class="col-sm-4 control-label">Birth Date</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="BirthDate" placeholder="Birth Date">
+                                <input type="date" class="form-control" id="birthDate" placeholder="Birth Date">
                             </div>
                         </div>
                         <%-- BUTTON --%>

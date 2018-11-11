@@ -1,27 +1,13 @@
 package com.railwaycompany.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-
 public class UserDto {
 
-    private Long id;
     private String email;
     private String password;
+    private String confirmPassword;
     private String firstName;
     private String lastName;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthDate;
-    private Byte role;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String birthDate;
 
     public String getEmail() {
         return email;
@@ -37,6 +23,14 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getFirstName() {
@@ -55,19 +49,11 @@ public class UserDto {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public Byte getRole() {
-        return role;
-    }
-
-    public void setRole(Byte role) {
-        this.role = role;
     }
 }

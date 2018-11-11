@@ -36,18 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("admin-all-stations").access("hasRole(3) or hasRole(2)")
                 .antMatchers("admin-all-trains").access("hasRole(3) or hasRole(2)")
 
-                .and().formLogin()
-                .loginProcessingUrl("/login")
-                .loginPage("/login")
-                .successForwardUrl("/index")
-                .failureForwardUrl("/index")
-
-                .usernameParameter("username")
-                .passwordParameter("password")
-
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
-
-                .and().csrf().disable();
+                .and()
+                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/login")
+                .and()
+                .csrf().disable();
 
     }
 
