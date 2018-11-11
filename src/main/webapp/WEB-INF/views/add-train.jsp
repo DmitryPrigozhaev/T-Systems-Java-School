@@ -32,10 +32,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="routeId">Set train number</label>
                             <input type="text" class="form-control" name="number" id="number" placeholder="number"/>
                         </div>
 
                         <div class="form-group">
+                            <label for="routeId">Set number of carriages</label>
                             <input type="text" class="form-control" name="numberOfCarriages" id="numberOfCarriages"
                                    placeholder="numberOfCarriages"/>
                         </div>

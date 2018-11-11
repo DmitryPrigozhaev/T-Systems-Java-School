@@ -12,7 +12,7 @@ public class DateConverter {
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
-    private static final String DATETIME_PATTERN = "yyyy-MM-dd HH:mm";
+    private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm";
 
     private static final long MILLIS_IN_10_MINUTES = 600_000;
 

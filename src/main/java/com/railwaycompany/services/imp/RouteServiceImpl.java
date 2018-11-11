@@ -9,7 +9,6 @@ import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.exceptions.RouteDoesNotExist;
 import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
-import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 import com.railwaycompany.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,20 +32,20 @@ public class RouteServiceImpl implements RouteService {
     StationDao stationDao;
 
     @Override
-    public void addRoute(String name) throws RouteWithSuchNameExistException {
-        Route route = routeDao.getRouteByName(name);
-        if (route == null) {
-            route = new Route();
+    public void addRoute(String name) /*throws RouteWithSuchNameExistException*/ {
+        /*Route route = routeDao.getRouteByName(name);
+        if (route == null) {*/
+            Route route = new Route();
             route.setName(name);
             routeDao.create(route);
-        } else {
+        /*} else {
             String message = "Route \"" + name + "\" is already exist";
             throw new RouteWithSuchNameExistException(message);
-        }
+        }*/
     }
 
     @Override
-    public void addRoute(Route route) throws RouteWithSuchNameExistException {
+    public void addRoute(Route route) {
         routeDao.create(route);
     }
 
@@ -114,11 +113,17 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public List<RoutePoint> getRoutePointsByRouteId(long id) throws RoutePointsForThisRouteDoesNotExist {
         List<RoutePoint> routePointsList = routePointDao.getRoutePointsByRouteId(id);
-        if (routePointsList == null && routePointsList.isEmpty()) {
+        if (routePointsList == null || routePointsList.isEmpty()) {
             String message = "Route with id = " + id + " does not have route points";
             throw new RoutePointsForThisRouteDoesNotExist(message);
         }
         return routePointsList;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<RoutePoint> getRoutePoints(Route route) {
+        return routeDao.getRoutePoints(route);
     }
 
     @Transactional(readOnly = true)

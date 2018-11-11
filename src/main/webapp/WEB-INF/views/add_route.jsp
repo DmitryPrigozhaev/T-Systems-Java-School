@@ -5,6 +5,10 @@
 <jsp:include page="header.jsp"/>
 <jsp:include page="navbar.jsp"/>
 
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script src="../../resources/js/sendAjaxRoute.js"></script>
+
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
     <div class="container">
@@ -19,75 +23,77 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-7 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-2">
                 <table class="shopping-cart">
-                    <form:form name="add-new-route" action="" method="post">
-                        <tr>
-                            <td>
-                                    <%-- Add route --%>
-                                    <%--<div class="form-group">--%>
-                                <label for="routeId">Choose route</label>
-                                <select class="form-control" id="routeId" name="routeId">
-                                    <c:forEach items="${routeList}" var="route">
-                                        <option value="${route.id}"><c:out value="${route.name}"/></option>
+                    <tr>
+                        <td>
+                            <c:choose>
+                                <c:when test="${edit}">
+                                    <label for="routeName">Route</label>
+                                    <input type="text" class="form-control" name="routeName" id="routeName" placeholder="${route.name}" disabled/>
+                                </c:when>
+                                <c:otherwise>
+                                    <label for="routeName">Add route name</label>
+                                    <input type="text" class="form-control" name="routeName" id="routeName"
+                                           placeholder="name"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <%-- Choose station --%>
+                            <div class="col-md-4">
+                                <label for="station">Choose station</label>
+                                <select class="form-control" id="station" name="station">
+                                    <c:forEach items="${stationList}" var="station">
+                                        <option value="${station.id}"><c:out value="${station.name}"/></option>
                                     </c:forEach>
                                 </select>
-                                    <%--</div>--%>
-                            </td>
-                        </tr>
-                        <%-- Add station --%>
-                        <tr>
-                            <td>
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <td class="col-md-2">
-                                            <label for="station">Choose station</label>
-                                        </td>
-                                        <td class="col-md-2">
-                                            <label for="station">Date arrival</label>
-                                        </td>
-                                        <td class="col-md-2">
-                                            <label for="station">Date departure</label>
-                                        </td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                            <%-- Choose station --%>
-                                        <td class="col-md-2">
-                                            <select class="form-control" id="station" name="station">
-                                                <c:forEach items="${stationList}" var="station">
-                                                    <option value="${station.id}"><c:out
-                                                            value="${station.name}"/></option>
-                                                </c:forEach>
-                                            </select>
-                                        </td>
+                            </div>
 
-                                            <%-- Date arrival --%>
-                                        <td class="col-md-2">
-                                            <div class="col-xs-10">
-                                                <input class="form-control" type="datetime-local"
-                                                       id="dateArrival">
-                                            </div>
-                                        </td>
+                            <%-- Date arrival --%>
+                            <div class="col-md-4">
+                                <label for="dateArrival">Date arrival</label>
+                                <input class="form-control" type="datetime-local"
+                                       id="dateArrival" title="dateArrival">
+                            </div>
 
-                                            <%-- Date departure --%>
-                                        <td class="col-md-2">
-                                            <div class="col-xs-10">
-                                                <input class="form-control" type="datetime-local"
-                                                       id="dateDeparture">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-
-                    </form:form>
+                            <%-- Date departure --%>
+                            <div class="col-md-4">
+                                <label for="dateDeparture">Date departure</label>
+                                <input class="form-control" type="datetime-local"
+                                       id="dateDeparture" title="dateDeparture">
+                            </div>
+                            <div class="col-md-4 col-md-offset-8">
+                                <br>
+                                <button class="btn-blue btn-block" onclick="sendRoutePointButtonClick()">Im button
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
 
+                <%-- TABLE OF ROUTE POINTS FOR THIS ROUTE --%>
+                <div id="tableContainer" class="grid-container">
+                    <table class="tab-content">
+                        <tr>
+                            <td class="col-md-1">id</td>
+                            <td class="col-md-2">station name</td>
+                            <td class="col-md-2">date arrival</td>
+                            <td class="col-md-2">date departure</td>
+                        </tr>
+                        <c:forEach items="${}" var="routePoint">
+                            <tr>
+                                <td>${routePoint.id}</td>
+                                <td>${routePoint.station.name}</td>
+                                <td>${routePoint.dateArrival}</td>
+                                <td>${routePoint.dateDeparture}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
             <div class="col-md2 col-md-offset-1">
                 <form action="<c:url value='admin-all-routes' />">

@@ -46,12 +46,9 @@ public class TrainController {
 
     @RequestMapping(value = "new-train", method = RequestMethod.POST)
     public String saveTrain(@RequestParam("routeId") long routeId,
-                           @RequestParam("number") int number,
-                           @RequestParam("numberOfCarriages") int numberOfCarriages,
-                           ModelMap model) {
-        System.out.println(routeId);
-        System.out.println(number);
-        System.out.println(numberOfCarriages);
+                            @RequestParam("number") int number,
+                            @RequestParam("numberOfCarriages") int numberOfCarriages,
+                            ModelMap model) {
 
         Route route = null;
         try {

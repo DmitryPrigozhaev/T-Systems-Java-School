@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void addUser(User user) throws AlreadyRegisteredException;
+    void saveUser(User user) throws AlreadyRegisteredException;
 
     User getUser(long id);
 

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="header.jsp"/>
 <jsp:include page="navbar.jsp" flush="true"/>
 
@@ -19,6 +20,7 @@
         <div class="row">
             <div class="col-md-9 col-md-offset-1">
                 <table class="shopping-cart">
+
                     <!-- ЗАГОЛОВКИ ТАБЛИЦЫ -->
                     <tr>
                         <td class="col-md-1">ID</td>
@@ -33,10 +35,10 @@
                                     ${route.id}
                             </td>
                             <td class="col-md-6">
-                                <button class="btn btn-xs btn-block" data-toggle="collapse" data-target="#hide-me">
+                                <button class="btn btn-xs btn-block" data-toggle="collapse" data-target="#${route.id}">
                                         ${route.name}
                                 </button>
-                                <div id="hide-me" class="collapse">
+                                <div id="${route.id}" class="collapse">
                                     <table class="tab-content">
                                         <tr>
                                             <td class="col-md-1">id</td>
@@ -44,14 +46,15 @@
                                             <td class="col-md-2">date arrival</td>
                                             <td class="col-md-2">date departure</td>
                                         </tr>
+                                        <%-- TODO через Ajax вытащить список станций по маршруту --%>
                                             <c:forEach items="${routePointList}" var="routePoint">
-                                        <tr>
-                                            <td>${routePoint.id}</td>
-                                            <td>${routePoint.station.name}</td>
-                                            <td>${routePoint.dateArrival}</td>
-                                            <td>${routePoint.dateDeparture}</td>
-                                        </tr>
-                                        </c:forEach>
+                                                <tr>
+                                                    <td>${routePoint.id}</td>
+                                                    <td>${routePoint.station.name}</td>
+                                                    <td>${routePoint.dateArrival}</td>
+                                                    <td>${routePoint.dateDeparture}</td>
+                                                </tr>
+                                            </c:forEach>
                                     </table>
                                 </div>
                             </td>

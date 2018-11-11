@@ -2,22 +2,40 @@ package com.railwaycompany.dto;
 
 public class RouteDto {
 
-    private Long id;
-    private String name;
+    private String routeName;
+    private long station;
+    private String dateArrival;
+    private String dateDeparture;
 
-    public Long getId() {
-        return id;
+    public String getRouteName() {
+        return routeName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
     }
 
-    public String getName() {
-        return name;
+    public long getStation() {
+        return station;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStation(long station) {
+        this.station = station;
+    }
+
+    public String getDateArrival() {
+        return dateArrival;
+    }
+
+    public void setDateArrival(String dateArrival) {
+        this.dateArrival = dateArrival;
+    }
+
+    public String getDateDeparture() {
+        return dateDeparture;
+    }
+
+    public void setDateDeparture(String dateDeparture) {
+        this.dateDeparture = dateDeparture;
     }
 }

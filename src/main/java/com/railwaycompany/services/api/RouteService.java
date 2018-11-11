@@ -5,16 +5,15 @@ import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.exceptions.RouteDoesNotExist;
 import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
-import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 
 import java.util.Date;
 import java.util.List;
 
 public interface RouteService {
 
-    void addRoute(String name) throws RouteWithSuchNameExistException;
+    void addRoute(String name);
 
-    void addRoute(Route route) throws RouteWithSuchNameExistException;
+    void addRoute(Route route);
 
     void addRoutePoint(RoutePoint routePoint);
 
@@ -30,6 +29,8 @@ public interface RouteService {
     List<Route> getAllRoutes();
 
     List<RoutePoint> getRoutePointsByRouteId(long id) throws RoutePointsForThisRouteDoesNotExist;
+
+    List<RoutePoint> getRoutePoints(Route route);
 
     List<RoutePoint> getAllRoutePoints();
 

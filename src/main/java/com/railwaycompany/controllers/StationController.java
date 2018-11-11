@@ -2,7 +2,7 @@ package com.railwaycompany.controllers;
 
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.StationService;
-import com.railwaycompany.services.exceptions.StationWithSuchNameDoesNotExistException;
+import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.StationWithSuchNameExistException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class StationController {
         Station station = null;
         try {
             station = stationService.getStationByName(name);
-        } catch (StationWithSuchNameDoesNotExistException e) {
+        } catch (StationDoesNotExistException e) {
             e.printStackTrace();
         }
         model.addAttribute("station", station);
@@ -73,7 +73,7 @@ public class StationController {
         try {
             Station station = stationService.getStationByName(name);
             stationService.deleteStation(station);
-        } catch (StationWithSuchNameDoesNotExistException e) {
+        } catch (StationDoesNotExistException e) {
             String message = "Station with name = " + name + " does not exist";
             LOG.warn(message, e);
         }

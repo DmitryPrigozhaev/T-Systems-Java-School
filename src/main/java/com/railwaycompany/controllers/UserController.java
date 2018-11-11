@@ -19,6 +19,52 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    //    @Autowired
+//    private SecurityService securityService;
+//
+//    @Autowired
+//    private UserValidator userValidator;
+//
+//    @RequestMapping(value = "registration", method = RequestMethod.GET)
+//    public String registration(Model model) {
+//        model.addAttribute("userForm", new User());
+//
+//        return "registration";
+//    }
+//
+//    @RequestMapping(value = "registration", method = RequestMethod.POST)
+//    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+//        userValidator.validate(userForm, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            return "registration";
+//        }
+//
+//        try {
+//            userService.saveUser(userForm);
+//        } catch (AlreadyRegisteredException e) {
+//            String message = "User already registered";
+//            LOG.warn(message);
+//        }
+//
+//        securityService.autoLogin(userForm.getEmail(), userForm.getConfirmPassword());
+//
+//        return "redirect:/index";
+//    }
+//
+//    @RequestMapping(value = "login", method = RequestMethod.GET)
+//    public String login(Model model, String error, String logout) {
+//        if (error != null) {
+//            model.addAttribute("error", "Email or password is incorrect");
+//        }
+//
+//        if (logout != null) {
+//            model.addAttribute("message", "Logged out successfully");
+//        }
+//
+//        return "login";
+//    }
+
     @RequestMapping(value = {"admin-all-passengers"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
 
@@ -43,7 +89,7 @@ public class UserController {
         }
 
         try {
-            userService.addUser(user);
+            userService.saveUser(user);
         } catch (AlreadyRegisteredException e) {
             e.printStackTrace();
         }

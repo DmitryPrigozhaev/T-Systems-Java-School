@@ -2,10 +2,12 @@ package com.railwaycompany.dao.imp;
 
 import com.railwaycompany.dao.api.RouteDao;
 import com.railwaycompany.entities.Route;
+import com.railwaycompany.entities.RoutePoint;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class RouteDaoImpl extends AbstractGenericDao<Route> implements RouteDao {
@@ -28,4 +30,8 @@ public class RouteDaoImpl extends AbstractGenericDao<Route> implements RouteDao 
         return route;
     }
 
+    @Override
+    public List<RoutePoint> getRoutePoints(Route route) {
+        return route.getRoutePointList();
+    }
 }

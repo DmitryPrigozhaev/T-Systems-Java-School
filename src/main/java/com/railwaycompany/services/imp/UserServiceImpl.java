@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void addUser(User user) throws AlreadyRegisteredException {
+    public void saveUser(User user) throws AlreadyRegisteredException {
         if (isUserEmailUnique(user.getEmail())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.create(user);

@@ -5,7 +5,7 @@ import com.railwaycompany.dao.api.StationDao;
 import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.StationService;
-import com.railwaycompany.services.exceptions.StationWithSuchNameDoesNotExistException;
+import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.StationWithSuchNameExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,14 +35,25 @@ public class StationServiceImpl implements StationService {
 
     @Transactional(readOnly = true)
     @Override
-    public Station getStationByName(String name) throws StationWithSuchNameDoesNotExistException {
+    public Station getStationByName(String name) throws StationDoesNotExistException {
         Station station = stationDao.getStationByName(name);
 
         if (station == null) {
             String message = "Station with name " + name + " does not exist";
-            throw new StationWithSuchNameDoesNotExistException(message);
+            throw new StationDoesNotExistException(message);
         }
 
+        return station;
+    }
+
+    @Override
+    public Station getStationById(long id) throws StationDoesNotExistException {
+        Station station = stationDao.read(id);
+        if (station == null) {
+            //todo
+            String message = "qweqe";
+            throw new StationDoesNotExistException(message);
+        }
         return station;
     }
 

@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -41,7 +42,9 @@ public abstract class AbstractGenericDao<E extends Serializable> implements Gene
     @SuppressWarnings("unchecked")
     @Override
     public List<E> readAll() {
-        return getCurrentSession().createCriteria(this.entityClass).list();
+        CriteriaQuery<E> query = getCurrentSession().getCriteriaBuilder().createQuery(this.entityClass);
+        query.from(this.entityClass);
+        return getCurrentSession().createQuery(query).getResultList();
     }
 
     @Override
