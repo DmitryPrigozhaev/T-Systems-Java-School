@@ -3,7 +3,7 @@ package com.railwaycompany.dto;
 public class RouteDto {
 
     private String routeName;
-    private long station;
+    private String station;
     private String dateArrival;
     private String dateDeparture;
 
@@ -15,11 +15,11 @@ public class RouteDto {
         this.routeName = routeName;
     }
 
-    public long getStation() {
+    public String getStation() {
         return station;
     }
 
-    public void setStation(long station) {
+    public void setStation(String station) {
         this.station = station;
     }
 

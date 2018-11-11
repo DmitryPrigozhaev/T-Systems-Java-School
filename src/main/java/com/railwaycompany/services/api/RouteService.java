@@ -1,17 +1,19 @@
 package com.railwaycompany.services.api;
 
+import com.railwaycompany.dto.RouteDto;
 import com.railwaycompany.entities.Route;
 import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.exceptions.RouteDoesNotExist;
 import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
+import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 
 import java.util.Date;
 import java.util.List;
 
 public interface RouteService {
 
-    void addRoute(String name);
+    void addRoute(String name) throws RouteWithSuchNameExistException;
 
     void addRoute(Route route);
 
@@ -25,6 +27,8 @@ public interface RouteService {
     Route getRouteById(long id) throws RouteDoesNotExist;
 
     Route getRouteByName(String name) throws RouteDoesNotExist;
+
+    List<RouteDto> getRouteDtoList(Route route);
 
     List<Route> getAllRoutes();
 

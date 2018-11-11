@@ -1,5 +1,5 @@
-<jsp:include page="header.jsp"/>
-<jsp:include page="navbar.jsp" flush="true"/>
+<jsp:include page="components/header.jsp"/>
+<jsp:include page="components/navbar.jsp" flush="true"/>
 
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
@@ -143,4 +143,4 @@
     </div>
 </div>
 
-<jsp:include page="footer.jsp" flush="true"/>
+<jsp:include page="components/footer.jsp" flush="true"/>

@@ -5,6 +5,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
+
+/**
+ * Simple JavaBean domain object that represents a User
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
 
 @Entity
 @Table(name = "users")
@@ -21,6 +29,9 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Transient
+    private String confirmPassword;
+
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
@@ -32,11 +43,12 @@ public class User implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @Column(name = "role")
-    private Byte role = 1;
+    @ManyToMany
+    @JoinTable(name="user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -59,6 +71,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -79,16 +99,15 @@ public class User implements Serializable {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthday) {
-        this.birthDate = birthday;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public Byte getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Byte role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
 }

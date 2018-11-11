@@ -2,6 +2,7 @@ package com.railwaycompany.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "stations")
@@ -14,6 +15,10 @@ public class Station implements Serializable {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    private
+    Set<RoutePoint> routePointSet;
 
     public Long getId() {
         return id;
@@ -31,4 +36,11 @@ public class Station implements Serializable {
         this.name = name;
     }
 
+    public Set<RoutePoint> getRoutePointSet() {
+        return routePointSet;
+    }
+
+    public void setRoutePointSet(Set<RoutePoint> routePointSet) {
+        this.routePointSet = routePointSet;
+    }
 }

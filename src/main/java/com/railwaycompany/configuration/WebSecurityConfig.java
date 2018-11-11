@@ -18,36 +18,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-
         http.authorizeRequests()
                 .antMatchers("admin-all-passengers").access("hasRole(3) or hasRole(2)")
                 .antMatchers("admin-all-routes").access("hasRole(3) or hasRole(2)")
                 .antMatchers("admin-all-stations").access("hasRole(3) or hasRole(2)")
                 .antMatchers("admin-all-trains").access("hasRole(3) or hasRole(2)")
+
                 .and().formLogin()
-                // submit URL of login page
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
                 .successForwardUrl("/index")
                 .failureForwardUrl("/index")
+
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index");
+
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index")
+
+                .and().csrf().disable();
 
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }

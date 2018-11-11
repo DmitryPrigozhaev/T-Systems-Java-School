@@ -37,17 +37,9 @@ public class RouteController {
         return "admin-all-routes";
     }
 
-//    @RequestMapping(value = "get-route-points", method = RequestMethod.GET)
-//    public ModelMap getRoutePointsForRoute() {
-//        JsonArray array = new JsonArray();
-//
-//    }
-
     @RequestMapping(value = "new-route", method = RequestMethod.GET)
     public String newRoute(ModelMap model) {
-        List<Route> routeList = routeService.getAllRoutes();
         List<Station> stationList = stationService.getAllStation();
-        model.addAttribute("routeList", routeList);
         model.addAttribute("stationList", stationList);
         model.addAttribute("edit", false);
         return "add_route";
@@ -55,59 +47,57 @@ public class RouteController {
 
     @ResponseBody
     @RequestMapping(value = "new-route", method = RequestMethod.POST)
-    public String saveRoute(@RequestBody RouteDto routeDto,
-                            ModelMap modelMap) {
+    public List<RoutePoint> saveRoute(@RequestBody RouteDto routeDto) {
 
-        Route route = null;
+        Route route;
+        RoutePoint routePoint;
 
         try {
             route = routeService.getRouteByName(routeDto.getRouteName());
         } catch (RouteDoesNotExist e) {
-            String info = "Route with name \"" + routeDto.getRouteName() + "\" does not exist, creating...";
-            LOG.warn(info);
+            String message = "Route with name \"" + routeDto.getRouteName() + "\" does not exist, creating...";
+            LOG.warn(message);
 
             route = new Route();
             route.setName(routeDto.getRouteName());
             routeService.addRoute(route);
 
-            String message = "Route with name \"" + routeDto.getRouteName() + "\" created successfully";
+            message = "Route \"" + route.getName() + "\" creating successfully";
             LOG.warn(message);
         }
 
-        RoutePoint routePoint = new RoutePoint();
-        try {
-            routePoint.setRoute(route);
-            routePoint.setStation(stationService.getStationById(routeDto.getStation()));
-
-            if (routeDto.getDateArrival().equals("")) {
-                routeDto.setDateArrival(null);
-            } else {
-                routePoint.setDateArrival(DateConverter.convertDatetime(routeDto.getDateArrival()));
+        if (route != null) {
+            try {
+                routePoint = new RoutePoint();
+                routePoint.setRoute(route);
+                routePoint.setStation(stationService.getStationByName(routeDto.getStation()));
+                if (routeDto.getDateArrival().equals("")) {
+                    routePoint.setDateArrival(null);
+                } else {
+                    routePoint.setDateArrival(DateConverter.convertDatetime(routeDto.getDateArrival()));
+                }
+                if (routeDto.getDateDeparture().equals("")) {
+                    routePoint.setDateDeparture(null);
+                } else {
+                    routePoint.setDateDeparture(DateConverter.convertDatetime(routeDto.getDateDeparture()));
+                }
+                routeService.addRoutePoint(routePoint);
+            } catch (StationDoesNotExistException e) {
+                String message = "Station with name \"" + routeDto.getStation() + "\" does not exist";
+                LOG.error(message, e);
             }
-
-            if (routeDto.getDateDeparture().equals("")) {
-                routeDto.setDateDeparture(null);
-            } else {
-                routePoint.setDateDeparture(DateConverter.convertDatetime(routeDto.getDateDeparture()));
-            }
-        } catch (StationDoesNotExistException e) {
-            String message = "Station with id = " + routeDto.getStation() + " does not exist";
-            LOG.warn(message, e);
         }
 
-        routeService.addRoutePoint(routePoint);
+        List<RoutePoint> routePoints = routeService.getRoutePoints(route);
+        for (RoutePoint point : routePoints) {
+            System.out.println(point.getId());
+            System.out.println(point.getRoute().getName());
+            System.out.println(point.getStation().getName());
+            System.out.println(point.getDateArrival());
+            System.out.println(point.getDateDeparture());
+        }
 
-//        List<RoutePoint> routePointList = null;
-//        try {
-//            routePointList = routeService.getRoutePoints(route);
-//        } catch (RoutePointsForThisRouteDoesNotExist e) {
-//            String message = "Route points for route with name \"" + route.getName() + "\" does not exist";
-//            LOG.warn(message);
-//        }
-//
-//        modelMap.addAttribute("routePointList", routePointList);
-
-        return "redirect:/new-route";
+        return routePoints;
     }
 
     @RequestMapping(value = {"edit-{name}-route"}, method = RequestMethod.GET)
@@ -123,6 +113,8 @@ public class RouteController {
             LOG.warn(message, e);
         }
 
+        List<Station> stationList = stationService.getAllStation();
+        model.addAttribute("stationList", stationList);
         model.addAttribute("route", route);
         model.addAttribute("routePointList", routePointList);
         model.addAttribute("edit", true);

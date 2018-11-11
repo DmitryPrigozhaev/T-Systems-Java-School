@@ -84,6 +84,8 @@ public class TrainController {
             LOG.warn(message, e);
         }
 
+        List<Route> routeList = routeService.getAllRoutes();
+        model.addAttribute("routeList", routeList);
         model.addAttribute("train", train);
         model.addAttribute("edit", true);
         return "add-train";

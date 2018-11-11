@@ -2,18 +2,18 @@ package com.railwaycompany.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
- * Simple JavaBean object that represent route of {@link Route}
+ * Simple JavaBean object that represent role of {@link User}
  *
  * @author Dmitry Prigozhaev
  * @version 1.0
  */
 
 @Entity
-@Table(name = "routes")
-public class Route implements Serializable {
+@Table(name = "roles")
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +23,8 @@ public class Route implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
-    private List<RoutePoint> routePointList;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     public Long getId() {
         return id;
@@ -42,11 +42,11 @@ public class Route implements Serializable {
         this.name = name;
     }
 
-    public List<RoutePoint> getRoutePointList() {
-        return routePointList;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setRoutePointList(List<RoutePoint> routePointList) {
-        this.routePointList = routePointList;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

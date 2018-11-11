@@ -6,6 +6,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Simple JavaBean object that represent role of {@link RoutePoint}
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "route_points")
 public class RoutePoint implements Serializable {

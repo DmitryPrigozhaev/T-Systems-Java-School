@@ -2,10 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="header.jsp"/>
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="components/header.jsp"/>
+<jsp:include page="components/navbar.jsp"/>
 
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
 <script src="../../resources/js/sendAjaxRoute.js"></script>
 
@@ -30,7 +31,8 @@
                             <c:choose>
                                 <c:when test="${edit}">
                                     <label for="routeName">Route</label>
-                                    <input type="text" class="form-control" name="routeName" id="routeName" placeholder="${route.name}" disabled/>
+                                    <input type="text" class="form-control" name="routeName" id="routeName"
+                                           placeholder="${route.name}" disabled/>
                                 </c:when>
                                 <c:otherwise>
                                     <label for="routeName">Add route name</label>
@@ -48,7 +50,7 @@
                                 <label for="station">Choose station</label>
                                 <select class="form-control" id="station" name="station">
                                     <c:forEach items="${stationList}" var="station">
-                                        <option value="${station.id}"><c:out value="${station.name}"/></option>
+                                        <option value="${station.name}"><c:out value="${station.name}"/></option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -68,32 +70,37 @@
                             </div>
                             <div class="col-md-4 col-md-offset-8">
                                 <br>
-                                <button class="btn-blue btn-block" onclick="sendRoutePointButtonClick()">Im button
+                                <button class="btn-blue btn-block" onclick="sendRoutePointButtonClick()">Add point
                                 </button>
                             </div>
                         </td>
                     </tr>
+                    <%--<tr id="routePointContainer" hidden>--%>
+                    <%--<td>--%>
+                    <%--qweqwadsd--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
                 </table>
 
                 <%-- TABLE OF ROUTE POINTS FOR THIS ROUTE --%>
-                <div id="tableContainer" class="grid-container">
-                    <table class="tab-content">
-                        <tr>
-                            <td class="col-md-1">id</td>
-                            <td class="col-md-2">station name</td>
-                            <td class="col-md-2">date arrival</td>
-                            <td class="col-md-2">date departure</td>
-                        </tr>
-                        <c:forEach items="${}" var="routePoint">
-                            <tr>
-                                <td>${routePoint.id}</td>
-                                <td>${routePoint.station.name}</td>
-                                <td>${routePoint.dateArrival}</td>
-                                <td>${routePoint.dateDeparture}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
+                <%--<div id="tableContainer" class="grid-container">--%>
+                <%--<table class="tab-content">--%>
+                <%--<tr>--%>
+                <%--<td class="col-md-1">id</td>--%>
+                <%--<td class="col-md-2">station name</td>--%>
+                <%--<td class="col-md-2">date arrival</td>--%>
+                <%--<td class="col-md-2">date departure</td>--%>
+                <%--</tr>--%>
+                <%--<c:forEach items="${routePointList}" var="routePoint">--%>
+                <%--<tr>--%>
+                <%--<td>${routePoint.id}</td>--%>
+                <%--<td>${routePoint.station.name}</td>--%>
+                <%--<td>${routePoint.dateArrival}</td>--%>
+                <%--<td>${routePoint.dateDeparture}</td>--%>
+                <%--</tr>--%>
+                <%--</c:forEach>--%>
+                <%--</table>--%>
+                <%--</div>--%>
             </div>
             <div class="col-md2 col-md-offset-1">
                 <form action="<c:url value='admin-all-routes' />">
@@ -107,4 +114,4 @@
 <br/>
 <br/>
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="components/footer.jsp"/>

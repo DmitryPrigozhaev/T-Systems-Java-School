@@ -15,7 +15,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring.version>5.1.0.RELEASE</spring.version>
         <spring-security.version>5.1.0.RELEASE</spring-security.version>
-        <!--<spring-data-jpa.version>2.1.2.RELEASE</spring-data-jpa.version>-->
+        <spring-data-jpa.version>2.1.2.RELEASE</spring-data-jpa.version>
         <mysql-connector.version>8.0.11</mysql-connector.version>
         <hibernate.version>5.3.6.Final</hibernate.version>
         <jackson.version>2.9.7</jackson.version>
@@ -35,11 +35,11 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.data</groupId>-->
-            <!--<artifactId>spring-data-jpa</artifactId>-->
-            <!--<version>${spring-data-jpa.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
 
         <!-- Spring Security -->
         <dependency>
@@ -82,6 +82,13 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- Slf4j подключен, чтобы не вылетало предупреждение от spring-data-jpa -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.25</version>
         </dependency>
 
         <!-- AspectJ -->

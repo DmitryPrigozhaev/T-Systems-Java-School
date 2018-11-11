@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="header.jsp"/>
-<jsp:include page="navbar.jsp" flush="true"/>
+<jsp:include page="components/header.jsp"/>
+<jsp:include page="components/navbar.jsp" flush="true"/>
 
 <%-- TODO --%>
 
@@ -38,4 +38,4 @@
 <a href="<c:url value='new' />">Add New User</a>
 
 
-<jsp:include page="footer.jsp" flush="true"/>
+<jsp:include page="components/footer.jsp" flush="true"/>

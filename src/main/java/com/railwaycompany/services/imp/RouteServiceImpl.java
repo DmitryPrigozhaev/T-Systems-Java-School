@@ -3,13 +3,16 @@ package com.railwaycompany.services.imp;
 import com.railwaycompany.dao.api.RouteDao;
 import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.dao.api.StationDao;
+import com.railwaycompany.dto.RouteDto;
 import com.railwaycompany.entities.Route;
 import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.exceptions.RouteDoesNotExist;
 import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
+import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 import com.railwaycompany.utils.DateConverter;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +21,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 @Service("routeService")
 @Transactional(readOnly = false)
 public class RouteServiceImpl implements RouteService {
+
+    private static final Logger LOG = Logger.getLogger(RouteServiceImpl.class.getName());
 
     @Autowired
     RouteDao routeDao;
@@ -31,17 +37,26 @@ public class RouteServiceImpl implements RouteService {
     @Autowired
     StationDao stationDao;
 
+    private RouteDto constructRouteDto(RoutePoint routePoint) {
+        RouteDto routeDto = new RouteDto();
+        routeDto.setRouteName(routePoint.getRoute().getName());
+        routeDto.setStation(routePoint.getStation().getName());
+        routeDto.setDateArrival(routePoint.getDateArrival().toString());
+        routeDto.setDateDeparture(routePoint.getDateDeparture().toString());
+        return routeDto;
+    }
+
     @Override
-    public void addRoute(String name) /*throws RouteWithSuchNameExistException*/ {
-        /*Route route = routeDao.getRouteByName(name);
-        if (route == null) {*/
-            Route route = new Route();
+    public void addRoute(String name) throws RouteWithSuchNameExistException {
+        Route route = routeDao.getRouteByName(name);
+        if (route == null) {
+            route = new Route();
             route.setName(name);
             routeDao.create(route);
-        /*} else {
+        } else {
             String message = "Route \"" + name + "\" is already exist";
             throw new RouteWithSuchNameExistException(message);
-        }*/
+        }
     }
 
     @Override
@@ -103,6 +118,22 @@ public class RouteServiceImpl implements RouteService {
         return route;
     }
 
+    @Override
+    public List<RouteDto> getRouteDtoList(Route route) {
+        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByRouteId(route.getId());
+        List<RouteDto> routeDtoList = null;
+        if (routePointsList != null && !routePointsList.isEmpty()) {
+            routeDtoList = new ArrayList<>();
+            for (RoutePoint routePoint : routePointsList) {
+                routeDtoList.add(constructRouteDto(routePoint));
+            }
+        } else {
+            String message = "Route points for route \"" + route.getName() + "\" does not exist";
+            LOG.warn(message);
+        }
+        return routeDtoList;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<Route> getAllRoutes() {
@@ -123,7 +154,7 @@ public class RouteServiceImpl implements RouteService {
     @Transactional(readOnly = true)
     @Override
     public List<RoutePoint> getRoutePoints(Route route) {
-        return routeDao.getRoutePoints(route);
+        return routePointDao.getRoutePointsByRouteId(route.getId());
     }
 
     @Transactional(readOnly = true)

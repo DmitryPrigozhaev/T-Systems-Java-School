@@ -1,6 +1,7 @@
 package com.railwaycompany.services.imp;
 
 import com.railwaycompany.dao.api.UserDao;
+import com.railwaycompany.entities.Role;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.api.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
 //                 вместо этого:
-//                for (Role role  : user.getRoles()) {
-//                    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-//
-//                }
+                for (Role role  : user.getRoles()) {
+                    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+
+                }
 //                было это:
-                grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+//                grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
                 return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
 

@@ -4,8 +4,8 @@
 <!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js"> <!--<![endif]-->
 
-<jsp:include page="header.jsp"/>
-<jsp:include page="navbar.jsp" flush="true"/>
+<jsp:include page="components/header.jsp"/>
+<jsp:include page="components/navbar.jsp" flush="true"/>
 
 <!-- Search train -->
 <div class="section section-breadcrumbs">
@@ -133,38 +133,38 @@
 <%--</div>--%>
 <%--<!-- End Services -->--%>
 
-<%--<!-- Our Clients -->--%>
-<%--<div class="section">--%>
-    <%--<div class="container">--%>
-        <%--<h2>Our Clients</h2>--%>
-        <%--<div class="clients-logo-wrapper text-center row">--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/canon.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/cisco.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/dell.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/ea.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/ebay.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img--%>
-                    <%--src="../../resources/img/logos/facebook.png" alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/google.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/hp.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img--%>
-                    <%--src="../../resources/img/logos/microsoft.png" alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/mysql.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/sony.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-            <%--<div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/yahoo.png"--%>
-                                                                              <%--alt="Client Name"></a></div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-<%--<!-- End Our Clients -->--%>
+<!-- Our Clients -->
+<div class="section">
+    <div class="container">
+        <h2>Our Clients</h2>
+        <div class="clients-logo-wrapper text-center row">
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/canon.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/cisco.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/dell.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/ea.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/ebay.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img
+                    src="../../resources/img/logos/facebook.png" alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/google.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/hp.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img
+                    src="../../resources/img/logos/microsoft.png" alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/mysql.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/sony.png"
+                                                                              alt="Client Name"></a></div>
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="../../resources/img/logos/yahoo.png"
+                                                                              alt="Client Name"></a></div>
+        </div>
+    </div>
+</div>
+<!-- End Our Clients -->
 
-<jsp:include page="footer.jsp" flush="true"/>
+<jsp:include page="components/footer.jsp" flush="true"/>

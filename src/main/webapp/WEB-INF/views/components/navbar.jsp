@@ -12,12 +12,12 @@
                             href="shopping-cart"><b>3 items</b></a></li>
                     <li>
                         <div class="dropdown choose-country">
-                            <a class="#" data-toggle="dropdown" href="#"><img src="../../resources/img/flags/gb.png"
+                            <a class="#" data-toggle="dropdown" href="#"><img src="../../../resources/img/flags/gb.png"
                                                                               alt="Great Britain"> UK</a>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="menuitem"><a href="#"><img src="../../resources/img/flags/ru.png"
+                                <li role="menuitem"><a href="#"><img src="../../../resources/img/flags/ru.png"
                                                                      alt="Russia"> RU</a></li>
-                                <li role="menuitem"><a href="#"><img src="../../resources/img/flags/de.png"
+                                <li role="menuitem"><a href="#"><img src="../../../resources/img/flags/de.png"
                                                                      alt="Germany"> DE</a></li>
                             </ul>
                         </div>
@@ -29,7 +29,7 @@
         <nav id="mainmenu" class="mainmenu">
             <ul>
                 <li class="logo-wrapper">
-                    <a href="index"><img src="../../resources/img/railwaycompany-logo.png"
+                    <a href="index"><img src="../../../resources/img/railwaycompany-logo.png"
                                          alt="Information system of a railway company"></a></li>
                 <li class="active">
                     <a href="index">Home</a>
