@@ -20,10 +20,10 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="basic-login">
 
-                    <form method="post" action='<spring:url value="/loginAction"/>'>
+                    <form method="post" action='login'>
                         <div class="form-group">
-                            <label for="username"><i class="icon-user"></i> <b>Email</b></label>
-                            <input class="form-control" name="username" id="username" type="text" placeholder="">
+                            <label for="email"><i class="icon-user"></i> <b>Email</b></label>
+                            <input class="form-control" name="email" id="email" type="text" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="password"><i class="icon-lock"></i> <b>Password</b></label>

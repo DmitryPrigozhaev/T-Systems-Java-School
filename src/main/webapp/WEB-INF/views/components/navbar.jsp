@@ -40,6 +40,9 @@
                 <li>
                     <a href="tickets">Tickets</a>
                 </li>
+                <li>
+                    <a href="account">Account</a>
+                </li>
                 <%--<sec:authorize access="hasRole(3) or hasRole(2)">--%>
                     <li class="has-submenu">
                         <a href="#">Manager Panel +</a>

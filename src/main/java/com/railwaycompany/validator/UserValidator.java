@@ -47,8 +47,8 @@ public class UserValidator implements Validator {
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Password.size");
         }
-        if (!user.getConfirmPassword().equals(user.getPassword())) {
-            errors.rejectValue("confirmPassword", "Password.confirm");
-        }
+//        if (!user.getConfirmPassword().equals(user.getPassword())) {
+//            errors.rejectValue("confirmPassword", "Password.confirm");
+//        }
     }
 }

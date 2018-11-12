@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * Simple JavaBean domain object that represents a User
@@ -29,9 +28,6 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Transient
-    private String confirmPassword;
-
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
@@ -43,9 +39,9 @@ public class User implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @ManyToMany
-    @JoinTable(name="user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @ManyToOne
+    @JoinColumn(name = "role")
+    private Role role;
 
     public Long getId() {
         return id;
@@ -69,14 +65,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getFirstName() {
@@ -103,11 +91,11 @@ public class User implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

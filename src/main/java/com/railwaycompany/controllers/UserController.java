@@ -1,17 +1,19 @@
 package com.railwaycompany.controllers;
 
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
-import com.railwaycompany.validator.UserValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -26,12 +28,36 @@ public class UserController {
 //    @Autowired
 //    private SecurityService securityService;
 
-    @Autowired
-    private UserValidator userValidator;
+//    @Autowired
+//    private UserValidator userValidator;
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String login() {
+        return "login";
+    }
 
     @RequestMapping(value = "registration", method = RequestMethod.GET)
-    public String registration() {
-        return "registration";
+    public ModelAndView registration() {
+        return new ModelAndView("registration", "user", new UserDto());
+    }
+
+    @RequestMapping(value = "registration", method = RequestMethod.POST)
+    public String registration(ModelMap modelMap, @ModelAttribute("user") UserDto userDto,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return "registration";
+
+        try {
+            userService.saveUser(userDto);
+        } catch (AlreadyRegisteredException e) {
+            String message = "User with email \"" + userDto.getEmail() + "\" is already exist";
+            LOG.warn(message);
+        }
+        return "redirect:/account";
+    }
+
+    @RequestMapping(value = "account", method = RequestMethod.GET)
+    public String account() {
+        return "account";
     }
 
 //    @ResponseBody
@@ -74,19 +100,19 @@ public class UserController {
     }
 
     @RequestMapping(value = {"new"}, method = RequestMethod.POST)
-    public String saveUser(User user, BindingResult result, ModelMap model) {
+    public String saveUser(UserDto userDto, BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
             return "registration";
         }
 
         try {
-            userService.saveUser(user);
+            userService.saveUser(userDto);
         } catch (AlreadyRegisteredException e) {
             e.printStackTrace();
         }
 
-        model.addAttribute("success", "User " + user.getEmail() + " registered successfully");
+        model.addAttribute("success", "User " + userDto.getEmail() + " registered successfully");
         return "success";
     }
 

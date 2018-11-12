@@ -30,19 +30,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/admin-all-passengers").access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/admin-all-routes").access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/admin-all-stations").access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/admin-all-trains").access("hasRole('ROLE_ADMIN')")
+//
+//                .and()
+//                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction")
+//                .successForwardUrl("/account")
+//                .failureUrl("/?error=true")//
+//                .and()
+//                .logout().logoutSuccessUrl("/login")
+//                .and()
+//                .csrf().disable();
+//
+//    }
+        http.csrf().disable();
+
         http.authorizeRequests()
-                .antMatchers("admin-all-passengers").access("hasRole(3) or hasRole(2)")
-                .antMatchers("admin-all-routes").access("hasRole(3) or hasRole(2)")
-                .antMatchers("admin-all-stations").access("hasRole(3) or hasRole(2)")
-                .antMatchers("admin-all-trains").access("hasRole(3) or hasRole(2)")
+                .antMatchers("/admin-all-passengers", "/admin-all-routes", "/admin-all-stations", "/admin-all-trains")
+                .access("hasRole('ROLE_ADMIN')")
 
-                .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll()
-                .and()
-                .logout().logoutSuccessUrl("/login")
-                .and()
-                .csrf().disable();
-
+                .and().formLogin()
+                .loginProcessingUrl("/login")
+                .loginPage("/login")
+                .successForwardUrl("/account")
+                .failureUrl("/login?error=true")
+                .usernameParameter("email")
+                .passwordParameter("password")
+// Config for Logout Page
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
+                .and().exceptionHandling().accessDeniedPage("/accessDenied");
     }
 
 

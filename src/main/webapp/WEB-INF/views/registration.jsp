@@ -23,21 +23,21 @@
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">Email</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
                             </div>
                         </div>
                         <%-- PASSWORD --%>
                         <div class="form-group">
                             <label for="password" class="col-sm-4 control-label">Password</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                             </div>
                         </div>
                         <%-- CONFIRM PASSWORD --%>
                         <div class="form-group">
                             <label for="confirmPassword" class="col-sm-4 control-label">Confirm Password</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="confirmPassword"
+                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword"
                                        placeholder="Confirm Password">
                             </div>
                         </div>
@@ -45,21 +45,21 @@
                         <div class="form-group">
                             <label for="firstName" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                                <input type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name">
                             </div>
                         </div>
                         <%-- LAST NAME --%>
                         <div class="form-group">
                             <label for="lastName" class="col-sm-4 control-label">Last Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name">
                             </div>
                         </div>
                         <%-- DATE OF BIRTHDAY--%>
                         <div class="form-group">
-                            <label for="BirthDate" class="col-sm-4 control-label">Birth Date</label>
+                            <label for="birthDate" class="col-sm-4 control-label">Birth Date</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="birthDate" placeholder="Birth Date">
+                                <input type="date" name="birthDate" class="form-control" id="birthDate" placeholder="Birth Date">
                             </div>
                         </div>
                         <%-- BUTTON --%>

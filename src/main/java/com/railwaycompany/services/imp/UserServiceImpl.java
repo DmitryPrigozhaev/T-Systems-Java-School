@@ -1,9 +1,12 @@
 package com.railwaycompany.services.imp;
 
+import com.railwaycompany.dao.api.RoleDao;
 import com.railwaycompany.dao.api.UserDao;
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
+import com.railwaycompany.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,15 +22,32 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
+    private User constructUser(UserDto userDto) {
+        User user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setBirthDate(DateConverter.convertDate(userDto.getBirthDate()));
+        user.setRole(roleDao.getRoleByName("ROLE_CLIENT"));
+        return user;
+    }
+
     @Override
-    public void saveUser(User user) throws AlreadyRegisteredException {
-        if (isUserEmailUnique(user.getEmail())) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void saveUser(UserDto userDto) throws AlreadyRegisteredException {
+        if (isUserEmailUnique(userDto.getEmail())) {
+
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            User user = constructUser(userDto);
             userDao.create(user);
+
         } else {
-            String message = "User with email \"" + user.getEmail() + "\" is already exist!";
+            String message = "User with email \"" + userDto.getEmail() + "\" is already exist!";
             throw new AlreadyRegisteredException(message);
         }
     }
