@@ -55,8 +55,12 @@ public class UserController {
         return "redirect:/account";
     }
 
-    @RequestMapping(value = "account", method = RequestMethod.GET)
+    @RequestMapping(value = "account", method = { RequestMethod.GET, RequestMethod.POST })
     public String account() {
+
+        User user = userService.getUserByEmail("mrvincentgun@gmail.com");
+        System.out.println(user.getBirthDate());
+
         return "account";
     }
 

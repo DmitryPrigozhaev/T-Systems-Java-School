@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Register</h1>
+                <h1>Registration</h1>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="basic-login">
-                    <form:form method="POST" modelAttribute="user" role="form" class="form-horizontal" data-toggle="validator">
+                    <form:form method="POST" modelAttribute="user" role="form" class="form-horizontal">
                         <%-- EMAIL --%>
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">Email</label>
@@ -64,7 +64,7 @@
                         </div>
                         <%-- BUTTON --%>
                         <div class="form-group">
-                            <button type="submit" class="btn pull-right" style="margin-right: 25px">Register</button>
+                            <button type="submit" class="btn pull-right success" style="margin-right: 25px">Register</button>
                             <div class="clearfix"></div>
                         </div>
                     </form:form>

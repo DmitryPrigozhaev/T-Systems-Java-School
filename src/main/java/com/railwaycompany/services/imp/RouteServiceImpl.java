@@ -90,8 +90,8 @@ public class RouteServiceImpl implements RouteService {
         for (int i = 0; i < stationId.length; i++) {
             routePoint.setRoute(route);
             routePoint.setStation(stationDao.read(stationId[i]));
-            routePoint.setDateArrival(DateConverter.convertDate(dateArrivalArray[i]));
-            routePoint.setDateDeparture(DateConverter.convertDate(dateDepartureArray[i]));
+            routePoint.setDateArrival(DateConverter.convertDatetime(dateArrivalArray[i]));
+            routePoint.setDateDeparture(DateConverter.convertDatetime(dateDepartureArray[i]));
             routePointDao.create(routePoint);
         }
     }

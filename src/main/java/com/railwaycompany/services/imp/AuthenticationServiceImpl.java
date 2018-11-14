@@ -28,13 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (user != null) {
                 Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-//                 вместо этого:
-//                for (Role role  : user.getRoles()) {
-//                    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-//
-//                }
-//                было это:
-                grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+                grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
                 return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
 

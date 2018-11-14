@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setBirthDate(DateConverter.convertDate(userDto.getBirthDate()));
-        user.setRole(roleDao.getRoleByName("ROLE_CLIENT"));
+        user.setRole(roleDao.getRoleByName("ROLE_USER"));
         return user;
     }
 

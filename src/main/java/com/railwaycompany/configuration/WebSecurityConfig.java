@@ -30,22 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/admin-all-passengers").access("hasRole('ROLE_ADMIN')")
-//                .antMatchers("/admin-all-routes").access("hasRole('ROLE_ADMIN')")
-//                .antMatchers("/admin-all-stations").access("hasRole('ROLE_ADMIN')")
-//                .antMatchers("/admin-all-trains").access("hasRole('ROLE_ADMIN')")
-//
-//                .and()
-//                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction")
-//                .successForwardUrl("/account")
-//                .failureUrl("/?error=true")//
-//                .and()
-//                .logout().logoutSuccessUrl("/login")
-//                .and()
-//                .csrf().disable();
-//
-//    }
         http.csrf().disable();
 
         http.authorizeRequests()
@@ -57,12 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .successForwardUrl("/account")
                 .failureUrl("/login?error=true")
+
                 .usernameParameter("email")
                 .passwordParameter("password")
 // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                 .and().exceptionHandling().accessDeniedPage("/accessDenied");
     }
-
 
 }
