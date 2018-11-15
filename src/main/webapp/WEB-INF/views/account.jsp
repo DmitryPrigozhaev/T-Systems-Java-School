@@ -6,12 +6,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>A train search will be implemented here</h1>
+                <h1>Account</h1>
             </div>
         </div>
     </div>
 </div>
 <!-- End Page Title -->
-
 
 <jsp:include page="components/footer.jsp" flush="true"/>

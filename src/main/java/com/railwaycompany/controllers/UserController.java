@@ -25,12 +25,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-//    @Autowired
-//    private SecurityService securityService;
-
-//    @Autowired
-//    private UserValidator userValidator;
-
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login() {
         return "login";
@@ -47,7 +41,7 @@ public class UserController {
         if (bindingResult.hasErrors()) return "registration";
 
         try {
-            userService.saveUser(userDto);
+            userService.saveUserDto(userDto);
         } catch (AlreadyRegisteredException e) {
             String message = "User with email \"" + userDto.getEmail() + "\" is already exist";
             LOG.warn(message);
@@ -55,46 +49,15 @@ public class UserController {
         return "redirect:/account";
     }
 
-    @RequestMapping(value = "account", method = { RequestMethod.GET, RequestMethod.POST })
-    public String account() {
-
-        User user = userService.getUserByEmail("mrvincentgun@gmail.com");
-        System.out.println(user.getBirthDate());
-
-        return "account";
-    }
-
-//    @ResponseBody
-//    @RequestMapping(value = "registration", method = RequestMethod.POST)
-//    public String registration(@RequestBody UserDto userDto) {
-//
-//        User user = new User();
-//        user.set
-//
-//        return "redirect:/index";
-//    }
-//
-//    @RequestMapping(value = "login", method = RequestMethod.GET)
-//    public String login(Model model, String error, String logout) {
-//        if (error != null) {
-//            model.addAttribute("error", "Email or password is incorrect");
-//        }
-//
-//        if (logout != null) {
-//            model.addAttribute("message", "Logged out successfully");
-//        }
-//
-//        return "login";
-//    }
-
     @RequestMapping(value = {"admin-all-passengers"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
 
-        List<User> userList = userService.getAllUsers();
+        List<UserDto> userList = userService.getAllUsersDto();
         model.addAttribute("userList", userList);
         return "admin-all-passengers";
     }
 
+    // todo don't use
     @RequestMapping(value = {"/new"}, method = RequestMethod.GET)
     public String newUser(ModelMap model) {
         User user = new User();
@@ -103,6 +66,7 @@ public class UserController {
         return "registration";
     }
 
+    // todo don't use
     @RequestMapping(value = {"new"}, method = RequestMethod.POST)
     public String saveUser(UserDto userDto, BindingResult result, ModelMap model) {
 
@@ -111,7 +75,7 @@ public class UserController {
         }
 
         try {
-            userService.saveUser(userDto);
+            userService.saveUserDto(userDto);
         } catch (AlreadyRegisteredException e) {
             e.printStackTrace();
         }
@@ -122,28 +86,28 @@ public class UserController {
 
     @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.GET)
     public String editUser(@PathVariable String email, ModelMap model) {
-        User user = userService.getUserByEmail(email);
+        UserDto user = userService.getUserDtoByEmail(email);
         model.addAttribute("user", user);
         model.addAttribute("edit", true);
         return "registration";
     }
 
     @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.POST)
-    public String updateUser(User user, BindingResult result, ModelMap model, @PathVariable String email) {
+    public String updateUser(UserDto userDto, BindingResult result, ModelMap model, @PathVariable String email) {
 
         if (result.hasErrors()) {
             return "registration";
         }
 
-        userService.updateUser(user);
+        userService.updateUserDto(userDto);
 
-        model.addAttribute("success", "User " + user.getEmail() + " updated successfully");
+        model.addAttribute("success", "User " + userDto.getEmail() + " updated successfully");
         return "success";
     }
 
     @RequestMapping(value = {"delete-{email}-user"}, method = RequestMethod.GET)
     public String deleteUser(@PathVariable String email) {
-        userService.deleteUser(userService.getUserByEmail(email));
+        userService.deleteUserDto(userService.getUserDtoByEmail(email));
         return "redirect:/list";
     }
 

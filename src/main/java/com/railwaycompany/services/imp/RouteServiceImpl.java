@@ -12,6 +12,7 @@ import com.railwaycompany.services.exceptions.RouteDoesNotExist;
 import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
 import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 import com.railwaycompany.utils.DateConverter;
+import com.railwaycompany.utils.DtoConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,15 +37,6 @@ public class RouteServiceImpl implements RouteService {
 
     @Autowired
     StationDao stationDao;
-
-    private RouteDto constructRouteDto(RoutePoint routePoint) {
-        RouteDto routeDto = new RouteDto();
-        routeDto.setRouteName(routePoint.getRoute().getName());
-        routeDto.setStation(routePoint.getStation().getName());
-        routeDto.setDateArrival(routePoint.getDateArrival().toString());
-        routeDto.setDateDeparture(routePoint.getDateDeparture().toString());
-        return routeDto;
-    }
 
     @Override
     public void addRoute(String name) throws RouteWithSuchNameExistException {
@@ -125,7 +117,7 @@ public class RouteServiceImpl implements RouteService {
         if (routePointsList != null && !routePointsList.isEmpty()) {
             routeDtoList = new ArrayList<>();
             for (RoutePoint routePoint : routePointsList) {
-                routeDtoList.add(constructRouteDto(routePoint));
+                routeDtoList.add(DtoConverter.constructRouteDto(routePoint));
             }
         } else {
             String message = "Route points for route \"" + route.getName() + "\" does not exist";

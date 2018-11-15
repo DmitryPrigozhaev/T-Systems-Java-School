@@ -38,48 +38,56 @@
         </div>
         <nav id="mainmenu" class="mainmenu">
             <ul>
+                <%-- LOGO --%>
                 <li class="logo-wrapper">
                     <a href="index"><img src="../../../resources/img/railwaycompany-logo.png"
                                          alt="Information system of a railway company"></a></li>
+                <%-- HOME --%>
                 <li class="active">
                     <a href="index">Home</a>
                 </li>
+                <%-- SCHEDULE --%>
                 <li>
                     <a href="schedule">Schedule</a>
                 </li>
+                <%-- TICKETS --%>
                 <li>
                     <a href="tickets">Tickets</a>
                 </li>
-                <li>
-                    <a href="account">Account</a>
-                </li>
-                <%--<sec:authorize access="hasRole(3) or hasRole(2)">--%>
-                <li class="has-submenu">
-                    <a href="#">Manager Panel +</a>
-                    <div class="mainmenu-submenu">
-                        <div class="mainmenu-submenu-inner">
-                            <div>
-                                <h4>Trains</h4>
-                                <ul>
-                                    <li><a href="admin-all-trains">All trains</a></li>
-                                </ul>
-                                <h4>Stations</h4>
-                                <ul>
-                                    <li><a href="admin-all-stations">All stations</a></li>
-                                </ul>
-                                <h4>Routes</h4>
-                                <ul>
-                                    <li><a href="admin-all-routes">All routes</a></li>
-                                </ul>
-                                <h4>Passengers</h4>
-                                <ul>
-                                    <li><a href="admin-all-passengers">All passengers</a></li>
-                                </ul>
+                <%-- ACCOUNT --%>
+                <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')">
+                    <li>
+                        <a href="account">Account</a>
+                    </li>
+                </sec:authorize>
+                <%-- ADMIN PANEL --%>
+                <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')">
+                    <li class="has-submenu">
+                        <a href="#">Manager Panel +</a>
+                        <div class="mainmenu-submenu">
+                            <div class="mainmenu-submenu-inner">
+                                <div>
+                                    <h4>Trains</h4>
+                                    <ul>
+                                        <li><a href="admin-all-trains">All trains</a></li>
+                                    </ul>
+                                    <h4>Stations</h4>
+                                    <ul>
+                                        <li><a href="admin-all-stations">All stations</a></li>
+                                    </ul>
+                                    <h4>Routes</h4>
+                                    <ul>
+                                        <li><a href="admin-all-routes">All routes</a></li>
+                                    </ul>
+                                    <h4>Passengers</h4>
+                                    <ul>
+                                        <li><a href="admin-all-passengers">All passengers</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div><!-- /mainmenu-submenu-inner -->
-                    </div><!-- /mainmenu-submenu -->
-                </li>
-                <%--</sec:authorize>--%>
+                        </div>
+                    </li>
+                </sec:authorize>
             </ul>
         </nav>
     </div>

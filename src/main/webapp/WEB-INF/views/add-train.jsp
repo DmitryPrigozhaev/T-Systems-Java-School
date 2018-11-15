@@ -29,8 +29,7 @@
             <div class="col-md-6 col-md-offset-3">
                 <table class="shopping-cart">
                     <form:form name="add-new-train" action="" method="post">
-
-
+                        <%-- TRAIN NUMBER--%>
                         <div class="form-group">
                             <c:choose>
                                 <c:when test="${edit}">
@@ -45,8 +44,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
-
-
+                        <%-- ROUTE --%>
                         <div class="form-group">
                             <label for="routeId">Choose route</label>
                             <select class="form-control" id="routeId" name="routeId">
@@ -55,14 +53,13 @@
                                 </c:forEach>
                             </select>
                         </div>
-
+                        <%-- NUMBER OF CARRIAGES --%>
                         <div class="form-group">
                             <label for="numberOfCarriages">Set number of carriages</label>
                             <input type="text" class="form-control" name="numberOfCarriages" id="numberOfCarriages"
                                    placeholder="numberOfCarriages"/>
                         </div>
-
-                        <%--<button type="submit" class="btn btn-primary">Add</button>--%>
+                        <%-- REGISTER / UPDATE --%>
                         <c:choose>
                             <c:when test="${edit}">
                                 <input type="submit" value="Update"/>

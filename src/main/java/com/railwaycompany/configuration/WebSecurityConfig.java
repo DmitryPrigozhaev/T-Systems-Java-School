@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/admin-all-passengers", "/admin-all-routes", "/admin-all-stations", "/admin-all-trains")
-                .access("hasRole('ROLE_ADMIN')")
+                .access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
 
                 .and().formLogin()
                 .loginProcessingUrl("/login")

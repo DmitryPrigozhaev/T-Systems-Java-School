@@ -2,8 +2,6 @@
 <jsp:include page="components/header.jsp"/>
 <jsp:include page="components/navbar.jsp" flush="true"/>
 
-<%-- TODO --%>
-
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
     <div class="container">

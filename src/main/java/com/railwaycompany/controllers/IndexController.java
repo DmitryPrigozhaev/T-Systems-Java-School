@@ -12,4 +12,15 @@ public class IndexController {
         return "index";
     }
 
+//    @RequestMapping(value = {"/", "index"}, method = RequestMethod.POST)
+//    public String searchTrain(@RequestParam(value = "stationFrom") String stationFrom,
+//                              @RequestParam(value = "stationTo") String stationTo,
+//                              @RequestParam(value = "date") String date,
+//                              ModelMap modelMap) {
+//        modelMap.addAttribute("stationFrom", stationFrom);
+//        modelMap.addAttribute("stationTo", stationTo);
+//        modelMap.addAttribute("date", date);
+//        return "redirect:/searchTrain";
+//    }
+
 }

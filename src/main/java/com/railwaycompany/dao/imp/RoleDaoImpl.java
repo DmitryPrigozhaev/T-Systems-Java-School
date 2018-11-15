@@ -14,7 +14,6 @@ public class RoleDaoImpl extends AbstractGenericDao<Role> implements RoleDao {
 
     private static final String GET_ROLE_BY_NAME = "SELECT r FROM Role r WHERE r.name = :name";
 
-
     @Override
     public Role getRoleByName(String name) {
         Query query = getCurrentSession().createQuery(GET_ROLE_BY_NAME);

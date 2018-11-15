@@ -39,7 +39,7 @@ public class UserValidator implements Validator {
         if (!pattern.matcher(user.getEmail()).matches()) {
             errors.rejectValue("email", "Email.invalid");
         }
-        if (userService.getUserByEmail(user.getEmail()) != null) {
+        if (userService.getUserDtoByEmail(user.getEmail()) != null) {
             errors.rejectValue("email", "Email.duplicate");
         }
 

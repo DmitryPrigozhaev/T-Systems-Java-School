@@ -8,6 +8,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String birthDate;
+    private String role;
 
     public String getEmail() {
         return email;
@@ -55,5 +56,13 @@ public class UserDto {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
