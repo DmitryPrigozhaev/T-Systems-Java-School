@@ -1,6 +1,6 @@
 package com.railwaycompany.services.exceptions;
 
-public class RailwayCompanyExceptions extends Exception {
+public class RailwayCompanyExceptions extends RuntimeException {
     public RailwayCompanyExceptions(String message) {
         super(message);
     }

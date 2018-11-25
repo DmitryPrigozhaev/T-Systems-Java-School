@@ -3,7 +3,7 @@ package com.railwaycompany.dto;
 public class StationDto {
 
     private Long id;
-    private String stationName;
+    private String name;
 
     public Long getId() {
         return id;
@@ -13,11 +13,11 @@ public class StationDto {
         this.id = id;
     }
 
-    public String getStationName() {
-        return stationName;
+    public String getName() {
+        return name;
     }
 
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

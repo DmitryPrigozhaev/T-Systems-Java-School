@@ -1,5 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <body>
 
 <!-- Navigation & Logo-->
@@ -10,7 +11,8 @@
             <div class="extras">
                 <ul>
                     <%-- SHOPPING CART --%>
-                    <li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i>
+                    <li class="shopping-cart-items">
+                        <i class="glyphicon glyphicon-shopping-cart icon-white"></i>
                         <a href="shopping-cart"><b>3 items</b></a>
                     </li>
                     <%-- LANGUAGES --%>
@@ -28,10 +30,16 @@
                     </li>
                     <%-- LOGIN / LOGOUT --%>
                     <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')">
-                        <li><a href="/logout">Logout</a></li>
+                        <li>
+                            <i class="glyphicon glyphicon-log-out icon-white"></i>
+                            <a href="/logout">Logout</a>
+                        </li>
                     </sec:authorize>
                     <sec:authorize access="!(hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER') || hasRole('ROLE_USER'))">
-                        <li><a href="login">Login</a></li>
+                        <li>
+                            <i class="glyphicon glyphicon-log-in icon-white"></i>
+                            <a href="login">Login</a>
+                        </li>
                     </sec:authorize>
                 </ul>
             </div>
@@ -92,3 +100,5 @@
         </nav>
     </div>
 </div>
+
+<div style="min-height:60vh">

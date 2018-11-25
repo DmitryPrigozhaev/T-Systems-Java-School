@@ -21,8 +21,10 @@ public class RoutePointDaoImpl extends AbstractGenericDao<RoutePoint> implements
 
     private static final String GET_ROUTE_POINTS_BY_ROUTE_ID = "SELECT rp FROM RoutePoint rp WHERE rp.route.id = :routeId";
 
+    private static final String GET_ROUTE_POINTS_BY_ROUTE_NAME = "SELECT rp FROM RoutePoint rp WHERE rp.route.name = :routeName";
+
     @Override
-    public List<RoutePoint> getStationScheduleByStationId(long stationId) {
+    public List<RoutePoint> getRoutePointsByStationId(long stationId) {
         Query query = getCurrentSession().createQuery(GET_SCHEDULE_BY_STATION_ID);
         query.setParameter("stationId", stationId);
 
@@ -40,7 +42,7 @@ public class RoutePointDaoImpl extends AbstractGenericDao<RoutePoint> implements
     }
 
     @Override
-    public List<RoutePoint> getStationScheduleByStationName(String stationName) {
+    public List<RoutePoint> getRoutePointsByStationName(String stationName) {
         Query query = getCurrentSession().createQuery(GET_SCHEDULE_BY_STATION_NAME);
         query.setParameter("stationName", stationName);
 
@@ -62,17 +64,30 @@ public class RoutePointDaoImpl extends AbstractGenericDao<RoutePoint> implements
         Query query = getCurrentSession().createQuery(GET_ROUTE_POINTS_BY_ROUTE_ID);
         query.setParameter("routeId", routeId);
 
-        List<RoutePoint> routeSchedule = null;
-        try {
-            List resultList = query.getResultList();
-            routeSchedule = new ArrayList<>();
+        List<RoutePoint> routePointList = null;
+        List resultList = query.getResultList();
+        if (resultList != null && !resultList.isEmpty()) {
+            routePointList = new ArrayList<>();
             for (Object o : resultList) {
-                routeSchedule.add((RoutePoint) o);
+                routePointList.add((RoutePoint) o);
             }
-        } catch (NoResultException e) {
-            LOG.warn("No schedule was found for routeId: " + routeId);
         }
-        return routeSchedule;
+        return routePointList;
     }
 
+    @Override
+    public List<RoutePoint> getRoutePointsByRouteName(String routeName) {
+        Query query = getCurrentSession().createQuery(GET_ROUTE_POINTS_BY_ROUTE_NAME);
+        query.setParameter("routeName", routeName);
+
+        List<RoutePoint> routePointList = null;
+        List resultList = query.getResultList();
+        if (resultList != null && !resultList.isEmpty()) {
+            routePointList = new ArrayList<>();
+            for (Object o : resultList) {
+                routePointList.add((RoutePoint) o);
+            }
+        }
+        return routePointList;
+    }
 }

@@ -1,14 +1,13 @@
 package com.railwaycompany.controllers;
 
 import com.railwaycompany.dto.RouteDto;
-import com.railwaycompany.entities.Route;
-import com.railwaycompany.entities.RoutePoint;
+import com.railwaycompany.dto.RoutePointDto;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.api.StationService;
-import com.railwaycompany.services.exceptions.RouteDoesNotExist;
+import com.railwaycompany.services.exceptions.RouteDoesNotExistException;
+import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
-import com.railwaycompany.utils.DateConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +29,10 @@ public class RouteController {
 
     @RequestMapping(value = "admin-all-routes", method = RequestMethod.GET)
     public String getAllRoutes(ModelMap model) {
-        List<Route> routeList = routeService.getAllRoutes();
-        List<RoutePoint> routePointList = routeService.getAllRoutePoints();
-        model.addAttribute("routeList", routeList);
-        model.addAttribute("routePointList", routePointList);
+        List<RouteDto> routeDtoList = routeService.getAllRoutes();
+        List<RoutePointDto> routePointsDtoList = routeService.getAllRoutePointsDtoList();
+        model.addAttribute("routeDtoList", routeDtoList);
+        model.addAttribute("routePointsDtoList", routePointsDtoList);
         return "admin-all-routes";
     }
 
@@ -46,100 +45,85 @@ public class RouteController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "new-route", method = RequestMethod.POST)
-    public List<RoutePoint> saveRoute(@RequestBody RouteDto routeDto) {
+    @RequestMapping(value = "new-route", method = RequestMethod.POST, consumes = "application/json")
+    public List<RoutePointDto> saveRoute(@RequestBody RoutePointDto routePointDto) {
 
-        Route route;
-        RoutePoint routePoint;
+        RouteDto routeDto;
 
         try {
-            route = routeService.getRouteByName(routeDto.getRouteName());
-        } catch (RouteDoesNotExist e) {
-            String message = "Route with name \"" + routeDto.getRouteName() + "\" does not exist, creating...";
+            routeDto = routeService.getRouteDtoByName(routePointDto.getRouteName());
+        } catch (RouteDoesNotExistException e) {
+            String message = "Route with name \"" + routePointDto.getRouteName() + "\" does not exist, creating...";
             LOG.warn(message);
 
-            route = new Route();
-            route.setName(routeDto.getRouteName());
-            routeService.addRoute(route);
-
-            message = "Route \"" + route.getName() + "\" creating successfully";
-            LOG.warn(message);
-        }
-
-        if (route != null) {
+            routeDto = new RouteDto();
+            routeDto.setName(routePointDto.getRouteName());
             try {
-                routePoint = new RoutePoint();
-                routePoint.setRoute(route);
-                routePoint.setStation(stationService.getStationByName(routeDto.getStation()));
-                if (routeDto.getDateArrival().equals("")) {
-                    routePoint.setDateArrival(null);
-                } else {
-                    routePoint.setDateArrival(DateConverter.convertDatetime(routeDto.getDateArrival()));
-                }
-                if (routeDto.getDateDeparture().equals("")) {
-                    routePoint.setDateDeparture(null);
-                } else {
-                    routePoint.setDateDeparture(DateConverter.convertDatetime(routeDto.getDateDeparture()));
-                }
-                routeService.addRoutePoint(routePoint);
-            } catch (StationDoesNotExistException e) {
-                String message = "Station with name \"" + routeDto.getStation() + "\" does not exist";
-                LOG.error(message, e);
+                routeService.addRoute(routeDto);
+            } catch (RouteWithSuchNameExistException e1) {
+                String msg = "Route with name \"" + routePointDto.getRouteName() + "\" already exist";
+                LOG.warn(msg);
             }
+
+            message = "Route \"" + routeDto.getName() + "\" creating successfully";
+            LOG.warn(message);
         }
 
-        List<RoutePoint> routePoints = routeService.getRoutePoints(route);
-        for (RoutePoint point : routePoints) {
-            System.out.println(point.getId());
-            System.out.println(point.getRoute().getName());
-            System.out.println(point.getStation().getName());
-            System.out.println(point.getDateArrival());
-            System.out.println(point.getDateDeparture());
+        try {
+            routeService.addRoutePoint(routePointDto);
+        } catch (StationDoesNotExistException e) {
+            String message = "Station with name \"" + routePointDto.getStationName() + "\" does not exist";
+            LOG.warn(message);
+        } catch (RouteDoesNotExistException e) {
+            String message = "Route with name \"" + routePointDto.getRouteName() + "\" does not exist";
+            LOG.warn(message);
         }
 
-        return routePoints;
+        return routeService.getRoutePointsDtoList(routeDto);
     }
 
     @RequestMapping(value = {"edit-{name}-route"}, method = RequestMethod.GET)
     public String editRoute(@PathVariable String name, ModelMap model) {
-        Route route = null;
-        List<RoutePoint> routePointList = null;
+
+        RouteDto routeDto = null;
+        List<RoutePointDto> routePointList = null;
 
         try {
-            route = routeService.getRouteByName(name);
-            routePointList = routeService.getRoutePoints(route);
-        } catch (RouteDoesNotExist e) {
+            routeDto = routeService.getRouteDtoByName(name);
+            routePointList = routeService.getRoutePointsDtoList(routeDto);
+        } catch (RouteDoesNotExistException e) {
             String message = "Route with name \"" + name + "\" does not exist";
             LOG.warn(message, e);
         }
 
         List<Station> stationList = stationService.getAllStation();
         model.addAttribute("stationList", stationList);
-        model.addAttribute("route", route);
+        model.addAttribute("route", routeDto);
         model.addAttribute("routePointList", routePointList);
         model.addAttribute("edit", true);
         return "add_route";
     }
 
+    // TODO вопрос по пересылаемому объекту
     @RequestMapping(value = {"edit-{name}-route"}, method = RequestMethod.POST)
-    public String updateRoute(@PathVariable String name, Route route, List<RoutePoint> list, ModelMap model) {
+    public String updateRoute(@PathVariable String name, RouteDto routeDto, ModelMap model) {
 
-        routeService.updateRoute(route);
+        routeService.updateRoute(routeDto);
 
-        model.addAttribute("success", "Route " + route.getName() + " updated successfully");
+        model.addAttribute("success", "Route " + routeDto.getName() + " updated successfully");
         return "route-success";
     }
 
     @RequestMapping(value = {"delete-{name}-route"}, method = RequestMethod.GET)
     public String deleteRoute(@PathVariable String name) {
-        Route route = null;
+        RouteDto routeDto = null;
         try {
-            route = routeService.getRouteByName(name);
-        } catch (RouteDoesNotExist e) {
+            routeDto = routeService.getRouteDtoByName(name);
+        } catch (RouteDoesNotExistException e) {
             String message = "Route with name \"" + name + "\" does not exist";
             LOG.warn(message);
         }
-        routeService.deleteRoute(route);
+        routeService.deleteRoute(routeDto);
         return "redirect:/admin-all-routes";
     }
 }

@@ -1,7 +1,6 @@
 package com.railwaycompany.services.api;
 
-import com.railwaycompany.entities.Route;
-import com.railwaycompany.entities.Train;
+import com.railwaycompany.dto.TrainDto;
 import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainWithSuchNumberExistException;
 
@@ -9,23 +8,21 @@ import java.util.List;
 
 public interface TrainService {
 
-    void addTrain(Train train) throws TrainWithSuchNumberExistException;
+    void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException;
 
     void addTrain(int number, long routeId, int numberOfCarriages) throws TrainWithSuchNumberExistException;
 
-    void setRouteForTrainByTrainId(Route route, long id);
+    TrainDto getTrainDtoById(long id) throws TrainDoesNotExistException;
 
-    Train getTrainById(long id) throws TrainDoesNotExistException;
+    TrainDto getTrainDtoByNumber(int number) throws TrainDoesNotExistException;
 
-    Train getTrainByNumber(int number) throws TrainDoesNotExistException;
+    TrainDto getTrainDtoByRouteId(long id) throws TrainDoesNotExistException;
 
-    Train getTrainByRouteId(long id) throws TrainDoesNotExistException;
-
-    List<Train> getAllTrains();
+    List<TrainDto> getAllTrains();
 
     int getNumberOfCarriagesByTrainId(long id) throws TrainDoesNotExistException;
 
-    void updateTrain(Train train);
+    void updateTrain(TrainDto trainDto);
 
-    void deleteTrain(Train train);
+    void deleteTrain(TrainDto trainDto);
 }

@@ -28,14 +28,14 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <table class="shopping-cart">
-                    <form:form name="add-new-train" action="" method="post">
+                    <form:form method="POST" name="new-train" action="">
                         <%-- TRAIN NUMBER--%>
                         <div class="form-group">
                             <c:choose>
                                 <c:when test="${edit}">
                                     <label for="number">Number of train</label>
                                     <input type="text" class="form-control" name="number" id="number"
-                                           placeholder="${train.number}" disabled/>
+                                           value="${train.number}" disabled/>
                                 </c:when>
                                 <c:otherwise>
                                     <label for="number">Set train number</label>
@@ -49,7 +49,7 @@
                             <label for="routeId">Choose route</label>
                             <select class="form-control" id="routeId" name="routeId">
                                 <c:forEach items="${routeList}" var="route">
-                                    <option value="${route.id}"><c:out value="${route.name}"/></option>
+                                    <option value="${route.name}"><c:out value="${route.name}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label for="numberOfCarriages">Set number of carriages</label>
                             <input type="text" class="form-control" name="numberOfCarriages" id="numberOfCarriages"
-                                   placeholder="numberOfCarriages"/>
+                                   placeholder="number of carriages"/>
                         </div>
                         <%-- REGISTER / UPDATE --%>
                         <c:choose>

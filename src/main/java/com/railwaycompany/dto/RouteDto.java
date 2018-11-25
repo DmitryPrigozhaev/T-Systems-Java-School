@@ -1,41 +1,34 @@
 package com.railwaycompany.dto;
 
+import java.util.List;
+
 public class RouteDto {
 
-    private String routeName;
-    private String station;
-    private String dateArrival;
-    private String dateDeparture;
+    private Long id;
+    private String name;
+    private List<RoutePointDto> routePointDtoList;
 
-    public String getRouteName() {
-        return routeName;
+    public Long getId() {
+        return id;
     }
 
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getStation() {
-        return station;
+    public String getName() {
+        return name;
     }
 
-    public void setStation(String station) {
-        this.station = station;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDateArrival() {
-        return dateArrival;
+    public List<RoutePointDto> getRoutePointDtoList() {
+        return routePointDtoList;
     }
 
-    public void setDateArrival(String dateArrival) {
-        this.dateArrival = dateArrival;
-    }
-
-    public String getDateDeparture() {
-        return dateDeparture;
-    }
-
-    public void setDateDeparture(String dateDeparture) {
-        this.dateDeparture = dateDeparture;
+    public void setRoutePointDtoList(List<RoutePointDto> routePointDtoList) {
+        this.routePointDtoList = routePointDtoList;
     }
 }

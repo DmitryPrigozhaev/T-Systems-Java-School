@@ -55,48 +55,70 @@
 
 <!-- Train List -->
 <div class="section">
-    <div class="container">
-        <div class="row">
-            <%-- Loading img --%>
-            <div class="col-md-offset-5">
-                <img src="../../resources/img/bx_loader.gif" id="imgLoad"/>
-            </div>
-            <div class="section-white col-md-10 col-md-offset-1">
+    <div id="foundTrains" class="container">
+
+        <%-- DOWNLOAD ANIMATION --%>
+        <div class="col-md-offset-5">
+            <img src="../../resources/img/bx_loader.gif" id="imgLoad"/>
+        </div>
+
+        <%-- FOUND TRAINS --%>
+        <template class="row">
+            <div class="section-white col-md-12" style="margin-bottom: 15px">
                 <div>
                     <div class="col-md-10">
-                        <div class="col-md-12">
-                            <div class="section">
-                                <span class="text-muted h4">train </span>
-                                <b class="h3">№
-                                    <span>number</span>
-                                    «<span>сообщение</span>»
-                                </b>
-                            </div>
+                        <div class="col-md-12" style="margin: 15px">
+                            <span class="text-muted h4">train </span>
+                            <b class="h3">№
+                                <span>number</span>
+                                «<span>сообщение</span>»
+                            </b>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                                <span class="h2">20:00</span>
+                        <div class="col-md-12" style="margin-bottom: 15px">
+                            <div class="col-md-4">
+                                <span class="h2 text-danger">20:00</span>
+                                <br>
                                 <span class="h4">12.12.2018</span>
+                                <br>
                                 <span class="h2 text-primary">Tver</span>
                             </div>
-                            <div class="col-md-3">
-                                2 block
+                            <div class="col-md-4">
+                                <span><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                <span class="h4">6h 30min</span>
+                                <span><i class="glyphicon glyphicon-arrow-right"></i></span>
                             </div>
-                            <div class="col-md-3">
-                                3 block
-                            </div>
-                            <div class="col-md-3">
-                                4 block route
+                            <div class="col-md-4">
+                                <span class="h2 text-danger">23:40</span>
+                                <br>
+                                <span class="h4">12.12.2018</span>
+                                <br>
+                                <span class="h2 text-primary">Saint-Petersburg</span>
                             </div>
                         </div>
+                        <div class=""></div>
                     </div>
                     <div class="col-md-2">
-                        Car block
+                        <div class="col-md-12" style="margin: 15px">
+                            <span class="text-muted h4">Route</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-xs btn-block btn-grey" data-toggle="collapse" data-target="#target">
+                                Эконом-класс
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </template>
+
+        <div id="target" class="collapse row" aria-expanded="false">
+            <div class="section-white col-md-12" style="margin-bottom: 15px">
+                <button class="btn btn-grey btn-lg" style="margin: 15px;">
+                    Вагон 1
+                </button>
+            </div>
         </div>
+
     </div>
 </div>
-
 <jsp:include page="components/footer.jsp"/>

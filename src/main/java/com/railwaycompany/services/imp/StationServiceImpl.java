@@ -65,12 +65,12 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public List<RoutePoint> getStationScheduleByStationId(long stationId) {
-        return routePointDao.getStationScheduleByStationId(stationId);
+        return routePointDao.getRoutePointsByStationId(stationId);
     }
 
     @Override
     public List<RoutePoint> getStationScheduleByStationName(String name) {
-        return routePointDao.getStationScheduleByStationName(name);
+        return routePointDao.getRoutePointsByStationName(name);
     }
 
     @Override

@@ -4,15 +4,15 @@ import com.railwaycompany.dao.api.RouteDao;
 import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.dao.api.StationDao;
 import com.railwaycompany.dto.RouteDto;
+import com.railwaycompany.dto.RoutePointDto;
 import com.railwaycompany.entities.Route;
 import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
 import com.railwaycompany.services.api.RouteService;
-import com.railwaycompany.services.exceptions.RouteDoesNotExist;
-import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
+import com.railwaycompany.services.exceptions.RouteDoesNotExistException;
 import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
+import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.utils.DateConverter;
-import com.railwaycompany.utils.DtoConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Service("routeService")
+@Service
 @Transactional(readOnly = false)
 public class RouteServiceImpl implements RouteService {
 
@@ -37,6 +37,80 @@ public class RouteServiceImpl implements RouteService {
 
     @Autowired
     StationDao stationDao;
+
+    private Route constructRoute(RouteDto routeDto) {
+        Route route = new Route();
+        route.setName(routeDto.getName());
+        return route;
+    }
+
+    private RouteDto constructRouteDto(Route route) {
+        List<RoutePointDto> routePointDtoList = null;
+        List<RoutePoint> routePointList = route.getRoutePointList();
+        if (routePointList != null && !routePointList.isEmpty()) {
+            routePointDtoList = new ArrayList<>();
+            for (RoutePoint routePoint : routePointList) {
+                routePointDtoList.add(constructRoutePointDto(routePoint));
+            }
+        }
+
+        RouteDto routeDto = new RouteDto();
+        routeDto.setId(route.getId());
+        routeDto.setName(route.getName());
+        routeDto.setRoutePointDtoList(routePointDtoList);
+        return routeDto;
+    }
+
+    private RoutePoint constructRoutePoint(RoutePointDto routePointDto) throws RouteDoesNotExistException, StationDoesNotExistException {
+        RoutePoint routePoint = new RoutePoint();
+        Route route;
+        Station station;
+        Date dateDeparture = null;
+        Date dateArrival = null;
+
+        route = routeDao.getRouteByName(routePointDto.getRouteName());
+        if (route == null) {
+            String message = "Route with name \"" + routePointDto.getRouteName() + "\" does not exist";
+            LOG.warn(message);
+            throw new RouteDoesNotExistException(message);
+        }
+        station = stationDao.getStationByName(routePointDto.getStationName());
+        if (station == null) {
+            String message = "Station with name \"" + routePointDto.getStationName() + "\" does not exist";
+            LOG.warn(message);
+            throw new StationDoesNotExistException(message);
+        }
+        if (!routePointDto.getDateDeparture().equals("")) {
+            dateDeparture = DateConverter.convertDatetime(routePointDto.getDateDeparture());
+        }
+        if (!routePointDto.getDateArrival().equals("")) {
+            dateArrival = DateConverter.convertDatetime(routePointDto.getDateArrival());
+        }
+        routePoint.setRoute(route);
+        routePoint.setStation(station);
+        routePoint.setDateDeparture(dateDeparture);
+        routePoint.setDateArrival(dateArrival);
+        return routePoint;
+    }
+
+    private RoutePointDto constructRoutePointDto(RoutePoint routePoint) {
+        RoutePointDto routeDto = new RoutePointDto();
+
+        routeDto.setId(routePoint.getId());
+        routeDto.setRouteName(routePoint.getRoute().getName());
+        routeDto.setStationName(routePoint.getStation().getName());
+        if (routePoint.getDateDeparture() == null) {
+            routeDto.setDateDeparture("");
+        } else {
+            routeDto.setDateDeparture(routePoint.getDateDeparture().toString());
+        }
+        if (routePoint.getDateArrival() == null) {
+            routeDto.setDateArrival("");
+        } else {
+            routeDto.setDateArrival(routePoint.getDateArrival().toString());
+        }
+        return routeDto;
+    }
 
     @Override
     public void addRoute(String name) throws RouteWithSuchNameExistException {
@@ -52,183 +126,180 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void addRoute(Route route) {
-        routeDao.create(route);
+    public void addRoute(RouteDto routeDto) throws RouteWithSuchNameExistException {
+        Route route = routeDao.getRouteByName(routeDto.getName());
+        if (route == null) {
+            route = constructRoute(routeDto);
+            routeDao.create(route);
+        } else {
+            String message = "Route \"" + routeDto.getName() + "\" is already exist";
+            throw new RouteWithSuchNameExistException(message);
+        }
     }
 
     @Override
-    public void addRoutePoint(RoutePoint routePoint) {
+    public void addRoutePoint(RoutePointDto routePointDto) throws StationDoesNotExistException, RouteDoesNotExistException {
+        RoutePoint routePoint = constructRoutePoint(routePointDto);
         routePointDao.create(routePoint);
     }
 
     @Override
-    public void addRoutePointsForRouteByRouteId(long id, List<Station> stationList,
-                                                List<Date> dateArrivalList, List<Date> dateDepartureList) {
-        Route route = routeDao.read(id);
-        RoutePoint routePoint = new RoutePoint();
-        for (int i = 0; i < stationList.size(); i++) {
-            routePoint.setRoute(route);
-            routePoint.setStation(stationList.get(i));
-            routePoint.setDateArrival(dateArrivalList.get(i));
-            routePoint.setDateDeparture(dateDepartureList.get(i));
-            routePointDao.create(routePoint);
-        }
-    }
-
-    @Override
-    public void addRoutePointsForRouteByRouteId(long id, long[] stationId, String[] dateArrivalArray, String[] dateDepartureArray) {
-        Route route = routeDao.read(id);
-        RoutePoint routePoint = new RoutePoint();
-        for (int i = 0; i < stationId.length; i++) {
-            routePoint.setRoute(route);
-            routePoint.setStation(stationDao.read(stationId[i]));
-            routePoint.setDateArrival(DateConverter.convertDatetime(dateArrivalArray[i]));
-            routePoint.setDateDeparture(DateConverter.convertDatetime(dateDepartureArray[i]));
-            routePointDao.create(routePoint);
-        }
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Route getRouteById(long id) throws RouteDoesNotExist {
+    public RouteDto getRouteDtoById(long id) throws RouteDoesNotExistException {
         Route route = routeDao.read(id);
         if (route == null) {
-            String message = "Route with id " + id + " does not exist";
-            throw new RouteDoesNotExist(message);
+            String message = "Route with id \"" + id + "\" does not exist";
+            throw new RouteDoesNotExistException(message);
         }
-        return route;
+        return constructRouteDto(route);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Route getRouteByName(String name) throws RouteDoesNotExist {
+    public RouteDto getRouteDtoByName(String name) throws RouteDoesNotExistException {
         Route route = routeDao.getRouteByName(name);
         if (route == null) {
             String message = "Route with name \"" + name + "\" does not exist";
-            throw new RouteDoesNotExist(message);
+            throw new RouteDoesNotExistException(message);
         }
-        return route;
+        return constructRouteDto(route);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<RouteDto> getRouteDtoList(Route route) {
-        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByRouteId(route.getId());
+    public List<RouteDto> getAllRoutes() {
         List<RouteDto> routeDtoList = null;
-        if (routePointsList != null && !routePointsList.isEmpty()) {
+        List<Route> routeList = routeDao.readAll();
+        if (routeList != null && !routeList.isEmpty()) {
             routeDtoList = new ArrayList<>();
-            for (RoutePoint routePoint : routePointsList) {
-                routeDtoList.add(DtoConverter.constructRouteDto(routePoint));
+            for (Route route : routeList) {
+                routeDtoList.add(constructRouteDto(route));
             }
-        } else {
-            String message = "Route points for route \"" + route.getName() + "\" does not exist";
-            LOG.warn(message);
         }
         return routeDtoList;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Route> getAllRoutes() {
-        return routeDao.readAll();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<RoutePoint> getRoutePointsByRouteId(long id) throws RoutePointsForThisRouteDoesNotExist {
-        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByRouteId(id);
-        if (routePointsList == null || routePointsList.isEmpty()) {
-            String message = "Route with id = " + id + " does not have route points";
-            throw new RoutePointsForThisRouteDoesNotExist(message);
-        }
-        return routePointsList;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<RoutePoint> getRoutePoints(Route route) {
-        return routePointDao.getRoutePointsByRouteId(route.getId());
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<RoutePoint> getAllRoutePoints() {
-        return routePointDao.readAll();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Route> findRouteByStationsName(String stationFromName, String stationToName) throws RoutePointsForThisRouteDoesNotExist {
-
-        List<Route> routeList = getAllRoutes();
-
-        List<Route> result = null;
-
-        if (routeList != null && !routeList.isEmpty()) {
-            result = new ArrayList<>();
-
-            for (Route route : routeList) {
-                List<RoutePoint> routePointList = getRoutePointsByRouteId(route.getId());
-                int countStations = 0;
-                for (RoutePoint routePoint : routePointList) {
-                    if (routePoint.getStation().getName().equals(stationFromName) &&
-                            routePoint.getStation().getName().equals(stationToName)) {
-                        countStations++;
-                    }
-                }
-                if (countStations == 2) result.add(route);
+    public List<RoutePointDto> getRoutePointsDtoList(RouteDto routeDto) {
+        List<RoutePointDto> routePointDtoList = null;
+        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByRouteName(routeDto.getName());
+        if (routePointsList != null && !routePointsList.isEmpty()) {
+            routePointDtoList = new ArrayList<>();
+            for (RoutePoint routePoint : routePointsList) {
+                routePointDtoList.add(constructRoutePointDto(routePoint));
             }
         }
-        return result;
+        return routePointDtoList;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Route> findRouteByStationsNameAndDate(String stationFromName, String stationToName, Date date)
-            throws RouteDoesNotExist, RoutePointsForThisRouteDoesNotExist {
-
-        List<Route> routeList = getAllRoutes();
-
-        List<Route> result = null;
-
-        if (routeList != null && !routeList.isEmpty()) {
-            result = new ArrayList<>();
-
-            for (Route route : routeList) {
-                List<RoutePoint> routePointList = getRoutePointsByRouteId(route.getId());
-                int countStations = 0;
-                for (RoutePoint routePoint : routePointList) {
-                    if (routePoint.getStation().getName().equals(stationFromName) &&
-                            routePoint.getStation().getName().equals(stationToName) &&
-                            routePoint.getDateDeparture().getTime() == date.getTime()) {
-                        countStations++;
-                    }
-                }
-                if (countStations == 2) result.add(route);
+    public List<RoutePointDto> getAllRoutePointsDtoList() {
+        List<RoutePointDto> routePointsDtoList = null;
+        List<RoutePoint> routePointsList = routePointDao.readAll();
+        if (routePointsList != null && !routePointsList.isEmpty()) {
+            routePointsDtoList = new ArrayList<>();
+            for (RoutePoint routePoint : routePointsList) {
+                routePointsDtoList.add(constructRoutePointDto(routePoint));
             }
-        } else {
-            String message = "Route from station \"" + stationFromName + "\" and station \"" + stationToName + "\" does not exist";
-            throw new RouteDoesNotExist(message);
         }
-        return result;
+        return routePointsDtoList;
     }
 
     @Override
-    public void updateRoute(Route route) {
+    public void updateRoute(RouteDto routeDto) {
+        Route route = routeDao.getRouteByName(routeDto.getName());
         routeDao.update(route);
     }
 
     @Override
-    public void updateRoutePoint(RoutePoint routePoint) {
+    public void updateRoutePoint(RoutePointDto routePointDto) {
+        // TODO ??????
+        RoutePoint routePoint = routePointDao.read(routePointDto.getId());
         routePointDao.update(routePoint);
     }
 
     @Override
-    public void deleteRoute(Route route) {
+    public void deleteRoute(RouteDto routeDto) {
+        Route route = routeDao.getRouteByName(routeDto.getName());
         routeDao.delete(route);
     }
 
     @Override
-    public void deleteRoutePoint(RoutePoint routePoint) {
+    public void deleteRoutePoint(RoutePointDto routePointDto) {
+        // TODO ???????
+        RoutePoint routePoint = routePointDao.read(routePointDto.getId());
         routePointDao.delete(routePoint);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<RoutePointDto> findRoutePointsDtoByStation(Station station) {
+
+        List<RoutePointDto> routePointsDtoList = null;
+
+        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByStationName(station.getName());
+        if (routePointsList != null && !routePointsList.isEmpty()) {
+            routePointsDtoList = new ArrayList<>();
+            for (RoutePoint routePoint : routePointsList) {
+                routePointsDtoList.add(constructRoutePointDto(routePoint));
+            }
+        }
+        return routePointsDtoList;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<RouteDto> findRouteDtoByStations(Station stationFrom, Station stationTo) {
+
+        List<RouteDto> result = null;
+
+        List<RouteDto> routeDtoList = getAllRoutes();
+        if (routeDtoList != null && !routeDtoList.isEmpty()) {
+            result = new ArrayList<>();
+            for (RouteDto routeDto : routeDtoList) {
+                List<RoutePointDto> routePointsDtoList = getRoutePointsDtoList(routeDto);
+                int countStations = 0;
+                for (RoutePointDto routePointDto : routePointsDtoList) {
+                    if (routePointDto.getStationName().equals(stationFrom.getName()) ||
+                            routePointDto.getStationName().equals(stationTo.getName())) {
+                        countStations++;
+                    }
+                }
+                if (countStations == 2) result.add(routeDto);
+            }
+        }
+        return result;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<RouteDto> findRouteDtoByStationsAndDate(Station stationFrom, Station stationTo, Date date) {
+        System.out.println("-----------------------------------");
+        System.out.println("stationFrom.getName() = " + stationFrom.getName());
+        System.out.println("stationTo.getName() = " + stationTo.getName());
+        System.out.println("date = " + date);
+        System.out.println("-----------------------------------");
+
+        List<RouteDto> result = null;
+
+        List<RouteDto> routeDtoList = getAllRoutes();
+        if (routeDtoList != null && !routeDtoList.isEmpty()) {
+            result = new ArrayList<>();
+            for (RouteDto routeDto : routeDtoList) {
+                List<RoutePointDto> routePointsDtoList = getRoutePointsDtoList(routeDto);
+                int countStations = 0;
+                for (RoutePointDto routePointDto : routePointsDtoList) {
+                    if ((routePointDto.getStationName().equals(stationFrom.getName()) ||
+                            routePointDto.getStationName().equals(stationTo.getName())) &&
+                            (date.equals(DateConverter.convertDate(routePointDto.getDateDeparture())) ||
+                                    date.equals(DateConverter.convertDate(routePointDto.getDateArrival())))) {
+                        countStations++;
+                    }
+                }
+                if (countStations == 2) result.add(routeDto);
+            }
+        }
+        return result;
     }
 }

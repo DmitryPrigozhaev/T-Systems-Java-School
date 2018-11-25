@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface RoutePointDao extends GenericDao<RoutePoint> {
 
-    List<RoutePoint> getStationScheduleByStationId(long stationId);
+    List<RoutePoint> getRoutePointsByStationId(long stationId);
 
-    List<RoutePoint> getStationScheduleByStationName(String stationName);
+    List<RoutePoint> getRoutePointsByStationName(String stationName);
 
     List<RoutePoint> getRoutePointsByRouteId(long routeId);
+
+    List<RoutePoint> getRoutePointsByRouteName(String name);
 
 }

@@ -19,42 +19,22 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <table class="shopping-cart">
-                    <!-- ЗАГОЛОВКИ ТАБЛИЦЫ -->
+                    <!-- TABLE HEADERS -->
                     <tr>
-                        <td>
-                            <%--<div class="col-sm-4">--%>
-                            ID
-                            <%--</div>--%>
-                        </td>
-                        <td>
-                            <%--<div class="col-md-5">--%>
-                            Route
-                            <%--</div>--%>
-                        </td>
-                        <td>
-                            Train number
-                        </td>
-                        <td>
-                            Number of carriages
-                        </td>
+                        <td>ID</td>
+                        <td>Route</td>
+                        <td>Train number</td>
+                        <td>Number of carriages</td>
                         <td class="col-md-2"></td>
                     </tr>
-                    <!-- КОНЕЦ ЗАГОЛОВКОВ -->
+                    <!-- END TABLE HEADERS -->
 
                     <c:forEach items="${trainList}" var="train">
                         <tr>
-                            <td>
-                                    ${train.id}
-                            </td>
-                            <td>
-                                    ${train.route.name}
-                            </td>
-                            <td>
-                                    ${train.number}
-                            </td>
-                            <td>
-                                    ${train.numberOfCarriages}
-                            </td>
+                            <td>${train.id}</td>
+                            <td>${train.routeName}</td>
+                            <td>${train.number}</td>
+                            <td>${train.numberOfCarriages}</td>
                             <td class="actions">
                                 <a href="<c:url value='edit-${train.number}-train' />" class="btn btn-xs btn-grey"><i
                                         class="glyphicon glyphicon-pencil"></i></a>

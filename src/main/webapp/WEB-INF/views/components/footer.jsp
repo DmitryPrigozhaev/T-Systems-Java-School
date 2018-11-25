@@ -1,3 +1,4 @@
+</div>
 <!-- Footer -->
 
 <div class="footer">
@@ -6,9 +7,9 @@
             <div class="col-footer col-md-4 col-xs-6">
                 <h3>Navigate</h3>
                 <ul class="no-list-style footer-navigate-section">
-                    <li><a href="schedule.jsp">Schedule</a></li>
+                    <li><a href="schedule">Schedule</a></li>
                     <li><a href="tickets">Tickets</a></li>
-                    <li><a href="faq.jsp">FAQ</a></li>
+                    <li><a href="faq">FAQ</a></li>
                 </ul>
             </div>
             <div class="col-footer col-md-4 col-xs-6">

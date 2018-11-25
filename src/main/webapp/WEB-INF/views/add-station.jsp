@@ -27,33 +27,33 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <div class="basic-login">
-                    <form:form method="POST" modelAttribute="station" cssClass="form-horizontal">
-                        <form:input type="hidden" path="id" id="id"/>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-4 control-label">Station name</label>
-                            <div class="col-sm-8">
+                <table class="shopping-cart">
+                    <tr>
+                        <td>
+                            <form:form method="POST" modelAttribute="station" cssClass="form-horizontal">
+                                <form:input type="hidden" path="id" id="id"/>
+                                <label for="name">Station name</label>
                                 <form:input path="name" id="name" class="form-control" type="text"
                                             placeholder="Station name"/>
-                            </div>
 
-                            <c:choose>
-                                <c:when test="${edit}">
-                                    <div class="col-md-4 col-md-offset-8">
-                                        <br>
-                                        <button class="btn-blue btn-block" value="Update">Update</button>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-md-4 col-md-offset-8">
-                                        <br>
-                                        <button class="btn-blue btn-block" value="Register">Register</button>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </form:form>
-                </div>
+                                <c:choose>
+                                    <c:when test="${edit}">
+                                        <div class="col-md-4 col-md-offset-8">
+                                            <br>
+                                            <button class="btn-blue btn-block" value="Update">Update</button>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col-md-4 col-md-offset-8">
+                                            <br>
+                                            <button class="btn-blue btn-block" value="Register">Register</button>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </form:form>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="col-md2 col-md-offset-1">
                 <form action="<c:url value='admin-all-stations' />">

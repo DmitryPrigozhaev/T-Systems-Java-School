@@ -6,7 +6,7 @@ import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
-import com.railwaycompany.utils.DtoConverter;
+import com.railwaycompany.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,13 +28,35 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    private User constructUser(UserDto userDto) {
+        User user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setBirthDate(DateConverter.convertDate(userDto.getBirthDate()));
+        user.setRole(roleDao.getRoleByName("ROLE_CLIENT"));
+        return user;
+    }
+
+    private UserDto constructUserDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        userDto.setConfirmPassword(user.getPassword());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setBirthDate(user.getBirthDate().toString());
+        userDto.setRole(user.getRole().getName());
+        return userDto;
+    }
+
     @Override
     public void saveUserDto(UserDto userDto) throws AlreadyRegisteredException {
         if (isUserEmailUnique(userDto.getEmail())) {
 
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            User user = DtoConverter.constructUser(userDto);
-            user.setRole(roleDao.getRoleByName("ROLE_USER"));
+            User user = constructUser(userDto);
             userDao.create(user);
 
         } else {
@@ -49,7 +71,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.read(userId);
         UserDto userDto = null;
         if (user != null) {
-            userDto = DtoConverter.constructUserDto(user);
+            userDto = constructUserDto(user);
         }
         return userDto;
     }
@@ -59,7 +81,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByEmail(email);
         UserDto userDto = null;
         if (user != null) {
-            userDto = DtoConverter.constructUserDto(user);
+            userDto = constructUserDto(user);
         }
         return userDto;
     }
@@ -72,7 +94,7 @@ public class UserServiceImpl implements UserService {
         if (userList != null && !userList.isEmpty()) {
             userDtoList = new ArrayList<>();
             for (User user : userList) {
-                userDtoList.add(DtoConverter.constructUserDto(user));
+                userDtoList.add(constructUserDto(user));
             }
         }
         return userDtoList;

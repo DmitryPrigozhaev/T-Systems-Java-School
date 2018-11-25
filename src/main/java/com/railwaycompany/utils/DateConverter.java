@@ -18,6 +18,7 @@ public class DateConverter {
 
     public static Date convertDate(final String dateStr) {
         Date date = null;
+        if (dateStr.equals("")) return null;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
             date = dateFormat.parse(dateStr);

@@ -23,32 +23,16 @@
                 <table class="shopping-cart">
                     <!-- ЗАГОЛОВКИ ТАБЛИЦЫ -->
                     <tr>
-                        <td>
-                            <%--<div class="col-sm-4">--%>
-                                ID
-                            <%--</div>--%>
-                        </td>
-                        <td>
-                            <%--<div class="col-md-5">--%>
-                                    Station Name
-                            <%--</div>--%>
-                        </td>
+                        <td>ID</td>
+                        <td>Station Name</td>
                         <td class="col-md-2"></td>
                     </tr>
                     <!-- КОНЕЦ ЗАГОЛОВКОВ -->
 
                     <c:forEach items="${stationList}" var="station">
                         <tr>
-                            <td>
-                                <%--<div class="col-md-4">--%>
-                                        ${station.id}
-                                <%--</div>--%>
-                            </td>
-                            <td>
-                                <%--<div class="col-md-4">--%>
-                                        ${station.name}
-                                <%--</div>--%>
-                            </td>
+                            <td>${station.id}</td>
+                            <td>${station.name}</td>
                             <td class="actions">
                                 <a href="<c:url value='edit-${station.name}-station' />" class="btn btn-xs btn-grey"><i
                                         class="glyphicon glyphicon-pencil"></i></a>
@@ -57,7 +41,6 @@
                             </td>
                         </tr>
                     </c:forEach>
-
                 </table>
             </div>
             <div class="col-md2 col-md-offset-1">

@@ -21,15 +21,15 @@
             <div class="col-md-9 col-md-offset-1">
                 <table class="shopping-cart">
 
-                    <!-- ЗАГОЛОВКИ ТАБЛИЦЫ -->
+                    <!-- Table Headers -->
                     <tr>
                         <td class="col-md-1">ID</td>
                         <td class="col-md-6">Name</td>
                         <td class="col-md-1"></td>
                     </tr>
-                    <!-- КОНЕЦ ЗАГОЛОВКОВ -->
+                    <!-- End Table Headers -->
 
-                    <c:forEach items="${routeList}" var="route">
+                    <c:forEach items="${routeDtoList}" var="route">
                         <tr>
                             <td class="col-md-1">
                                     ${route.id}
@@ -46,15 +46,14 @@
                                             <td class="col-md-2">date arrival</td>
                                             <td class="col-md-2">date departure</td>
                                         </tr>
-                                        <%-- TODO через Ajax вытащить список станций по маршруту --%>
-                                            <c:forEach items="${routePointList}" var="routePoint">
-                                                <tr>
-                                                    <td>${routePoint.id}</td>
-                                                    <td>${routePoint.station.name}</td>
-                                                    <td>${routePoint.dateArrival}</td>
-                                                    <td>${routePoint.dateDeparture}</td>
-                                                </tr>
-                                            </c:forEach>
+                                        <c:forEach items="${route.routePointDtoList}" var="routePoint">
+                                            <tr>
+                                                <td>${routePoint.id}</td>
+                                                <td>${routePoint.stationName}</td>
+                                                <td>${routePoint.dateArrival}</td>
+                                                <td>${routePoint.dateDeparture}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </table>
                                 </div>
                             </td>

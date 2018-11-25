@@ -1,10 +1,10 @@
 package com.railwaycompany.controllers;
 
-import com.railwaycompany.entities.Route;
-import com.railwaycompany.entities.Train;
+import com.railwaycompany.dto.RouteDto;
+import com.railwaycompany.dto.TrainDto;
 import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.api.TrainService;
-import com.railwaycompany.services.exceptions.RouteDoesNotExist;
+import com.railwaycompany.services.exceptions.RouteDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainWithSuchNumberExistException;
 import org.apache.log4j.Logger;
@@ -31,14 +31,14 @@ public class TrainController {
 
     @RequestMapping(value = "admin-all-trains", method = RequestMethod.GET)
     public String getAllTrains(ModelMap model) {
-        List<Train> trainList = trainService.getAllTrains();
+        List<TrainDto> trainList = trainService.getAllTrains();
         model.addAttribute("trainList", trainList);
         return "admin-all-trains";
     }
 
     @RequestMapping(value = "new-train", method = RequestMethod.GET)
     public String newTrain(ModelMap model) {
-        List<Route> routeList = routeService.getAllRoutes();
+        List<RouteDto> routeList = routeService.getAllRoutes();
         model.addAttribute("routeList", routeList);
         model.addAttribute("edit", false);
         return "add-train";
@@ -50,61 +50,62 @@ public class TrainController {
                             @RequestParam("numberOfCarriages") int numberOfCarriages,
                             ModelMap model) {
 
-        Route route = null;
+        RouteDto routeDto = null;
         try {
-            route = routeService.getRouteById(routeId);
-        } catch (RouteDoesNotExist routeDoesNotExist) {
-            routeDoesNotExist.printStackTrace();
+            routeDto = routeService.getRouteDtoById(routeId);
+        } catch (RouteDoesNotExistException routeDoesNotExistException) {
+            routeDoesNotExistException.printStackTrace();
         }
 
-        Train train = new Train();
-        train.setRoute(route);
-        train.setNumber(number);
-        train.setNumberOfCarriages(numberOfCarriages);
+        TrainDto trainDto = new TrainDto();
+        trainDto.setNumber(number);
+        trainDto.setRouteName(routeDto == null ? "" : routeDto.getName());
+        trainDto.setNumberOfCarriages(numberOfCarriages);
+
         try {
-            trainService.addTrain(train);
+            trainService.addTrain(trainDto);
         } catch (TrainWithSuchNumberExistException e) {
             String message = "Train with number = " + number + " already exist";
             LOG.warn(message, e);
         }
 
-        model.addAttribute("success", "Train number " + train.getNumber() + " registered successfully");
+        model.addAttribute("success", "Train number " + trainDto.getNumber() + " registered successfully");
         return "train-success";
     }
 
 
     @RequestMapping(value = {"edit-{number}-train"}, method = RequestMethod.GET)
     public String editTrain(@PathVariable int number, ModelMap model) {
-        Train train = null;
+        TrainDto trainDto = null;
 
         try {
-            train = trainService.getTrainByNumber(number);
+            trainDto = trainService.getTrainDtoByNumber(number);
         } catch (TrainDoesNotExistException e) {
             String message = "Train with number " + number + " does not exist";
             LOG.warn(message, e);
         }
 
-        List<Route> routeList = routeService.getAllRoutes();
+        List<RouteDto> routeList = routeService.getAllRoutes();
         model.addAttribute("routeList", routeList);
-        model.addAttribute("train", train);
+        model.addAttribute("train", trainDto);
         model.addAttribute("edit", true);
         return "add-train";
     }
 
     @RequestMapping(value = {"edit-{number}-train"}, method = RequestMethod.POST)
-    public String updateTrain(@PathVariable int number, Train train, ModelMap model) {
+    public String updateTrain(@PathVariable int number, TrainDto trainDto, ModelMap model) {
 
-        trainService.updateTrain(train);
+        trainService.updateTrain(trainDto);
 
-        model.addAttribute("success", "Train " + train.getNumber() + " updated successfully");
+        model.addAttribute("success", "Train " + trainDto.getNumber() + " updated successfully");
         return "train-success";
     }
 
     @RequestMapping(value = {"delete-{number}-train"}, method = RequestMethod.GET)
     public String deleteTrain(@PathVariable int number) {
         try {
-            Train train = trainService.getTrainByNumber(number);
-            trainService.deleteTrain(train);
+            TrainDto trainDto = trainService.getTrainDtoByNumber(number);
+            trainService.deleteTrain(trainDto);
         } catch (TrainDoesNotExistException e) {
             String message = "Train number " + number + " does not exist";
             LOG.warn(message, e);

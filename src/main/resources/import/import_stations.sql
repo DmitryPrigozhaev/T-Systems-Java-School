@@ -101,7 +101,7 @@ INSERT INTO stations (name) VALUES ('Rybinsk');
 INSERT INTO stations (name) VALUES ('Ryazan');
 INSERT INTO stations (name) VALUES ('Salekhard');
 INSERT INTO stations (name) VALUES ('Samara');
-INSERT INTO stations (name) VALUES ('Saint Petersburg');
+INSERT INTO stations (name) VALUES ('Saint-Petersburg');
 INSERT INTO stations (name) VALUES ('Saransk');
 INSERT INTO stations (name) VALUES ('Saratov');
 INSERT INTO stations (name) VALUES ('Severodvinsk');

@@ -1,12 +1,11 @@
 package com.railwaycompany.services.api;
 
 import com.railwaycompany.dto.RouteDto;
-import com.railwaycompany.entities.Route;
-import com.railwaycompany.entities.RoutePoint;
+import com.railwaycompany.dto.RoutePointDto;
 import com.railwaycompany.entities.Station;
-import com.railwaycompany.services.exceptions.RouteDoesNotExist;
-import com.railwaycompany.services.exceptions.RoutePointsForThisRouteDoesNotExist;
+import com.railwaycompany.services.exceptions.RouteDoesNotExistException;
 import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
+import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 
 import java.util.Date;
 import java.util.List;
@@ -15,38 +14,32 @@ public interface RouteService {
 
     void addRoute(String name) throws RouteWithSuchNameExistException;
 
-    void addRoute(Route route);
+    void addRoute(RouteDto routeDto) throws RouteWithSuchNameExistException;
 
-    void addRoutePoint(RoutePoint routePoint);
+    void addRoutePoint(RoutePointDto routePointDto) throws StationDoesNotExistException, RouteDoesNotExistException;
 
-    void addRoutePointsForRouteByRouteId(long id, List<Station> stationList,
-                                         List<Date> dateArrivalList, List<Date> dateDepartureList);
+    RouteDto getRouteDtoById(long id) throws RouteDoesNotExistException;
 
-    void addRoutePointsForRouteByRouteId(long id, long[] stationId, String[] dateArrivalArray, String[] dateDepartureArray);
+    RouteDto getRouteDtoByName(String name) throws RouteDoesNotExistException;
 
-    Route getRouteById(long id) throws RouteDoesNotExist;
+    List<RouteDto> getAllRoutes();
 
-    Route getRouteByName(String name) throws RouteDoesNotExist;
+    List<RoutePointDto> getRoutePointsDtoList(RouteDto routeDto);
 
-    List<RouteDto> getRouteDtoList(Route route);
+    List<RoutePointDto> getAllRoutePointsDtoList();
 
-    List<Route> getAllRoutes();
+    void updateRoute(RouteDto routeDto);
 
-    List<RoutePoint> getRoutePointsByRouteId(long id) throws RoutePointsForThisRouteDoesNotExist;
+    void updateRoutePoint(RoutePointDto routePointDto);
 
-    List<RoutePoint> getRoutePoints(Route route);
+    void deleteRoute(RouteDto routeDto);
 
-    List<RoutePoint> getAllRoutePoints();
+    void deleteRoutePoint(RoutePointDto routePointDto);
 
-    List<Route> findRouteByStationsName(String stationFrom, String stationTo) throws RoutePointsForThisRouteDoesNotExist;
+    List<RoutePointDto> findRoutePointsDtoByStation(Station stationName);
 
-    List<Route> findRouteByStationsNameAndDate(String stationFrom, String stationTo, Date date) throws RoutePointsForThisRouteDoesNotExist, RouteDoesNotExist;
+    List<RouteDto> findRouteDtoByStations(Station stationFrom, Station stationTo);
 
-    void updateRoute(Route route);
+    List<RouteDto> findRouteDtoByStationsAndDate(Station stationFrom, Station stationTo, Date date);
 
-    void updateRoutePoint(RoutePoint routePoint);
-
-    void deleteRoute(Route route);
-
-    void deleteRoutePoint(RoutePoint routePoint);
 }

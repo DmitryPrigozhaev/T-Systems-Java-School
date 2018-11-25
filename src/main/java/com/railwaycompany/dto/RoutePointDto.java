@@ -1,17 +1,12 @@
 package com.railwaycompany.dto;
 
-import com.railwaycompany.entities.Route;
-import com.railwaycompany.entities.Station;
-
-import java.util.Date;
-
 public class RoutePointDto {
 
     private Long id;
-    private Route route;
-    private Station station;
-    private Date dateArrival;
-    private Date dateDeparture;
+    private String routeName;
+    private String stationName;
+    private String dateArrival;
+    private String dateDeparture;
 
     public Long getId() {
         return id;
@@ -21,35 +16,35 @@ public class RoutePointDto {
         this.id = id;
     }
 
-    public Route getRoute() {
-        return route;
+    public String getRouteName() {
+        return routeName;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
     }
 
-    public Station getStation() {
-        return station;
+    public String getStationName() {
+        return stationName;
     }
 
-    public void setStation(Station station) {
-        this.station = station;
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
     }
 
-    public Date getDateArrival() {
+    public String getDateArrival() {
         return dateArrival;
     }
 
-    public void setDateArrival(Date dateArrival) {
+    public void setDateArrival(String dateArrival) {
         this.dateArrival = dateArrival;
     }
 
-    public Date getDateDeparture() {
+    public String getDateDeparture() {
         return dateDeparture;
     }
 
-    public void setDateDeparture(Date dateDeparture) {
+    public void setDateDeparture(String dateDeparture) {
         this.dateDeparture = dateDeparture;
     }
 }

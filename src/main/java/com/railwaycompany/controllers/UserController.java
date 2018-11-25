@@ -1,7 +1,6 @@
 package com.railwaycompany.controllers;
 
 import com.railwaycompany.dto.UserDto;
-import com.railwaycompany.entities.User;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 import org.apache.log4j.Logger;
@@ -38,6 +37,7 @@ public class UserController {
     @RequestMapping(value = "registration", method = RequestMethod.POST)
     public String registration(ModelMap modelMap, @ModelAttribute("user") UserDto userDto,
                                BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) return "registration";
 
         try {
@@ -55,33 +55,6 @@ public class UserController {
         List<UserDto> userList = userService.getAllUsersDto();
         model.addAttribute("userList", userList);
         return "admin-all-passengers";
-    }
-
-    // todo don't use
-    @RequestMapping(value = {"/new"}, method = RequestMethod.GET)
-    public String newUser(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("edit", false);
-        return "registration";
-    }
-
-    // todo don't use
-    @RequestMapping(value = {"new"}, method = RequestMethod.POST)
-    public String saveUser(UserDto userDto, BindingResult result, ModelMap model) {
-
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        try {
-            userService.saveUserDto(userDto);
-        } catch (AlreadyRegisteredException e) {
-            e.printStackTrace();
-        }
-
-        model.addAttribute("success", "User " + userDto.getEmail() + " registered successfully");
-        return "success";
     }
 
     @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.GET)

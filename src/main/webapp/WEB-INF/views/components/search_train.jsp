@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Search train -->
 <div class="section section-breadcrumbs center-block">
     <div class="container">
@@ -6,21 +7,20 @@
                 <form class="form-inline">
                     <div class="form-group">
                         <h1>
-                            <label for="stationFrom">  </label>
-                            <input id="stationFrom" name="stationFrom" type="text" class="form-control input-lg"
-                                   placeholder="station from">
+                            <label for="stationFromName">  </label>
+                            <input id="stationFromName" name="stationFromName" type="text" class="form-control input-lg" placeholder="station from">
                         </h1>
                     </div>
                     <div class="form-group">
                         <h1>
-                            <label for="stationTo">  </label>
-                            <input id="stationTo" name="stationTo" type="search" class="form-control input-lg" placeholder="station to">
+                            <label for="stationToName">  </label>
+                            <input id="stationToName" name="stationToName" type="search" class="form-control input-lg" placeholder="station to">
                         </h1>
                     </div>
                     <div class="form-group">
                         <h1>
-                            <label for="date">  </label>
-                            <input id="date" name="date" type="date" class="form-control input-lg">
+                            <label for="dateStr">  </label>
+                            <input id="dateStr" name="dateStr" type="date" class="form-control input-lg">
                         </h1>
                     </div>
                     <button type="submit" class="btn btn-lg btn-facebook-login">search</button>

@@ -40,6 +40,8 @@ public class HibernateConfig {
         properties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         properties.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.connection.autocommit", env.getRequiredProperty("hibernate.connection.autocommit"));
+        properties.setProperty("hibernate.connection.Charset", env.getRequiredProperty("hibernate.connection.Charset"));
+        properties.setProperty("hibernate.connection.CharacterEncoding", env.getRequiredProperty("hibernate.connection.CharacterEncoding"));
         properties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.c3p0.min_size", env.getRequiredProperty("hibernate.c3p0.min_size"));
         properties.setProperty("hibernate.c3p0.max_size", env.getRequiredProperty("hibernate.c3p0.max_size"));

@@ -1,12 +1,10 @@
 package com.railwaycompany.dto;
 
-import com.railwaycompany.entities.Route;
-
 public class TrainDto {
 
     private Long id;
     private Integer number;
-    private Route route;
+    private String routeName;
     private Integer numberOfCarriages;
 
     public Long getId() {
@@ -25,12 +23,12 @@ public class TrainDto {
         this.number = number;
     }
 
-    public Route getRoute() {
-        return route;
+    public String getRouteName() {
+        return routeName;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
     }
 
     public Integer getNumberOfCarriages() {
