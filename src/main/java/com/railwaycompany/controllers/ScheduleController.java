@@ -47,7 +47,6 @@ public class ScheduleController {
     @RequestMapping(value = "find-schedule", method = RequestMethod.POST, consumes = "application/json")
     public List<TrainDto> searchTrain(@RequestBody ScheduleDto scheduleDto) {
 
-        System.out.println("Русская кодировка");
         Station stationFrom = null;
         Station stationTo = null;
         Date date = null;
@@ -78,7 +77,7 @@ public class ScheduleController {
         if (routes != null) {
             trainDtoList = new ArrayList<>();
             for (RouteDto route : routes) {
-                TrainDto trainDto = trainService.getTrainDtoByRouteId(route.getId());
+                TrainDto trainDto = trainService.getTrainDtoByRouteIdAndStations(route.getId(), stationFrom.getName(), stationTo.getName());
                 trainDtoList.add(trainDto);
             }
         }

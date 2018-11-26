@@ -1,6 +1,7 @@
 package com.railwaycompany.services.api;
 
 import com.railwaycompany.dto.TrainDto;
+import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainWithSuchNumberExistException;
 
@@ -16,7 +17,9 @@ public interface TrainService {
 
     TrainDto getTrainDtoByNumber(int number) throws TrainDoesNotExistException;
 
-    TrainDto getTrainDtoByRouteId(long id) throws TrainDoesNotExistException;
+    TrainDto getTrainDtoByRouteId(long routeId) throws TrainDoesNotExistException;
+
+    TrainDto getTrainDtoByRouteIdAndStations(long routeId, String stationFromName, String stationToName) throws TrainDoesNotExistException, StationDoesNotExistException;
 
     List<TrainDto> getAllTrains();
 
