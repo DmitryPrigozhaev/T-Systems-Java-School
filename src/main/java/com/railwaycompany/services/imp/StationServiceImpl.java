@@ -74,13 +74,19 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void updateStation(Station station) {
-        stationDao.update(station);
+    public void updateStation(Station stationUpdate) throws StationWithSuchNameExistException {
+        Station station = stationDao.getStationByName(stationUpdate.getName());
+        if (station == null) {
+            stationDao.update(stationUpdate);
+        } else {
+            String message = "Cannot update station \"" + stationUpdate.getName() + "\": station with such name already exist";
+            throw new StationWithSuchNameExistException(message);
+        }
     }
 
     @Override
-    public void deleteStation(Station station) {
-        stationDao.delete(station);
+    public void deleteStation(Station stationDelete) {
+            stationDao.delete(stationDelete);
     }
 
     @Transactional(readOnly = true)

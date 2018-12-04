@@ -4,7 +4,6 @@
 <body>
 
 <!-- Navigation & Logo-->
-
 <div class="mainmenu-wrapper">
     <div class="container">
         <div class="menuextras">
@@ -44,12 +43,12 @@
                 </ul>
             </div>
         </div>
+
         <nav id="mainmenu" class="mainmenu">
             <ul>
                 <%-- LOGO --%>
                 <li class="logo-wrapper">
-                    <a href="index"><img src="../../../resources/img/railwaycompany-logo.png"
-                                         alt="Information system of a railway company"></a></li>
+                    <a href="index"><img src="../../../resources/img/railwaycompany-logo.png" alt="Information system of a railway company"></a></li>
                 <%-- HOME --%>
                 <li class="active">
                     <a href="index">Home</a>

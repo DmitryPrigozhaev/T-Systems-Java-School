@@ -4,12 +4,13 @@ import com.railwaycompany.dto.TrainDto;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainWithSuchNumberExistException;
+import com.railwaycompany.services.exceptions.TrainWithSuchRouteExistException;
 
 import java.util.List;
 
 public interface TrainService {
 
-    void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException;
+    void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException;
 
     void addTrain(int number, long routeId, int numberOfCarriages) throws TrainWithSuchNumberExistException;
 
@@ -25,7 +26,7 @@ public interface TrainService {
 
     int getNumberOfCarriagesByTrainId(long id) throws TrainDoesNotExistException;
 
-    void updateTrain(TrainDto trainDto);
+    void updateTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException;
 
     void deleteTrain(TrainDto trainDto);
 }

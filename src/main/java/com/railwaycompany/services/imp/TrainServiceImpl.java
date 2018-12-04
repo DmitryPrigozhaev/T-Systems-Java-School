@@ -14,6 +14,7 @@ import com.railwaycompany.services.api.TrainService;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainWithSuchNumberExistException;
+import com.railwaycompany.services.exceptions.TrainWithSuchRouteExistException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,10 +45,10 @@ public class TrainServiceImpl implements TrainService {
     StationDao stationDao;
 
     private Train constructTrain(TrainDto trainDto) {
-        Route route = routeDao.getRouteByName(trainDto.getRouteName());
 
         Train train = new Train();
         train.setNumber(trainDto.getNumber());
+        Route route = routeDao.getRouteByName(trainDto.getRouteName());
         train.setRoute(route);
         train.setNumberOfCarriages(trainDto.getNumberOfCarriages());
         return train;
@@ -57,7 +58,11 @@ public class TrainServiceImpl implements TrainService {
         TrainDto trainDto = new TrainDto();
         trainDto.setId(train.getId());
         trainDto.setNumber(train.getNumber());
-        trainDto.setRouteName(train.getRoute().getName());
+        try {
+            trainDto.setRouteName(train.getRoute().getName());
+        } catch (NullPointerException e) {
+            trainDto.setRouteName("-");
+        }
         trainDto.setNumberOfCarriages(train.getNumberOfCarriages());
         return trainDto;
     }
@@ -86,19 +91,21 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException {
+    public void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException {
+        if (trainDao.getTrainByRouteName(trainDto.getRouteName()) != null) {
+            String message = "Train with route \"" + trainDto.getRouteName() + "\" already exist";
+            throw new TrainWithSuchRouteExistException(message);
+        }
         if (trainDao.getTrainByNumber(trainDto.getNumber()) == null) {
             Train train = constructTrain(trainDto);
             trainDao.create(train);
         } else {
-            String message = "Train with number " + trainDto.getNumber() + " already exist: " +
-                    "\nid: " + trainDto.getId() +
-                    "\nRoute: " + trainDto.getRouteName() +
-                    "\nNumber of carriages: " + trainDto.getNumberOfCarriages();
+            String message = "Train with №" + trainDto.getNumber() + " already exist";
             throw new TrainWithSuchNumberExistException(message);
         }
     }
 
+    // todo удалить если не используется
     @Override
     public void addTrain(int number, long routeId, int numberOfCarriages) throws TrainWithSuchNumberExistException {
         Route route = routeDao.read(routeId);
@@ -110,10 +117,7 @@ public class TrainServiceImpl implements TrainService {
             train.setNumberOfCarriages(numberOfCarriages);
             trainDao.create(train);
         } else {
-            String message = "Train with number " + number + " already exist: " +
-                    "\nid: " + train.getId() +
-                    "\nRoute: " + train.getRoute() +
-                    "\nNumber of carriages: " + train.getNumberOfCarriages();
+            String message = "Train №" + number + " already exist";
             throw new TrainWithSuchNumberExistException(message);
         }
     }
@@ -173,6 +177,7 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public List<TrainDto> getAllTrains() {
         List<TrainDto> trainDtoList = null;
+
         List<Train> trainList = trainDao.readAll();
         if (trainList != null && !trainList.isEmpty()) {
             trainDtoList = new ArrayList<>();
@@ -197,9 +202,25 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void updateTrain(TrainDto trainDto) {
-        Train train = trainDao.getTrainByNumber(trainDto.getNumber());
-        trainDao.update(train);
+    public void updateTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException {
+        Train train = trainDao.getTrainByRouteName(trainDto.getRouteName());
+        if (train != null && !trainDto.getId().equals(train.getId())) {
+            String message = "Train with route \"" + trainDto.getRouteName() + "\" already exist";
+            throw new TrainWithSuchRouteExistException(message);
+        }
+
+        train = trainDao.getTrainByNumber(trainDto.getNumber());
+        if (train == null || train.getId().equals(trainDto.getId())) {
+            train = trainDao.getTrainById(trainDto.getId());
+            train.setRoute(routeDao.getRouteByName(trainDto.getRouteName()));
+            train.setNumber(trainDto.getNumber());
+            train.setNumberOfCarriages(trainDto.getNumberOfCarriages());
+            trainDao.update(train);
+        } else {
+            String message = "Cannot change number " + train.getNumber() + " to " + trainDto.getNumber() + ": " +
+                    "train №" + trainDto.getNumber() + " already exist";
+            throw new TrainWithSuchNumberExistException(message);
+        }
     }
 
     @Override

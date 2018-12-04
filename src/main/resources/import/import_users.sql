@@ -1,0 +1,20 @@
+INSERT INTO users VALUE (2, '1990-01-01', 'user2@gmail.com', 'Ivan', 'Ivanov', '$2a$10$HlpGY18RquK2TMHjm7nqDuIatX9mArGgyTEEOFN7GQe1xzqmMlH02', 3);
+INSERT INTO users VALUE (3, '1990-01-01', 'user3@gmail.com', 'Bogdan', 'Bogdanov', '$2a$10$HlpGY18RquK2TMHjm7nqDuIatX9mArGgyTEEOFN7GQe1xzqmMlH02', 3);
+INSERT INTO users VALUE (4, '1991-01-01', 'user4@gmail.com', 'Petr', 'Petrov', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (5, '1991-01-01', 'user5@gmail.com', 'Alexandr', 'Alexandrow', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (6, '1991-01-01', 'user6@gmail.com', 'Grigory', 'Grigoryev', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (7, '1991-01-01', 'user7@gmail.com', 'Sergey', 'Sergeev', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (8, '1991-01-01', 'user8@gmail.com', 'Denis', 'Denisov', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (9, '1991-01-01', 'user9@gmail.com', 'Vasily', 'Vasilyev', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (10, '1991-01-01', 'user10@gmail.com', 'Dmitry', 'Dmitriev', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+
+INSERT INTO users VALUE (11, '1991-01-01', 'user11@gmail.com', 'user11', 'user11_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (12, '1991-01-01', 'user12@gmail.com', 'user12', 'user12_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (13, '1991-01-01', 'user13@gmail.com', 'user13', 'user13_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (14, '1991-01-01', 'user14@gmail.com', 'user14', 'user14_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (15, '1991-01-01', 'user15@gmail.com', 'user15', 'user15_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (16, '1991-01-01', 'user16@gmail.com', 'user16', 'user16_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (17, '1991-01-01', 'user17@gmail.com', 'user17', 'user17_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (18, '1991-01-01', 'user18@gmail.com', 'user18', 'user18_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (19, '1991-01-01', 'user19@gmail.com', 'user19', 'user19_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);
+INSERT INTO users VALUE (20, '1991-01-01', 'user20@gmail.com', 'user20', 'user20_lastname', '$2a$10$VnB3tiD9iYwb7XnuSL.i.u28CSEY9YfxdjoZdQlK8Oen7BNKYIn9G', 3);

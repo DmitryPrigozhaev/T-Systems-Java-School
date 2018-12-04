@@ -16,6 +16,8 @@ public class RouteDaoImpl extends AbstractGenericDao<Route> implements RouteDao 
 
     private static final String GET_ROUTE_BY_NAME = "SELECT r FROM Route r WHERE r.name = :name";
 
+    private static final String GET_ROUTE_BY_TRAIN_NUMBER = "SELECT route FROM Train t WHERE t.number = :trainNumber";
+
     @Override
     public Route getRouteByName(String name) {
         Query query = getCurrentSession().createQuery(GET_ROUTE_BY_NAME);
@@ -29,6 +31,22 @@ public class RouteDaoImpl extends AbstractGenericDao<Route> implements RouteDao 
         }
         return route;
     }
+
+    // TODO экспериментальный метод вытащить Route из Train, проверить работоспособность
+    // TODO UPD: проверено, вроде работает
+    @Override
+    public Route getRouteByTrainNumber(int trainNumber) {
+        Query query = getCurrentSession().createQuery(GET_ROUTE_BY_TRAIN_NUMBER);
+        query.setParameter("trainNumber", trainNumber);
+
+        Route route = null;
+        try {
+            route = (Route) query.getSingleResult();
+        } catch (Exception e) {
+            LOG.warn(e);
+        }
+        return route;
+}
 
     @Override
     public List<RoutePoint> getRoutePoints(Route route) {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -14,39 +15,20 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
 
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class.getName());
 
-    private static final String GET_PURCHASED_SEATS_BY_CARRIAGE_AND_TRAIN_ID = "SELECT t FROM Ticket t WHERE t.carriage = :carriage " +
+    private static final String GET_TICKETS_BY_TRAIN_ID = "SELECT t FROM Ticket t WHERE t.train.id = :trainId";
+
+    private static final String GET_TICKETS_BY_CARRIAGE_AND_TRAIN_ID = "SELECT t FROM Ticket t WHERE t.carriage = :carriage " +
             "AND" + " t.train.id = :trainId";
 
-    private static final String GET_TICKET_BY_TRAIN_AND_USER_ID = "SELECT t FROM Ticket t WHERE t.train.id = :trainId " +
+    private static final String GET_TICKETS_BY_TRAIN_ID_AND_USER_ID = "SELECT t FROM Ticket t WHERE t.train.id = :trainId " +
             "AND" + " t.user.id = :userId";
-
-    private static final String GET_TICKET_BY_TRAIN_ID = "SELECT t FROM Ticket t WHERE t.train.id = :trainId";
-
-    @Override
-    public int[] getPurchasedSeatsByCarriageAndTrainId(long trainId, int carriageNumber) {
-
-        Query query = getCurrentSession().createQuery(GET_PURCHASED_SEATS_BY_CARRIAGE_AND_TRAIN_ID);
-        query.setParameter("carriage", carriageNumber);
-        query.setParameter("trainId", trainId);
-
-        int[] numbersOfPurchasedSeats = new int[38];
-
-        List resultList = query.getResultList();
-        if (resultList != null && !resultList.isEmpty()) {
-            for (int i = 0; i < resultList.size(); i++) {
-                numbersOfPurchasedSeats[i] = (int) resultList.get(i);
-            }
-        }
-        return numbersOfPurchasedSeats;
-    }
 
     @Override
     public List<Ticket> getAllTicketsByTrainId(long trainId) {
-        Query query = getCurrentSession().createQuery(GET_TICKET_BY_TRAIN_ID);
+        Query query = getCurrentSession().createQuery(GET_TICKETS_BY_TRAIN_ID);
         query.setParameter("trainId", trainId);
 
         List<Ticket> ticketList = null;
-
         List resultList = query.getResultList();
         if (resultList != null && !resultList.isEmpty()) {
             ticketList = new ArrayList<>();
@@ -55,18 +37,38 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
                     ticketList.add((Ticket) o);
                 }
             }
+            Collections.sort(ticketList);
+        }
+        return ticketList;
+    }
+
+    @Override
+    public List<Ticket> getTicketsByTrainIdAndCarriageNumber(long trainId, int carriageNumber) {
+        Query query = getCurrentSession().createQuery(GET_TICKETS_BY_CARRIAGE_AND_TRAIN_ID);
+        query.setParameter("carriage", carriageNumber);
+        query.setParameter("trainId", trainId);
+
+        List<Ticket> ticketList = null;
+        List queryResultList = query.getResultList();
+        if (queryResultList != null && !queryResultList.isEmpty()) {
+            ticketList = new ArrayList<>();
+            for (Object o : queryResultList) {
+                if (o instanceof Ticket) {
+                    ticketList.add((Ticket) o);
+                }
+            }
+            Collections.sort(ticketList);
         }
         return ticketList;
     }
 
     @Override
     public List<Ticket> getTicketByUserIdAndTrainId(long userId, long trainId) {
-        Query query = getCurrentSession().createQuery(GET_TICKET_BY_TRAIN_AND_USER_ID);
+        Query query = getCurrentSession().createQuery(GET_TICKETS_BY_TRAIN_ID_AND_USER_ID);
         query.setParameter("userId", userId);
         query.setParameter("trainId", trainId);
 
         List<Ticket> ticketList = null;
-
         List resultList = query.getResultList();
         if (resultList != null && !resultList.isEmpty()) {
             ticketList = new ArrayList<>();
@@ -75,6 +77,7 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
                     ticketList.add((Ticket) o);
                 }
             }
+            Collections.sort(ticketList);
         }
         return ticketList;
     }

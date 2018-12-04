@@ -21,7 +21,7 @@ public interface StationService {
 
     List<RoutePoint> getStationScheduleByStationName(String name);
 
-    void updateStation(Station station);
+    void updateStation(Station station) throws StationWithSuchNameExistException;
 
     void deleteStation(Station station);
 

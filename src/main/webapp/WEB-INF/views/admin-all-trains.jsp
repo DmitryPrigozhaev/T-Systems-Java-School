@@ -38,7 +38,7 @@
                             <td class="actions">
                                 <a href="<c:url value='edit-${train.number}-train' />" class="btn btn-xs btn-grey"><i
                                         class="glyphicon glyphicon-pencil"></i></a>
-                                <a href="<c:url value='delete-${train.number}-train' />"
+                                <a href="<c:url value='delete-${train.number}-train'/>"
                                    class="btn btn-xs btn-grey"><i class="glyphicon glyphicon-trash"></i></a>
                             </td>
                         </tr>

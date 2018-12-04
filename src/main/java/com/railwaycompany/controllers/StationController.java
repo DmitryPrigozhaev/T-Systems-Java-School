@@ -8,9 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class StationController {
         return "admin-all-stations";
     }
 
-    @RequestMapping(value = "new-station", method = RequestMethod.GET)
+    @GetMapping(value = "new-station")
     public String newStation(ModelMap model) {
         Station station = new Station();
         model.addAttribute("station", station);
@@ -37,46 +35,61 @@ public class StationController {
         return "add-station";
     }
 
-    @RequestMapping(value = "new-station", method = RequestMethod.POST)
-    public String saveStation(Station station, ModelMap model) throws StationWithSuchNameExistException {
+    @PostMapping(value = "new-station")
+    public String saveStation(Station station, ModelMap model) {
 
-        stationService.addStation(station);
+        try {
+            stationService.addStation(station);
+            model.addAttribute("saveStationSuccess", true);
+            model.addAttribute("success", "Station \"" + station.getName() + "\" registered successfully");
+        } catch (StationWithSuchNameExistException e) {
+            model.addAttribute("saveStationFailure", true);
+            model.addAttribute("failure", "Cannot create station: station \"" + station.getName() + "\" already exist");
+        }
 
-        model.addAttribute("success", "Station " + station.getName() + " registered successfully");
-        return "station-success";
+        return "add-station";
     }
 
-    @RequestMapping(value = {"edit-{name}-station"}, method = RequestMethod.GET)
+    @GetMapping(value = "edit-{name}-station")
     public String editStation(@PathVariable String name, ModelMap model) {
         Station station = null;
         try {
             station = stationService.getStationByName(name);
         } catch (StationDoesNotExistException e) {
-            e.printStackTrace();
+            String message = "Cannot update station \"" + name + "\": station does not exist!";
+            LOG.warn(message);
         }
         model.addAttribute("station", station);
-            model.addAttribute("edit", true);
+        model.addAttribute("edit", true);
         return "add-station";
     }
 
-    @RequestMapping(value = {"edit-{name}-station"}, method = RequestMethod.POST)
-    public String updateStation(Station station, ModelMap model, @PathVariable String name) {
+    @PostMapping(value = "edit-{name}-station")
+    public String updateStation(Station station, ModelMap model) {
 
-        stationService.updateStation(station);
+        try {
+            stationService.updateStation(station);
+            model.addAttribute("updateStationSuccess", true);
+            model.addAttribute("success", "Station \"" + station.getName() + "\" updated successfully");
+        } catch (StationWithSuchNameExistException e) {
+            model.addAttribute("updateStationFailure", true);
+            model.addAttribute("failure", "Cannot update station \"" + station.getName() + "\": station with such name already exist");
+        }
 
-        model.addAttribute("success", "Station " + station.getName() + " updated successfully");
-        return "station-success";
+        model.addAttribute("edit", true);
+        return "add-station";
     }
 
-    @RequestMapping(value = {"delete-{name}-station"}, method = RequestMethod.GET)
+    @GetMapping(value = "delete-{name}-station")
     public String deleteStation(@PathVariable String name) {
+        Station station = null;
         try {
-            Station station = stationService.getStationByName(name);
-            stationService.deleteStation(station);
+            station = stationService.getStationByName(name);
         } catch (StationDoesNotExistException e) {
-            String message = "Station with name = " + name + " does not exist";
-            LOG.warn(message, e);
+            String message = "Station with name \"" + name + "\" does not exist";
+            LOG.warn(message);
         }
+        stationService.deleteStation(station);
         return "redirect:/admin-all-stations";
     }
 }

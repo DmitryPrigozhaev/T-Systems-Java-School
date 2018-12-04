@@ -1,10 +1,7 @@
 package com.railwaycompany.services.api;
 
-import com.railwaycompany.dto.RoutePointDto;
 import com.railwaycompany.dto.TicketDto;
-import com.railwaycompany.entities.Route;
-import com.railwaycompany.entities.Station;
-import com.railwaycompany.entities.Train;
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.User;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.exceptions.CannotBuyTicketException;
@@ -15,19 +12,15 @@ import java.util.List;
 
 public interface TicketService {
 
-    List<TicketDto> buyTicket(User user, Train train, Route route, List<RoutePointDto> routePointDtoList,
-                              Station stationFrom, Station stationTo, Date dateDeparture, int carriageNumber, int seatNumber)
-            throws AlreadyRegisteredException, CannotBuyTicketException, InvalidInputDataException;
+    List<TicketDto> buyTicket(TicketDto ticketDto) throws AlreadyRegisteredException, CannotBuyTicketException, InvalidInputDataException;
 
-    int[] getPurchasedSeatsByCarriageAndTrainId(long trainId, int carriageNumber);
+    List<TicketDto> getTicketByUserDtoAndTrainNumber(UserDto userDto, int trainNumber);
 
-    List<TicketDto> getAllTicketsByTrainId(long id);
+    List<TicketDto> getAllTicketsByTrainNumberAndCarriage(int trainNumber, int carriageNumber);
+
+    List<TicketDto> getAllTicketsByTrainNumberAndCarriageAndStations(int trainNumber, int carriageNumber, String stationFromName, String stationToName);
 
     List<TicketDto> getAllTicketsByTrainNumber(int trainNumber);
-
-    List<TicketDto> getAllTickets();
-
-    boolean hasEnoughTimeBeforeDeparture(int trainNumber, String stationNameFrom, Date dateDeparture) throws InvalidInputDataException;
 
     boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture);
 

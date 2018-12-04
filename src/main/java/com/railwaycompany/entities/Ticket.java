@@ -1,12 +1,15 @@
 package com.railwaycompany.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tickets")
-public class Ticket implements Serializable {
+public class Ticket implements Serializable, Comparable<Ticket> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +25,10 @@ public class Ticket implements Serializable {
     private Train train;
 
     @ManyToOne
+    @JoinColumn(name = "route", nullable = false)
+    private Route route;
+
+    @ManyToOne
     @JoinColumn(name = "from_station", nullable = false)
     private Station stationFrom;
 
@@ -29,7 +36,8 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "to_station", nullable = false)
     private Station stationTo;
 
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @Column(name = "sale_time", nullable = false)
     private Date saleTime;
 
@@ -41,9 +49,6 @@ public class Ticket implements Serializable {
 
     @Column(name = "price", nullable = false)
     private Float price;
-
-    @Column(name = "date_departure", nullable = false)
-    private Date dateDeparture;
 
     public Long getId() {
         return id;
@@ -67,6 +72,14 @@ public class Ticket implements Serializable {
 
     public void setTrain(Train train) {
         this.train = train;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public Station getStationFrom() {
@@ -117,11 +130,25 @@ public class Ticket implements Serializable {
         this.price = price;
     }
 
-    public Date getDateDeparture() {
-        return dateDeparture;
+    @Override
+    public int compareTo(Ticket ticket) {
+        return (int) (this.id - ticket.id);
     }
 
-    public void setDateDeparture(Date dateDeparture) {
-        this.dateDeparture = dateDeparture;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ticket)) return false;
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(id, ticket.id) &&
+                Objects.equals(user, ticket.user) &&
+                Objects.equals(train, ticket.train) &&
+                Objects.equals(route, ticket.route) &&
+                Objects.equals(saleTime, ticket.saleTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, saleTime);
     }
 }

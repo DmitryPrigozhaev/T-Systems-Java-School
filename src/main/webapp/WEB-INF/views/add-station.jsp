@@ -27,6 +27,32 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
+
+                <%-- INFORMATION PANEL --%>
+                <c:choose>
+                    <c:when test="${saveStationSuccess}">
+                        <div class="panel panel-warning">
+                            <h4 style="margin: 10px">${success}</h4>
+                        </div>
+                    </c:when>
+                    <c:when test="${saveStationFailure}">
+                        <div class="panel panel-warning">
+                            <h4 style="margin: 10px">${failure}</h4>
+                        </div>
+                    </c:when>
+                    <c:when test="${updateStationSuccess}">
+                        <div class="panel panel-warning">
+                            <h4 style="margin: 10px">${success}</h4>
+                        </div>
+                    </c:when>
+                    <c:when test="${updateStationFailure}">
+                        <div class="panel panel-warning">
+                            <h4 style="margin: 10px">${failure}</h4>
+                        </div>
+                    </c:when>
+                </c:choose>
+
+                <%-- STATION ADD/EDIT PANEL --%>
                 <table class="shopping-cart">
                     <tr>
                         <td>
@@ -46,7 +72,7 @@
                                     <c:otherwise>
                                         <div class="col-md-4 col-md-offset-8">
                                             <br>
-                                            <button class="btn-blue btn-block" value="Register">Register</button>
+                                            <button class="btn-blue btn-block" value="Register">Create</button>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
@@ -54,7 +80,10 @@
                         </td>
                     </tr>
                 </table>
+
             </div>
+
+            <%-- BUTTON RETURN TO ALL STATIONS --%>
             <div class="col-md2 col-md-offset-1">
                 <form action="<c:url value='admin-all-stations' />">
                     <button type="submit" class="btn pull-right">All stations</button>

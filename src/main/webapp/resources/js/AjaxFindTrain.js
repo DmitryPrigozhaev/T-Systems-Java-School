@@ -5,6 +5,7 @@ $(document).ready(function () {
 function findScheduleButtonClick() {
 
     $("#imgLoad").show(); // show loading
+    $("#foundTrains").hide();
 
     var sendData = {
         stationFromName: $("#stationFromName").val(),
@@ -20,15 +21,18 @@ function findScheduleButtonClick() {
 
     }).done(function (result) {
 
-        $("#imgLoad").hide(); // hide loading
+        $("#imgLoad").hide();
+        $("#foundTrains").show().empty();
 
-        $("#foundTrains").empty();
+        window.trainDtoList = result;
 
         for (var i = 0; i < result.length; i++) {
 
             var trainDto = result[i];
 
             var departureTime = new Date(Date.parse(trainDto.datetimeDeparture));
+            // do not display departed trains
+            if (departureTime < (new Date())) break;
             var arrivalTime = new Date(Date.parse(trainDto.datetimeArrival));
             var travelTime = new Date(arrivalTime - departureTime);
 
@@ -47,37 +51,78 @@ function findScheduleButtonClick() {
 
             number.textContent = trainDto.number;
             route.textContent = trainDto.routeName;
-            timeDeparture.textContent = departureTime.getHours() + ":" + ('0' + departureTime.getMinutes()).slice(-2);
-            dateDeparture.textContent = departureTime.getFullYear() + "." + (departureTime.getMonth() + 1) + "." + departureTime.getDate();
+            timeDeparture.textContent = ('0' + departureTime.getHours()).slice(-2) + ":" + ('0' + departureTime.getMinutes()).slice(-2);
+            dateDeparture.textContent = departureTime.getFullYear() + "." + (departureTime.getMonth() + 1) + "." + ('0' + departureTime.getDate()).slice(-2);
             stationDeparture.textContent = trainDto.stationDeparture;
             travelTimeH.textContent = travelTime.getHours();
             travelTimeM.textContent = travelTime.getMinutes();
-            timeArrival.textContent = arrivalTime.getHours() + ":" + arrivalTime.getMinutes();
-            dateArrival.textContent = arrivalTime.getFullYear() + "." + (arrivalTime.getMonth() + 1) + "." + arrivalTime.getDate();
+            timeArrival.textContent = ('0' + arrivalTime.getHours()).slice(-2) + ":" + ('0' + arrivalTime.getMinutes()).slice(-2);
+            dateArrival.textContent = arrivalTime.getFullYear() + "." + (arrivalTime.getMonth() + 1) + "." + ('0' + arrivalTime.getDate()).slice(-2);
             stationArrival.textContent = trainDto.stationArrival;
 
             // slider carriages
-            var button = template.content.querySelector('#carButton');
-            button.setAttribute('data-target', ('#' + trainDto.number));
+            var button = template.content.querySelector('#economClassButton');
+            button.setAttribute('data-target', ('#' + trainDto.number + "_" + trainDto.routeName.replace(/\s/g, '')));
 
             var target = template.content.querySelector('#target');
-            target.setAttribute('id', trainDto.number);
+            target.setAttribute('id', trainDto.number + "_" + trainDto.routeName.replace(/\s/g, ''));
 
             // carriages
             for (var j = 0; j < trainDto.numberOfCarriages; j++) {
 
                 var carriage = document.querySelector('#carriage').cloneNode(true);
+
+                // carriage ID
+                carriage.content.querySelector('#carriage_id')
+                    .setAttribute('id', ('train' + trainDto.number + "_" + (j + 1)));
+
+                // carriage number on button
                 carriage.content.querySelector('#carrNumber').textContent = j + 1;
+
+                // slider carriage
+                var carriageButton = carriage.content.querySelector('#carriageButton');
+                carriageButton.setAttribute('data-target', ('#train' + trainDto.number + "_" + (j + 1)));
+                carriageButton.setAttribute('id', trainDto.number + "-" + (j + 1));
+
+                // selected place form
+                var selectedPlace = carriage.content.querySelector('#selectedPlace');
+                selectedPlace.setAttribute('id', 'selectedPlace_' + trainDto.number + "_" + (j + 1));
+
+                // hidden form for send data to controller
+                var hiddenTrainNumber = carriage.content.querySelector('#hiddenTrainNumber');
+                hiddenTrainNumber.setAttribute('value', trainDto.number);
+                var hiddenCarriageNumber = carriage.content.querySelector('#hiddenCarriageNumber');
+                hiddenCarriageNumber.setAttribute('value', j + 1);
+                var hiddenSeatNumber = carriage.content.querySelector('#hiddenSeatNumber');
+                hiddenSeatNumber.setAttribute('id', 'hiddenSeatNumber_' + trainDto.number + '_' + (j + 1));
+                var hiddenRouteName = carriage.content.querySelector('#hiddenRouteName');
+                hiddenRouteName.setAttribute('value', trainDto.routeName);
+                var hiddenStationFromName = carriage.content.querySelector('#hiddenStationFromName');
+                hiddenStationFromName.setAttribute('value', trainDto.stationDeparture);
+                var hiddenStationToName = carriage.content.querySelector('#hiddenStationToName');
+                hiddenStationToName.setAttribute('value', trainDto.stationArrival);
+
+                var count = 1;
+                carriage.content.querySelectorAll('.place').forEach(
+                    function (value) {
+                        if (count === 41) count = 1;
+                        value.setAttribute('onclick', 'addSeatNumberToPanel(' + hiddenSeatNumber.id + ', ' + selectedPlace.id + ', ' + count + ')');
+                        count++;
+                    }
+                );
+
+                // carriage button "buy ticket"
+                // var buyTicket = carriage.content.querySelector('#buyTicket');
+                // buyTicket.setAttribute('id', 'buyTicket_' + trainDto.number + "-" + (j + 1));
+                // buyTicket.setAttribute('onclick', 'buyTicket(' + i + ', ' + (j + 1) + ', ' + selectedPlace.id + ');');
 
                 var cloneCarriage = document.importNode(carriage.content, true);
 
                 target.appendChild(cloneCarriage);
             }
 
-
             var cloneTrain = document.importNode(template.content, true);
             document.querySelector('#foundTrains').appendChild(cloneTrain);
-
         }
 
     }).fail(function (error) {
@@ -87,3 +132,90 @@ function findScheduleButtonClick() {
     });
 
 }
+
+// add seat number to panel and to hidden form
+function addSeatNumberToPanel(hiddenSeatNumber, selectedPlace, number) {
+    selectedPlace.style.fontSize = 'large';
+    selectedPlace.style.removeProperty('color');
+    selectedPlace.textContent = number;
+    hiddenSeatNumber.setAttribute('value', number);
+}
+
+// find tickets by pressing button "Carriage [id]"
+function findTicketsByCarriage(trainAndCarriageNumber) {
+
+    var data = trainAndCarriageNumber.toString().split('-');
+
+    var sendData = {
+        stationFromName: $("#stationFromName").val(),
+        stationToName: $("#stationToName").val(),
+        trainNumber: data[0],
+        carriageNumber: data[1]
+    };
+
+    $.ajax({
+        url: "/find-ticket",
+        contentType: 'application/json',
+        method: "POST",
+        data: JSON.stringify(sendData)
+
+    }).done(function (result) {
+
+        var block = document.querySelector('#train' + data[0] + "_" + data[1]);
+
+        var purchasedPlace = [];
+        for (var i = 0; i < result.length; i++) {
+            var ticketDto = result[i];
+            purchasedPlace.push(ticketDto.seatNumber);
+        }
+
+        for (var i = 0; i < purchasedPlace.length; i++) {
+            var place = block.querySelector('#place_' + purchasedPlace[i]);
+            place.setAttribute('fill', 'ff0000');
+            place.removeAttribute('onclick');
+        }
+
+    }).fail(function (error) {
+
+        alert("шляпа");
+
+    });
+}
+
+// function buyTicket(trainDtoId, carriageNumber, seatNumber) {
+//
+//     if (seatNumber.textContent === '' || seatNumber.textContent === 'NO PLACE SELECTED') {
+//         seatNumber.style.color = 'red';
+//         seatNumber.style.fontSize = 'large';
+//         seatNumber.textContent = 'NO PLACE SELECTED';
+//         return 0;
+//     }
+//
+//     var trainDto = window.trainDtoList[trainDtoId];
+//
+//     var sendData = {
+//         trainNumber: trainDto.number,
+//         carriageNumber: carriageNumber,
+//         seatNumber: seatNumber.textContent,
+//         routeName: trainDto.routeName,
+//         stationFromName: trainDto.stationDeparture,
+//         stationToName: trainDto.stationArrival
+//     };
+//
+//     $.ajax({
+//         url: "/buy-ticket-page",
+//         contentType: 'application/json',
+//         method: "POST",
+//         data: JSON.stringify(sendData)
+//
+//     }).done(function (result) {
+//
+//         console.log("done");
+//         console.log(JSON.stringify(result));
+//
+//     }).fail(function (error) {
+//
+//         console.log("error: " + error);
+//
+//     });
+// }

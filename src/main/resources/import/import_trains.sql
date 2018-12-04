@@ -1,1 +1,1 @@
-INSERT INTO trains VALUE (1, 10, '10', 1);
+INSERT INTO trains VALUE (2, 20, '10', 9);

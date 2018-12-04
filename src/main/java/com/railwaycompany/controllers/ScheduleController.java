@@ -2,19 +2,19 @@ package com.railwaycompany.controllers;
 
 import com.railwaycompany.dto.RouteDto;
 import com.railwaycompany.dto.ScheduleDto;
+import com.railwaycompany.dto.TicketDto;
 import com.railwaycompany.dto.TrainDto;
 import com.railwaycompany.entities.Station;
-import com.railwaycompany.services.api.RouteService;
-import com.railwaycompany.services.api.StationService;
-import com.railwaycompany.services.api.TrainService;
+import com.railwaycompany.services.api.*;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
+import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
 import com.railwaycompany.utils.DateConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -27,7 +27,13 @@ public class ScheduleController {
     private static final Logger LOG = Logger.getLogger(ScheduleController.class);
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     StationService stationService;
+
+    @Autowired
+    TicketService ticketService;
 
     @Autowired
     RouteService routeService;
@@ -36,15 +42,13 @@ public class ScheduleController {
     TrainService trainService;
 
 
-    @RequestMapping(value = "schedule", method = RequestMethod.GET)
+    @GetMapping(value = "schedule")
     public String searchTrain(/*ModelMap modelMap*/) {
-//        List<Station> stationList = stationService.getAllStation();
-//        modelMap.addAttribute("stationList", stationList);
         return "schedule";
     }
 
     @ResponseBody
-    @RequestMapping(value = "find-schedule", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = "find-schedule", consumes = "application/json")
     public List<TrainDto> searchTrain(@RequestBody ScheduleDto scheduleDto) {
 
         Station stationFrom = null;
@@ -77,7 +81,16 @@ public class ScheduleController {
         if (routes != null) {
             trainDtoList = new ArrayList<>();
             for (RouteDto route : routes) {
-                TrainDto trainDto = trainService.getTrainDtoByRouteIdAndStations(route.getId(), stationFrom.getName(), stationTo.getName());
+                TrainDto trainDto = null;
+                try {
+                    trainDto = trainService.getTrainDtoByRouteIdAndStations(route.getId(), stationFrom.getName(), stationTo.getName());
+                } catch (TrainDoesNotExistException e) {
+                    String message = "Train does not exist";
+                    LOG.warn(message);
+                } catch (StationDoesNotExistException e) {
+                    String message = "Station does not exist";
+                    LOG.warn(message);
+                }
                 trainDtoList.add(trainDto);
             }
         }
@@ -85,4 +98,10 @@ public class ScheduleController {
         return trainDtoList;
     }
 
+    @ResponseBody
+    @PostMapping(value = "find-ticket", consumes = "application/json")
+    public List<TicketDto> searchTickets(@RequestBody TicketDto ticketDto) {
+        return ticketService.getAllTicketsByTrainNumberAndCarriageAndStations(
+                ticketDto.getTrainNumber(), ticketDto.getCarriageNumber(), ticketDto.getStationFromName(), ticketDto.getStationToName());
+    }
 }

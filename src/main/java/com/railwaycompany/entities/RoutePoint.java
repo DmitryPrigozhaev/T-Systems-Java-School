@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Simple JavaBean object that represent role of {@link RoutePoint}
@@ -15,7 +16,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "route_points")
-public class RoutePoint implements Serializable {
+public class RoutePoint implements Serializable, Comparable<RoutePoint> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,5 +79,24 @@ public class RoutePoint implements Serializable {
 
     public void setDateDeparture(Date dateDeparture) {
         this.dateDeparture = dateDeparture;
+    }
+
+    @Override
+    public int compareTo(RoutePoint routePoint) {
+        return (int) (this.id - routePoint.id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RoutePoint)) return false;
+        RoutePoint that = (RoutePoint) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(route, that.route);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, route);
     }
 }

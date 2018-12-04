@@ -9,6 +9,8 @@ public interface RouteDao extends GenericDao<Route> {
 
     Route getRouteByName(String name);
 
+    Route getRouteByTrainNumber(int trainNumber);
+
     List<RoutePoint> getRoutePoints(Route route);
 
 }

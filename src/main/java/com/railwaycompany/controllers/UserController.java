@@ -8,13 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -24,19 +21,20 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @GetMapping(value = "login")
     public String login() {
         return "login";
     }
 
-    @RequestMapping(value = "registration", method = RequestMethod.GET)
+    @GetMapping(value = "registration")
     public ModelAndView registration() {
         return new ModelAndView("registration", "user", new UserDto());
     }
 
-    @RequestMapping(value = "registration", method = RequestMethod.POST)
-    public String registration(ModelMap modelMap, @ModelAttribute("user") UserDto userDto,
-                               BindingResult bindingResult) {
+    @PostMapping(value = "registration")
+    public String registration(@ModelAttribute("user") UserDto userDto,
+                               BindingResult bindingResult,
+                               ModelMap modelMap) {
 
         if (bindingResult.hasErrors()) return "registration";
 
@@ -47,41 +45,6 @@ public class UserController {
             LOG.warn(message);
         }
         return "redirect:/account";
-    }
-
-    @RequestMapping(value = {"admin-all-passengers"}, method = RequestMethod.GET)
-    public String listUsers(ModelMap model) {
-
-        List<UserDto> userList = userService.getAllUsersDto();
-        model.addAttribute("userList", userList);
-        return "admin-all-passengers";
-    }
-
-    @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.GET)
-    public String editUser(@PathVariable String email, ModelMap model) {
-        UserDto user = userService.getUserDtoByEmail(email);
-        model.addAttribute("user", user);
-        model.addAttribute("edit", true);
-        return "registration";
-    }
-
-    @RequestMapping(value = {"edit-{email}-user"}, method = RequestMethod.POST)
-    public String updateUser(UserDto userDto, BindingResult result, ModelMap model, @PathVariable String email) {
-
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        userService.updateUserDto(userDto);
-
-        model.addAttribute("success", "User " + userDto.getEmail() + " updated successfully");
-        return "success";
-    }
-
-    @RequestMapping(value = {"delete-{email}-user"}, method = RequestMethod.GET)
-    public String deleteUser(@PathVariable String email) {
-        userService.deleteUserDto(userService.getUserDtoByEmail(email));
-        return "redirect:/list";
     }
 
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class RouteServiceImpl implements RouteService {
         List<RoutePointDto> routePointDtoList = null;
         List<RoutePoint> routePointList = route.getRoutePointList();
         if (routePointList != null && !routePointList.isEmpty()) {
+            Collections.sort(routePointList);
             routePointDtoList = new ArrayList<>();
             for (RoutePoint routePoint : routePointList) {
                 routePointDtoList.add(constructRoutePointDto(routePoint));
@@ -164,6 +166,16 @@ public class RouteServiceImpl implements RouteService {
         return constructRouteDto(route);
     }
 
+    @Override
+    public RouteDto getRouteDtoByTrainNumber(int trainNumber) throws RouteDoesNotExistException {
+        Route route = routeDao.getRouteByTrainNumber(trainNumber);
+        if (route == null) {
+            String message = "Route for train number \"" + trainNumber + "\" does not exist";
+            throw new RouteDoesNotExistException(message);
+        }
+        return constructRouteDto(route);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<RouteDto> getAllRoutes() {
@@ -197,7 +209,9 @@ public class RouteServiceImpl implements RouteService {
     public List<RoutePointDto> getAllRoutePointsDtoList() {
         List<RoutePointDto> routePointsDtoList = null;
         List<RoutePoint> routePointsList = routePointDao.readAll();
-        if (routePointsList != null && !routePointsList.isEmpty()) {
+        Collections.sort(routePointsList);
+
+        if (!routePointsList.isEmpty()) {
             routePointsDtoList = new ArrayList<>();
             for (RoutePoint routePoint : routePointsList) {
                 routePointsDtoList.add(constructRoutePointDto(routePoint));
@@ -261,8 +275,8 @@ public class RouteServiceImpl implements RouteService {
                 List<RoutePointDto> routePointsDtoList = getRoutePointsDtoList(routeDto);
                 int countStations = 0;
                 for (RoutePointDto routePointDto : routePointsDtoList) {
-                    if (routePointDto.getStationName().equals(stationFrom.getName()) ||
-                            routePointDto.getStationName().equals(stationTo.getName())) {
+                    if ((routePointDto.getStationName().equals(stationFrom.getName()) ||
+                            routePointDto.getStationName().equals(stationTo.getName()))) {
                         countStations++;
                     }
                 }
@@ -275,12 +289,6 @@ public class RouteServiceImpl implements RouteService {
     @Transactional(readOnly = true)
     @Override
     public List<RouteDto> findRouteDtoByStationsAndDate(Station stationFrom, Station stationTo, Date date) {
-        System.out.println("-----------------------------------");
-        System.out.println("stationFrom.getName() = " + stationFrom.getName());
-        System.out.println("stationTo.getName() = " + stationTo.getName());
-        System.out.println("date = " + date);
-        System.out.println("-----------------------------------");
-
         List<RouteDto> result = null;
 
         List<RouteDto> routeDtoList = getAllRoutes();

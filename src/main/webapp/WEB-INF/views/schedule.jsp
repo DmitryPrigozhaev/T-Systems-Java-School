@@ -5,6 +5,7 @@
 <jsp:include page="components/navbar.jsp" flush="true"/>
 <jsp:include page="components/found_trains.jsp"/>
 
+<%-- JQuery --%>
 <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
@@ -26,7 +27,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-1 form-inline">
-                <%--<form class="form-inline">--%>
                 <div class="form-group">
                     <h1>
                         <label for="stationFromName"> </label>
@@ -48,7 +48,6 @@
                     </h1>
                 </div>
                 <button class="btn btn-lg btn-facebook-login" onclick="findScheduleButtonClick()">search</button>
-                <%--</form>--%>
             </div>
         </div>
     </div>
@@ -58,9 +57,9 @@
 <div class="section">
 
     <%-- DOWNLOAD ANIMATION --%>
-    <div class="container" style="margin-bottom: 15px">
-        <div class="col-md-offset-5">
-            <img src="../../resources/img/bx_loader.gif" id="imgLoad"/>
+    <div class="container" style="text-align: center">
+        <div>
+            <img id="imgLoad" src="../../resources/img/bx_loader.gif"/>
         </div>
     </div>
 

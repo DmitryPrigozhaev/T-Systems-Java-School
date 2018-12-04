@@ -33,8 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/admin-all-passengers", "/admin-all-routes", "/admin-all-stations", "/admin-all-trains")
+                .antMatchers("/admin-all-passengers",
+                        "/admin-all-routes",
+                        "/admin-all-stations",
+                        "/admin-all-trains")
                 .access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+
+                .antMatchers("/account",
+                        "/buy-ticket-page")
+                .access("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_CLIENT')")
 
                 .and().formLogin()
                 .loginProcessingUrl("/login")
@@ -44,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .usernameParameter("email")
                 .passwordParameter("password")
+
                 // Config for Logout Page
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                 .and().exceptionHandling().accessDeniedPage("/accessDenied");

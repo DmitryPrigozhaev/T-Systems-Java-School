@@ -17,6 +17,7 @@
         <spring.version>5.1.0.RELEASE</spring.version>
         <spring-security.version>5.1.0.RELEASE</spring-security.version>
         <spring-data-jpa.version>2.1.2.RELEASE</spring-data-jpa.version>
+        <modelmapper.version>2.3.1</modelmapper.version>
         <mysql-connector.version>8.0.11</mysql-connector.version>
         <hibernate.version>5.3.6.Final</hibernate.version>
         <jackson.version>2.9.7</jackson.version>
@@ -64,6 +65,12 @@
             <version>${spring-security.version}</version>
         </dependency>
 
+        <!-- ModelMapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
 
         <!-- Hibernate -->
         <dependency>

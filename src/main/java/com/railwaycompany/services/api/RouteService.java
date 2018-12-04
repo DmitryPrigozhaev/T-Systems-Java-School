@@ -22,6 +22,8 @@ public interface RouteService {
 
     RouteDto getRouteDtoByName(String name) throws RouteDoesNotExistException;
 
+    RouteDto getRouteDtoByTrainNumber(int trainNumber) throws RouteDoesNotExistException;
+
     List<RouteDto> getAllRoutes();
 
     List<RoutePointDto> getRoutePointsDtoList(RouteDto routeDto);

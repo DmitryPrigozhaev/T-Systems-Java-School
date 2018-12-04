@@ -1,86 +1,79 @@
 package com.railwaycompany.dto;
 
-import com.railwaycompany.entities.Station;
-import com.railwaycompany.entities.Train;
-import com.railwaycompany.entities.User;
-
-import java.util.Date;
-
 public class TicketDto {
 
-    private Long id;
-    private User user;
-    private Train train;
-    private Station stationFrom;
-    private Station stationTo;
-    private Date saleTime;
-    private Integer carriage;
-    private Integer seat;
+    private String userEmail;
+    private Integer trainNumber;
+    private Integer carriageNumber;
+    private Integer seatNumber;
+    private String routeName;
+    private String stationFromName;
+    private String stationToName;
+    private String saleTime;
     private Float price;
-    private Date dateDeparture;
 
-    public Long getId() {
-        return id;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getTrainNumber() {
+        return trainNumber;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTrainNumber(Integer trainNumber) {
+        this.trainNumber = trainNumber;
     }
 
-    public Train getTrain() {
-        return train;
+    public Integer getCarriageNumber() {
+        return carriageNumber;
     }
 
-    public void setTrain(Train train) {
-        this.train = train;
+    public void setCarriageNumber(Integer carriageNumber) {
+        this.carriageNumber = carriageNumber;
     }
 
-    public Station getStationFrom() {
-        return stationFrom;
+    public Integer getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setStationFrom(Station stationFrom) {
-        this.stationFrom = stationFrom;
+    public void setSeatNumber(Integer seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
-    public Station getStationTo() {
-        return stationTo;
+    public String getRouteName() {
+        return routeName;
     }
 
-    public void setStationTo(Station stationTo) {
-        this.stationTo = stationTo;
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
     }
 
-    public Date getSaleTime() {
+    public String getStationFromName() {
+        return stationFromName;
+    }
+
+    public void setStationFromName(String stationFromName) {
+        this.stationFromName = stationFromName;
+    }
+
+    public String getStationToName() {
+        return stationToName;
+    }
+
+    public void setStationToName(String stationToName) {
+        this.stationToName = stationToName;
+    }
+
+    public String getSaleTime() {
         return saleTime;
     }
 
-    public void setSaleTime(Date saleTime) {
+    public void setSaleTime(String saleTime) {
         this.saleTime = saleTime;
-    }
-
-    public Integer getCarriage() {
-        return carriage;
-    }
-
-    public void setCarriage(Integer carriage) {
-        this.carriage = carriage;
-    }
-
-    public Integer getSeat() {
-        return seat;
-    }
-
-    public void setSeat(Integer seat) {
-        this.seat = seat;
     }
 
     public Float getPrice() {
@@ -89,13 +82,5 @@ public class TicketDto {
 
     public void setPrice(Float price) {
         this.price = price;
-    }
-
-    public Date getDateDeparture() {
-        return dateDeparture;
-    }
-
-    public void setDateDeparture(Date dateDeparture) {
-        this.dateDeparture = dateDeparture;
     }
 }

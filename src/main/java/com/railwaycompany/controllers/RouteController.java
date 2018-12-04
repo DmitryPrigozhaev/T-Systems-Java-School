@@ -31,6 +31,7 @@ public class RouteController {
     public String getAllRoutes(ModelMap model) {
         List<RouteDto> routeDtoList = routeService.getAllRoutes();
         List<RoutePointDto> routePointsDtoList = routeService.getAllRoutePointsDtoList();
+
         model.addAttribute("routeDtoList", routeDtoList);
         model.addAttribute("routePointsDtoList", routePointsDtoList);
         return "admin-all-routes";
@@ -82,7 +83,7 @@ public class RouteController {
         return routeService.getRoutePointsDtoList(routeDto);
     }
 
-    @RequestMapping(value = {"edit-{name}-route"}, method = RequestMethod.GET)
+    @GetMapping(value = "edit-{name}-route")
     public String editRoute(@PathVariable String name, ModelMap model) {
 
         RouteDto routeDto = null;
