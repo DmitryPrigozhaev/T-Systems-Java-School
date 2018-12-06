@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $("#imgLoad").hide();  // hide pre-loader
+    $("#imgLoad").hide();
 });
 
 function findScheduleButtonClick() {
 
-    $("#imgLoad").show(); // show loading
+    $("#imgLoad").show();
     $("#foundTrains").hide();
 
     var sendData = {
@@ -14,7 +14,7 @@ function findScheduleButtonClick() {
     };
 
     $.ajax({
-        url: "/find-schedule",
+        url: "find-schedule",
         contentType: 'application/json',
         method: "POST",
         data: JSON.stringify(sendData)
@@ -112,9 +112,9 @@ function findScheduleButtonClick() {
                 );
 
                 // carriage button "buy ticket"
-                // var buyTicket = carriage.content.querySelector('#buyTicket');
-                // buyTicket.setAttribute('id', 'buyTicket_' + trainDto.number + "-" + (j + 1));
-                // buyTicket.setAttribute('onclick', 'buyTicket(' + i + ', ' + (j + 1) + ', ' + selectedPlace.id + ');');
+                var buyTicket = carriage.content.querySelector('#buyTicket');
+                buyTicket.setAttribute('id', 'buyTicket_' + trainDto.number + "-" + (j + 1));
+                buyTicket.setAttribute('onclick', 'buyTicket(' + i + ', ' + (j + 1) + ', ' + selectedPlace.id + ');');
 
                 var cloneCarriage = document.importNode(carriage.content, true);
 
@@ -127,7 +127,7 @@ function findScheduleButtonClick() {
 
     }).fail(function (error) {
 
-        alert("Error\n" + JSON.stringify(error));
+        console.log("error:" + error);
 
     });
 
@@ -154,7 +154,7 @@ function findTicketsByCarriage(trainAndCarriageNumber) {
     };
 
     $.ajax({
-        url: "/find-ticket",
+        url: "find-ticket",
         contentType: 'application/json',
         method: "POST",
         data: JSON.stringify(sendData)
@@ -177,45 +177,18 @@ function findTicketsByCarriage(trainAndCarriageNumber) {
 
     }).fail(function (error) {
 
-        alert("шляпа");
+        console.log("error:" + error);
 
     });
 }
 
-// function buyTicket(trainDtoId, carriageNumber, seatNumber) {
-//
-//     if (seatNumber.textContent === '' || seatNumber.textContent === 'NO PLACE SELECTED') {
-//         seatNumber.style.color = 'red';
-//         seatNumber.style.fontSize = 'large';
-//         seatNumber.textContent = 'NO PLACE SELECTED';
-//         return 0;
-//     }
-//
-//     var trainDto = window.trainDtoList[trainDtoId];
-//
-//     var sendData = {
-//         trainNumber: trainDto.number,
-//         carriageNumber: carriageNumber,
-//         seatNumber: seatNumber.textContent,
-//         routeName: trainDto.routeName,
-//         stationFromName: trainDto.stationDeparture,
-//         stationToName: trainDto.stationArrival
-//     };
-//
-//     $.ajax({
-//         url: "/buy-ticket-page",
-//         contentType: 'application/json',
-//         method: "POST",
-//         data: JSON.stringify(sendData)
-//
-//     }).done(function (result) {
-//
-//         console.log("done");
-//         console.log(JSON.stringify(result));
-//
-//     }).fail(function (error) {
-//
-//         console.log("error: " + error);
-//
-//     });
-// }
+function buyTicket(trainDtoId, carriageNumber, seatNumber) {
+
+    if (seatNumber.textContent === '' || seatNumber.textContent === 'NO PLACE SELECTED') {
+        event.preventDefault();
+        seatNumber.style.color = 'red';
+        seatNumber.style.fontSize = 'large';
+        seatNumber.textContent = 'NO PLACE SELECTED';
+    }
+
+}

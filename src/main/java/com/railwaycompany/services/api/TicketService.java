@@ -14,13 +14,15 @@ public interface TicketService {
 
     List<TicketDto> buyTicket(TicketDto ticketDto) throws AlreadyRegisteredException, CannotBuyTicketException, InvalidInputDataException;
 
-    List<TicketDto> getTicketByUserDtoAndTrainNumber(UserDto userDto, int trainNumber);
+    List<TicketDto> getTicketDtoByUserDto(UserDto userDto);
 
     List<TicketDto> getAllTicketsByTrainNumberAndCarriage(int trainNumber, int carriageNumber);
 
     List<TicketDto> getAllTicketsByTrainNumberAndCarriageAndStations(int trainNumber, int carriageNumber, String stationFromName, String stationToName);
 
     List<TicketDto> getAllTicketsByTrainNumber(int trainNumber);
+
+    List<UserDto> getAllUsersDtoByTrainNumber(int trainNumber);
 
     boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture);
 

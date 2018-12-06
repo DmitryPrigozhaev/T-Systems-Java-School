@@ -18,11 +18,11 @@
                     <li>
                         <div class="dropdown choose-country">
                             <a class="#" data-toggle="dropdown" href="#">
-                                <img src="../../../resources/img/flags/gb.png" alt="Great Britain"> UK</a>
+                                <img src="resources/img/flags/gb.png" alt="Great Britain"> UK</a>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="menuitem"><a href="#"><img src="../../../resources/img/flags/ru.png"
+                                <li role="menuitem"><a href="#"><img src="resources/img/flags/ru.png"
                                                                      alt="Russia"> RU</a></li>
-                                <li role="menuitem"><a href="#"><img src="../../../resources/img/flags/de.png"
+                                <li role="menuitem"><a href="#"><img src="resources/img/flags/de.png"
                                                                      alt="Germany"> DE</a></li>
                             </ul>
                         </div>
@@ -48,7 +48,7 @@
             <ul>
                 <%-- LOGO --%>
                 <li class="logo-wrapper">
-                    <a href="index"><img src="../../../resources/img/railwaycompany-logo.png" alt="Information system of a railway company"></a></li>
+                    <a href="index"><img src="resources/img/railwaycompany-logo.png" alt="Information system of a railway company"></a></li>
                 <%-- HOME --%>
                 <li class="active">
                     <a href="index">Home</a>

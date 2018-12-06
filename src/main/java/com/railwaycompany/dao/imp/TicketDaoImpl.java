@@ -17,6 +17,8 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
 
     private static final String GET_TICKETS_BY_TRAIN_ID = "SELECT t FROM Ticket t WHERE t.train.id = :trainId";
 
+    private static final String GET_TICKETS_BY_USER_EMAIL = "SELECT t FROM Ticket t WHERE t.user.email = :email";
+
     private static final String GET_TICKETS_BY_CARRIAGE_AND_TRAIN_ID = "SELECT t FROM Ticket t WHERE t.carriage = :carriage " +
             "AND" + " t.train.id = :trainId";
 
@@ -28,18 +30,8 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
         Query query = getCurrentSession().createQuery(GET_TICKETS_BY_TRAIN_ID);
         query.setParameter("trainId", trainId);
 
-        List<Ticket> ticketList = null;
         List resultList = query.getResultList();
-        if (resultList != null && !resultList.isEmpty()) {
-            ticketList = new ArrayList<>();
-            for (Object o : resultList) {
-                if (o instanceof Ticket) {
-                    ticketList.add((Ticket) o);
-                }
-            }
-            Collections.sort(ticketList);
-        }
-        return ticketList;
+        return getTickets(resultList);
     }
 
     @Override
@@ -48,18 +40,8 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
         query.setParameter("carriage", carriageNumber);
         query.setParameter("trainId", trainId);
 
-        List<Ticket> ticketList = null;
         List queryResultList = query.getResultList();
-        if (queryResultList != null && !queryResultList.isEmpty()) {
-            ticketList = new ArrayList<>();
-            for (Object o : queryResultList) {
-                if (o instanceof Ticket) {
-                    ticketList.add((Ticket) o);
-                }
-            }
-            Collections.sort(ticketList);
-        }
-        return ticketList;
+        return getTickets(queryResultList);
     }
 
     @Override
@@ -68,18 +50,17 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
         query.setParameter("userId", userId);
         query.setParameter("trainId", trainId);
 
-        List<Ticket> ticketList = null;
         List resultList = query.getResultList();
-        if (resultList != null && !resultList.isEmpty()) {
-            ticketList = new ArrayList<>();
-            for (Object o : resultList) {
-                if (o instanceof Ticket) {
-                    ticketList.add((Ticket) o);
-                }
-            }
-            Collections.sort(ticketList);
-        }
-        return ticketList;
+        return getTickets(resultList);
+    }
+
+    @Override
+    public List<Ticket> getTicketByUserEmail(String email) {
+        Query query = getCurrentSession().createQuery(GET_TICKETS_BY_USER_EMAIL);
+        query.setParameter("email", email);
+
+        List resultList = query.getResultList();
+        return getTickets(resultList);
     }
 
     @Override
@@ -95,4 +76,17 @@ public class TicketDaoImpl extends AbstractGenericDao<Ticket> implements TicketD
         return registered;
     }
 
+    private List<Ticket> getTickets(List resultList) {
+        List<Ticket> ticketList = null;
+        if (resultList != null && !resultList.isEmpty()) {
+            ticketList = new ArrayList<>();
+            for (Object o : resultList) {
+                if (o instanceof Ticket) {
+                    ticketList.add((Ticket) o);
+                }
+            }
+            Collections.sort(ticketList);
+        }
+        return ticketList;
+    }
 }

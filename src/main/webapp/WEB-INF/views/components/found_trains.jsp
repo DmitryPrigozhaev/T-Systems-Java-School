@@ -70,11 +70,11 @@
 
         <%-- CARRIAGE OPTION ICON --%>
         <div class="col-md-2" style="margin-top: 8px">
-            <img src="../../../resources/img/wc.png" class="carriage-option"
+            <img src="resources/img/wc.png" class="carriage-option"
                  alt="Bio toilet" title="Bio toilet"/>
-            <img src="../../../resources/img/conditioner.png" class="carriage-option"
+            <img src="resources/img/conditioner.png" class="carriage-option"
                  alt="Air conditioning works in summer" title="Air conditioning works in summer"/>
-            <img src="../../../resources/img/linens.png" class="carriage-option"
+            <img src="resources/img/linens.png" class="carriage-option"
                  alt="Bed linen" title="Bed linen"/>
         </div>
 
@@ -168,7 +168,7 @@
                               fill="#008000"></path>
                     </svg>
 
-                    <img class="carriage-img" src="../../../resources/img/carriage.png"/>
+                    <img class="carriage-img" src="resources/img/carriage.png"/>
 
                 </div>
             </div>

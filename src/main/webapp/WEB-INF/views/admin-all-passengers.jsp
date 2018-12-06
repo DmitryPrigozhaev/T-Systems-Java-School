@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-<script src="../../resources/js/AjaxFindPassengers.js"></script>
+<script src="resources/js/AjaxFindPassengers.js"></script>
 
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
@@ -39,20 +39,21 @@
                 <div class="col-md-3 col-md-offset-9">
                     <br>
                     <button class="btn-blue btn-block" onclick="getPassenger()">Select</button>
+                    <br>
                 </div>
+
+                <%-- DOWNLOAD ANIMATION --%>
+                <div style="text-align: center">
+                    <div>
+                        <img id="imgLoad" src="resources/img/bx_loader.gif"/>
+                    </div>
+                </div>
+
+                <%-- USER CONTAINER --%>
+                <div id="userContainer"></div>
+
             </div>
         </div>
-
-        <%-- DOWNLOAD ANIMATION --%>
-        <div class="container" style="text-align: center">
-            <div>
-                <img id="imgLoad" src="../../resources/img/bx_loader.gif"/>
-            </div>
-        </div>
-
-        <%-- USER CONTAINER --%>
-        <div id="userContainer"></div>
-
     </div>
 </div>
 

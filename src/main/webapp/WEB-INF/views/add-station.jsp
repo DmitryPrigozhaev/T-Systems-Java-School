@@ -61,7 +61,6 @@
                                 <label for="name">Station name</label>
                                 <form:input path="name" id="name" class="form-control" type="text"
                                             placeholder="Station name"/>
-
                                 <c:choose>
                                     <c:when test="${edit}">
                                         <div class="col-md-4 col-md-offset-8">

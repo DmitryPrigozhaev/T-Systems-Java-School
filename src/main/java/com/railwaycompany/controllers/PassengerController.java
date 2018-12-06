@@ -1,7 +1,7 @@
 package com.railwaycompany.controllers;
 
-import com.railwaycompany.dto.TicketDto;
 import com.railwaycompany.dto.TrainDto;
+import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.services.api.TicketService;
 import com.railwaycompany.services.api.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,8 @@ public class PassengerController {
 
     @ResponseBody
     @PostMapping(value = "get-tickets", consumes = "application/json")
-    public List<TicketDto> getTickets(@RequestBody TrainDto trainDto) {
-
-        System.out.println("trainDto.getId() = " + trainDto.getId());
-        System.out.println("trainDto.getNumber() = " + trainDto.getNumber());
-        System.out.println("trainDto.getNumberOfCarriages() = " + trainDto.getNumberOfCarriages());
-        System.out.println("trainDto.getRouteName() = " + trainDto.getRouteName());
-
-        return ticketService.getAllTicketsByTrainNumber(trainDto.getNumber());
+    public List<UserDto> getTickets(@RequestBody TrainDto trainDto) {
+        return ticketService.getAllUsersDtoByTrainNumber(trainDto.getNumber());
     }
 
 }

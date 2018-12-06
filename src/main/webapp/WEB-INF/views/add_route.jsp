@@ -8,7 +8,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-<script src="../../resources/js/AjaxAddRoute.js"></script>
+<script src="resources/js/AjaxAddRoute.js"></script>
 
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
@@ -89,7 +89,7 @@
                 <div class="grid-container" id="tableContainer">
                      <%--insert items by id="tableContainer" --%>
                     <div class="col-md-offset-5">
-                        <img src="../../resources/img/bx_loader.gif" id="imgLoad"/>
+                        <img src="resources/img/bx_loader.gif" id="imgLoad"/>
                     </div>
                 </div>
                 <%-- END TABLE OF ROUTE POINTS --%>

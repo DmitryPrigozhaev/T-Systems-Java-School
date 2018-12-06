@@ -12,6 +12,8 @@ public interface TicketDao extends GenericDao<Ticket> {
 
     List<Ticket> getTicketByUserIdAndTrainId(long userId, long trainId);
 
+    List<Ticket> getTicketByUserEmail(String email);
+
     boolean isRegistered(int userId, int trainId);
 
 }

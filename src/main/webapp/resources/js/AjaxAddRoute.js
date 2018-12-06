@@ -14,7 +14,7 @@ function addRoutePointButtonClick() {
     };
 
     $.ajax({
-        url: "/new-route",
+        url: "new-route",
         contentType: 'application/json',
         method: "POST",
         data: JSON.stringify(sendData)
@@ -53,7 +53,7 @@ function addRoutePointButtonClick() {
 
     }).fail(function (error) {
 
-        alert("Error\n" + JSON.stringify(error));
+        console.log("Error\n" + JSON.stringify(error));
 
     });
 
@@ -69,18 +69,19 @@ function editRoutePointButtonClick() {
     };
 
     $.ajax({
-        url: "/edit-" + $("#routeName").val() + "-route",
+        url: "edit-" + $("#routeName").val() + "-route",
         contentType: 'application/json',
         method: "POST",
         data: JSON.stringify(sendData)
 
     }).done(function (result) {
 
-        alert(JSON.stringify(result));
+        // todo add function
+        console.log(JSON.stringify(result));
 
     }).fail(function (error) {
 
-        alert("Error\n" + JSON.stringify(error));
+        console.log("Error\n" + JSON.stringify(error));
 
     });
 }

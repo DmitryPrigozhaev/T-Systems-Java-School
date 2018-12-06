@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-<script src="../../resources/js/AjaxFindTrain.js"></script>
+<script src="resources/js/AjaxFindTrain.js"></script>
 
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
@@ -59,7 +59,7 @@
     <%-- DOWNLOAD ANIMATION --%>
     <div class="container" style="text-align: center">
         <div>
-            <img id="imgLoad" src="../../resources/img/bx_loader.gif"/>
+            <img id="imgLoad" src="resources/img/bx_loader.gif"/>
         </div>
     </div>
 

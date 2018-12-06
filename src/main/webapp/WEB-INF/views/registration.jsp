@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="basic-login">
-                    <form:form method="POST" modelAttribute="user" role="form" class="form-horizontal">
+                    <form:form method="POST" id="form" modelAttribute="user" role="form" class="form-horizontal">
                         <%-- EMAIL --%>
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">Email</label>
@@ -30,7 +30,8 @@
                         <div class="form-group">
                             <label for="password" class="col-sm-4 control-label">Password</label>
                             <div class="col-sm-8">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                <input type="password" name="password" class="form-control" id="password"
+                                       placeholder="Password">
                             </div>
                         </div>
                         <%-- CONFIRM PASSWORD --%>
@@ -45,26 +46,30 @@
                         <div class="form-group">
                             <label for="firstName" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
-                                <input type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name">
+                                <input type="text" name="firstName" class="form-control" id="firstName"
+                                       placeholder="First Name">
                             </div>
                         </div>
                         <%-- LAST NAME --%>
                         <div class="form-group">
                             <label for="lastName" class="col-sm-4 control-label">Last Name</label>
                             <div class="col-sm-8">
-                                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name">
+                                <input type="text" name="lastName" class="form-control" id="lastName"
+                                       placeholder="Last Name">
                             </div>
                         </div>
                         <%-- DATE OF BIRTHDAY--%>
                         <div class="form-group">
                             <label for="birthDate" class="col-sm-4 control-label">Birth Date</label>
                             <div class="col-sm-8">
-                                <input type="date" name="birthDate" class="form-control" id="birthDate" placeholder="Birth Date">
+                                <input type="date" name="birthDate" class="form-control" id="birthDate"
+                                       placeholder="Birth Date">
                             </div>
                         </div>
                         <%-- BUTTON --%>
                         <div class="form-group">
-                            <button type="submit" class="btn pull-right success" style="margin-right: 25px">Register</button>
+                            <button type="submit" class="btn pull-right success" style="margin-right: 25px">Register
+                            </button>
                             <div class="clearfix"></div>
                         </div>
                     </form:form>

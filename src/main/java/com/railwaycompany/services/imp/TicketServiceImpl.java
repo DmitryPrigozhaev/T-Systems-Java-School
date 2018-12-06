@@ -5,6 +5,7 @@ import com.railwaycompany.dto.TicketDto;
 import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.*;
 import com.railwaycompany.services.api.TicketService;
+import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
 import com.railwaycompany.services.exceptions.CannotBuyTicketException;
 import com.railwaycompany.services.exceptions.InvalidInputDataException;
@@ -15,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -28,6 +26,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     TicketDao ticketDao;
@@ -155,15 +156,41 @@ public class TicketServiceImpl implements TicketService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<TicketDto> getTicketByUserDtoAndTrainNumber(UserDto userDto, int trainNumber) {
+    public List<TicketDto> getTicketDtoByUserDto(UserDto userDto) {
         List<TicketDto> ticketDtoList = null;
-        User user = userDao.getUserByEmail(userDto.getEmail());
-        Train train = trainDao.getTrainByNumber(trainNumber);
-        List<Ticket> ticketList = ticketDao.getTicketByUserIdAndTrainId(user.getId(), train.getId());
+        List<Ticket> ticketList = ticketDao.getTicketByUserEmail(userDto.getEmail());
         if (ticketList != null && !ticketList.isEmpty()) {
             ticketDtoList = new ArrayList<>();
+
+            List<Ticket> temp = new ArrayList<>();
+            float price = 0f;
+
+            Set<Date> dateTimeSet = new HashSet<>();
             for (Ticket ticket : ticketList) {
-                ticketDtoList.add(constructTicketDto(ticket));
+                dateTimeSet.add(ticket.getSaleTime());
+            }
+            for (Date date : dateTimeSet) {
+                for (Ticket ticket : ticketList) {
+                    if (ticket.getSaleTime().equals(date)) {
+                        temp.add(ticket);
+                        price += ticket.getPrice();
+                    }
+                }
+                TicketDto ticketDto = new TicketDto();
+                ticketDto.setUserEmail(temp.get(0).getUser().getEmail());
+                ticketDto.setRouteName(temp.get(0).getRoute().getName());
+                ticketDto.setTrainNumber(temp.get(0).getTrain().getNumber());
+                ticketDto.setCarriageNumber(temp.get(0).getCarriage());
+                ticketDto.setSeatNumber(temp.get(0).getSeat());
+                ticketDto.setSaleTime(temp.get(0).getSaleTime().toString());
+                ticketDto.setStationFromName(temp.get(0).getStationFrom().getName());
+                ticketDto.setStationToName(temp.get(temp.size()-1).getStationTo().getName());
+                ticketDto.setPrice(price);
+
+                ticketDtoList.add(ticketDto);
+
+                temp.clear();
+                price = 0f;
             }
         }
         return ticketDtoList;
@@ -187,8 +214,8 @@ public class TicketServiceImpl implements TicketService {
     // метод возвращает все билеты на вагон по указанному отрезку
     @Transactional(readOnly = true)
     @Override
-    public List<TicketDto> getAllTicketsByTrainNumberAndCarriageAndStations(int trainNumber,
-                                                                            int carriageNumber, String stationFromName, String stationToName) {
+    public List<TicketDto> getAllTicketsByTrainNumberAndCarriageAndStations(int trainNumber, int carriageNumber,
+                                                                            String stationFromName, String stationToName) {
 
         List<TicketDto> result = null;
 
@@ -241,6 +268,25 @@ public class TicketServiceImpl implements TicketService {
             }
         }
         return ticketDtoList;
+    }
+
+    @Override
+    public List<UserDto> getAllUsersDtoByTrainNumber(int trainNumber) {
+        List<UserDto> userDtoList = null;
+        List<TicketDto> ticketDtoList = getAllTicketsByTrainNumber(trainNumber);
+        if (ticketDtoList != null && !ticketDtoList.isEmpty()) {
+            userDtoList = new ArrayList<>();
+            Set<String> emailSet = new HashSet<>();
+            for (TicketDto ticketDto : ticketDtoList) {
+                emailSet.add(ticketDto.getUserEmail());
+            }
+            for (String email : emailSet) {
+                UserDto userDto = userService.getUserDtoByEmail(email);
+                userDtoList.add(userDto);
+            }
+        }
+
+        return userDtoList;
     }
 
     @Transactional(readOnly = true)
