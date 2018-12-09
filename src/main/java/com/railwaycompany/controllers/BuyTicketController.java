@@ -49,25 +49,36 @@ public class BuyTicketController {
     }
 
     @PostMapping(value = "buy-ticket")
-    public String buyTicket(@ModelAttribute TicketDto ticketDto, ModelMap modelMap) {
+    public String buyTicket(@ModelAttribute UserDto userDto,
+                            @ModelAttribute TicketDto ticketDto, ModelMap modelMap) {
 
         List<TicketDto> ticketDtoList = null;
         try {
             ticketDtoList = ticketService.buyTicket(ticketDto);
+            String message = "Ticket purchase was successful";
+            modelMap.addAttribute("success", true);
+            modelMap.addAttribute("message", message);
         } catch (AlreadyRegisteredException e) {
-            String message = "User with email \"" + ticketDto.getUserEmail() + "\" already registered ";
+            String message = "A passenger can have only one ticket";
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", message);
             LOG.warn(message);
-        } catch (CannotBuyTicketException e) {
-            String message = "Cannot buy ticket";
-            LOG.warn(message, e);
+        } catch (CannotBuyTicketException message) {
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", message);
+            LOG.warn(message);
         } catch (InvalidInputDataException e) {
             String message = "Invalid input data";
+            modelMap.addAttribute("error", true);
+            modelMap.addAttribute("message", message);
             LOG.warn(message, e);
         }
 
         modelMap.addAttribute("success", true);
+        modelMap.addAttribute("userDto", userDto);
+        modelMap.addAttribute("ticketDto", ticketDto);
         modelMap.addAttribute("ticketList", ticketDtoList);
 
-        return "account";
+        return "buy-ticket-page";
     }
 }

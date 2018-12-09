@@ -88,6 +88,7 @@
                     <button type="submit" class="btn pull-right">All stations</button>
                 </form>
             </div>
+
         </div>
     </div>
 </div>

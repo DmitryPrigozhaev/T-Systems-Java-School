@@ -4,6 +4,7 @@ import com.railwaycompany.dao.api.*;
 import com.railwaycompany.dto.TicketDto;
 import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.*;
+import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.api.TicketService;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
@@ -176,6 +177,17 @@ public class TicketServiceImpl implements TicketService {
                         price += ticket.getPrice();
                     }
                 }
+
+                String datetimeDeparture = "";
+                String datetimeArrival = "";
+                List<RoutePoint> routePointList = temp.get(0).getRoute().getRoutePointList();
+                for (RoutePoint routePoint : routePointList) {
+                    if (routePoint.getStation().equals(temp.get(0).getStationFrom()))
+                        datetimeDeparture = routePoint.getDateDeparture().toString();
+                    if (routePoint.getStation().equals(temp.get(0).getStationTo()))
+                        datetimeArrival = routePoint.getDateArrival().toString();
+                }
+
                 TicketDto ticketDto = new TicketDto();
                 ticketDto.setUserEmail(temp.get(0).getUser().getEmail());
                 ticketDto.setRouteName(temp.get(0).getRoute().getName());
@@ -185,6 +197,8 @@ public class TicketServiceImpl implements TicketService {
                 ticketDto.setSaleTime(temp.get(0).getSaleTime().toString());
                 ticketDto.setStationFromName(temp.get(0).getStationFrom().getName());
                 ticketDto.setStationToName(temp.get(temp.size()-1).getStationTo().getName());
+                ticketDto.setDatetimeDeparture(datetimeDeparture);
+                ticketDto.setDatetimeArrival(datetimeArrival);
                 ticketDto.setPrice(price);
 
                 ticketDtoList.add(ticketDto);

@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="components/header.jsp"/>
 <jsp:include page="components/navbar.jsp" flush="true"/>
 
@@ -20,8 +21,18 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="basic-login">
 
-                    <form method="post" action='login'>
-                        <div class="form-group">
+                    <c:choose>
+                        <c:when test="${error}">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Invalid email or password</h3>
+                                </div>
+                            </div>
+                        </c:when>
+                    </c:choose>
+
+                    <form id="loginForm" method="post" action='login'>
+                        <div class="form-group has-feedback">
                             <label for="email"><i class="icon-user"></i> <b>Email</b></label>
                             <input class="form-control" name="email" id="email" type="text" placeholder="">
                         </div>

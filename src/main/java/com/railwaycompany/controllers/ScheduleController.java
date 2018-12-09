@@ -47,6 +47,14 @@ public class ScheduleController {
         return "schedule";
     }
 
+//    рабочая шапка
+//    @ResponseBody
+//    @PostMapping(value = "find-schedule", consumes = "application/json")
+//    public List<TrainDto> searchTrain(@RequestBody ScheduleDto scheduleDto) {
+//
+//        Station stationFrom = null;
+//        Station stationTo = null;
+//        Date date = null;
     @ResponseBody
     @PostMapping(value = "find-schedule", consumes = "application/json")
     public List<TrainDto> searchTrain(@RequestBody ScheduleDto scheduleDto) {

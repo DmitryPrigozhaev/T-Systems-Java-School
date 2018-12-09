@@ -194,6 +194,10 @@
                             <input id="hiddenStationFromName" type="text" name="stationFromName">
                             <label for="hiddenStationToName">stationToName</label>
                             <input id="hiddenStationToName" type="text" name="stationToName">
+                            <label for="hiddenDatetimeDeparture">datetimeDeparture</label>
+                            <input id="hiddenDatetimeDeparture" type="text" name="datetimeDeparture">
+                            <label for="hiddenDatetimeArrival">datetimeArrival</label>
+                            <input id="hiddenDatetimeArrival" type="text" name="datetimeArrival">
                         </div>
                         <button id="buyTicket" class="btn btn-grey">
                             Buy ticket

@@ -101,7 +101,12 @@ function findScheduleButtonClick() {
                 hiddenStationFromName.setAttribute('value', trainDto.stationDeparture);
                 var hiddenStationToName = carriage.content.querySelector('#hiddenStationToName');
                 hiddenStationToName.setAttribute('value', trainDto.stationArrival);
-
+                var hiddenDatetimeDeparture = carriage.content.querySelector('#hiddenDatetimeDeparture');
+                hiddenDatetimeDeparture.setAttribute('value', departureTime.getFullYear() + "." + (departureTime.getMonth() + 1) + "." + ('0' + departureTime.getDate()).slice(-2) +
+                    ' ' + ('0' + departureTime.getHours()).slice(-2) + ":" + ('0' + departureTime.getMinutes()).slice(-2));
+                var hiddenDatetimeArrival = carriage.content.querySelector('#hiddenDatetimeArrival');
+                hiddenDatetimeArrival.setAttribute('value', arrivalTime.getFullYear() + "." + (arrivalTime.getMonth() + 1) + "." + ('0' + arrivalTime.getDate()).slice(-2) +
+                    ' ' + ('0' + arrivalTime.getHours()).slice(-2) + ":" + ('0' + arrivalTime.getMinutes()).slice(-2));
                 var count = 1;
                 carriage.content.querySelectorAll('.place').forEach(
                     function (value) {

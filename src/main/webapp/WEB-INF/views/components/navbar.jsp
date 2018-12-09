@@ -10,20 +10,22 @@
             <div class="extras">
                 <ul>
                     <%-- SHOPPING CART --%>
-                    <li class="shopping-cart-items">
-                        <i class="glyphicon glyphicon-shopping-cart icon-white"></i>
-                        <a href="shopping-cart"><b>3 items</b></a>
-                    </li>
+                    <%--<li class="shopping-cart-items">--%>
+                        <%--<i class="glyphicon glyphicon-shopping-cart icon-white"></i>--%>
+                        <%--<a href="shopping-cart"><b>3 items</b></a>--%>
+                    <%--</li>--%>
                     <%-- LANGUAGES --%>
                     <li>
                         <div class="dropdown choose-country">
                             <a class="#" data-toggle="dropdown" href="#">
                                 <img src="resources/img/flags/gb.png" alt="Great Britain"> UK</a>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="menuitem"><a href="#"><img src="resources/img/flags/ru.png"
-                                                                     alt="Russia"> RU</a></li>
-                                <li role="menuitem"><a href="#"><img src="resources/img/flags/de.png"
-                                                                     alt="Germany"> DE</a></li>
+                                <li role="menuitem">
+                                    <a href="#"><img src="resources/img/flags/ru.png" alt="Russia"> RU</a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="#"><img src="resources/img/flags/de.png" alt="Germany"> DE</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -31,7 +33,7 @@
                     <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')">
                         <li>
                             <i class="glyphicon glyphicon-log-out icon-white"></i>
-                            <a href="/logout">Logout</a>
+                            <a href="logout">Logout</a>
                         </li>
                     </sec:authorize>
                     <sec:authorize access="!(hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER') || hasRole('ROLE_USER'))">

@@ -9,8 +9,6 @@ public interface UserService {
 
     void saveUserDto(UserDto userDto) throws AlreadyRegisteredException;
 
-    UserDto getUserDto(long id);
-
     UserDto getUserDtoByEmail(String email);
 
     List<UserDto> getAllUsersDto();

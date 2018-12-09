@@ -65,17 +65,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public UserDto getUserDto(long userId) {
-        User user = userDao.read(userId);
-        UserDto userDto = null;
-        if (user != null) {
-            userDto = constructUserDto(user);
-        }
-        return userDto;
-    }
-
     @Override
     public UserDto getUserDtoByEmail(String email) {
         User user = userDao.getUserByEmail(email);

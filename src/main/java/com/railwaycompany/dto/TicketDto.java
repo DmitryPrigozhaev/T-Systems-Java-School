@@ -9,6 +9,8 @@ public class TicketDto {
     private String routeName;
     private String stationFromName;
     private String stationToName;
+    private String datetimeDeparture;
+    private String datetimeArrival;
     private String saleTime;
     private Float price;
 
@@ -74,6 +76,22 @@ public class TicketDto {
 
     public void setSaleTime(String saleTime) {
         this.saleTime = saleTime;
+    }
+
+    public String getDatetimeDeparture() {
+        return datetimeDeparture;
+    }
+
+    public void setDatetimeDeparture(String datetimeDeparture) {
+        this.datetimeDeparture = datetimeDeparture;
+    }
+
+    public String getDatetimeArrival() {
+        return datetimeArrival;
+    }
+
+    public void setDatetimeArrival(String datetimeArrival) {
+        this.datetimeArrival = datetimeArrival;
     }
 
     public Float getPrice() {
