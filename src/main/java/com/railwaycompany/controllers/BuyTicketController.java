@@ -42,6 +42,7 @@ public class BuyTicketController {
 
         UserDto userDto = userService.getUserDtoByEmail(username);
         ticketDto.setUserEmail(userDto.getEmail());
+        ticketDto.setPrice(ticketService.getTicketCostByUserRoute(ticketDto.getRouteName(), ticketDto.getStationFromName(), ticketDto.getStationToName()));
 
         modelMap.addAttribute("userDto", userDto);
         modelMap.addAttribute("ticketDto", ticketDto);

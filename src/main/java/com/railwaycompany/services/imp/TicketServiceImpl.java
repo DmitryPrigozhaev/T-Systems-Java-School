@@ -4,7 +4,6 @@ import com.railwaycompany.dao.api.*;
 import com.railwaycompany.dto.TicketDto;
 import com.railwaycompany.dto.UserDto;
 import com.railwaycompany.entities.*;
-import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.api.TicketService;
 import com.railwaycompany.services.api.UserService;
 import com.railwaycompany.services.exceptions.AlreadyRegisteredException;
@@ -118,14 +117,16 @@ public class TicketServiceImpl implements TicketService {
         // checking the availability of free space in the carriage
         Train train = trainDao.getTrainByNumber(ticketDto.getTrainNumber());
         List<Ticket> carriageTicketList = ticketDao.getTicketsByTrainIdAndCarriageNumber(train.getId(), ticketDto.getCarriageNumber());
-        for (Ticket ticket : carriageTicketList) {
-            if (ticketDto.getSeatNumber().equals(ticket.getSeat()) &&
-                    ticket.getStationFrom().getName().equals(stationFrom.getName())) {
-                String message = "Place number " + ticketDto.getSeatNumber() +
-                        " in the carriage number " + ticketDto.getCarriageNumber() +
-                        " is already taken";
-                LOG.warn(message);
-                throw new CannotBuyTicketException(message);
+        if (carriageTicketList != null && !carriageTicketList.isEmpty()) {
+            for (Ticket ticket : carriageTicketList) {
+                if (ticketDto.getSeatNumber().equals(ticket.getSeat()) &&
+                        ticket.getStationFrom().getName().equals(stationFrom.getName())) {
+                    String message = "Place number " + ticketDto.getSeatNumber() +
+                            " in the carriage number " + ticketDto.getCarriageNumber() +
+                            " is already taken";
+                    LOG.warn(message);
+                    throw new CannotBuyTicketException(message);
+                }
             }
         }
 
@@ -305,7 +306,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Transactional(readOnly = true)
     @Override
-    public boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture) {
+    public Boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture) {
         Train train = trainDao.getTrainByNumber(trainNumber);
         List<Ticket> ticketList = ticketDao.getTicketByUserIdAndTrainId(user.getId(), train.getId());
 
@@ -324,7 +325,28 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public float getTicketCost() {
+    public Float getTicketCost() {
         return 250.00f;
+    }
+
+    @Override
+    public Float getTicketCostByUserRoute(String routeName, String stationFrom, String stationTo) {
+        Float price = 0.0f;
+        Route route = routeDao.getRouteByName(routeName);
+        List<RoutePoint> routePointList = route.getRoutePointList();
+        if (routePointList != null && !routePointList.isEmpty()) {
+            Collections.sort(routePointList);
+            boolean writePrice = false;
+            for (RoutePoint routePoint : routePointList) {
+                if (routePoint.getStation().getName().equals(stationFrom)) {
+                    writePrice = true;
+                }
+                if (routePoint.getStation().getName().equals(stationTo)) {
+                    break;
+                }
+                if (writePrice) price += getTicketCost();
+            }
+        }
+        return price;
     }
 }

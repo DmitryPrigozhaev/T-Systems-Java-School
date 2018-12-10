@@ -24,8 +24,9 @@ public interface TicketService {
 
     List<UserDto> getAllUsersDtoByTrainNumber(int trainNumber);
 
-    boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture);
+    Boolean isRegistered(User user, int trainNumber, String stationFromName, Date dateDeparture);
 
-    float getTicketCost();
+    Float getTicketCost();
 
+    Float getTicketCostByUserRoute(String routeName, String stationFrom, String stationTo);
 }

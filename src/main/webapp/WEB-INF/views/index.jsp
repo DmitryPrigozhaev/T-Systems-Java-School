@@ -1,10 +1,6 @@
 <jsp:include page="components/header.jsp"/>
 <jsp:include page="components/navbar.jsp" flush="true"/>
 
-<!-- Search train -->
-<jsp:include page="components/search_train.jsp"/>
-<!-- End Search train -->
-
 <!-- Homepage Slider -->
 <div class="homepage-slider">
     <div id="sequence">
@@ -37,87 +33,38 @@
         </div>
     </div>
 </div>
-<!-- End Homepage Slider -->
 
-<div>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-
+<!-- Services -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="service-wrapper">
+                    <img src="resources/img/service-icon/ticket.png" alt="Service 1">
+                    <h3>Find train</h3>
+                    <p>Find the train and buy a ticket</p>
+                    <a href="#" class="btn">Search</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="service-wrapper">
+                    <img src="resources/img/service-icon/station.png" alt="Service 2">
+                    <h3>Station schedule</h3>
+                    <p>View station schedule for the desired date</p>
+                    <a href="#" class="btn">Schedule</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="service-wrapper">
+                    <img src="resources/img/service-icon/info.png" alt="Service 3">
+                    <h3>Information</h3>
+                    <p>Product Information and Documentation</p>
+                    <a href="#" class="btn">Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<%--<!-- Press Coverage -->--%>
-<%--<div class="section">--%>
-<%--<div class="container">--%>
-<%--<div class="row">--%>
-<%--<div class="col-md-4 col-sm-6">--%>
-<%--<div class="in-press press-wired">--%>
-<%--<a href="#">Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat--%>
-<%--vitae</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-md-4 col-sm-6">--%>
-<%--<div class="in-press press-mashable">--%>
-<%--<a href="#">Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat--%>
-<%--vitae</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-md-4 col-sm-6">--%>
-<%--<div class="in-press press-techcrunch">--%>
-<%--<a href="#">Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat--%>
-<%--vitae</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<!-- Press Coverage -->--%>
-
-<%--<!-- Services -->--%>
-<%--<div class="section">--%>
-<%--<div class="container">--%>
-<%--<div class="row">--%>
-<%--<div class="col-md-4 col-sm-6">--%>
-<%--<div class="service-wrapper">--%>
-<%--<img src="resources/img/service-icon/diamond.png" alt="Service 1">--%>
-<%--<h3>Aliquam in adipiscing</h3>--%>
-<%--<p>Praesent rhoncus mauris ac sollicitudin vehicula. Nam fringilla turpis turpis, at posuere turpis--%>
-<%--aliquet sit amet condimentum</p>--%>
-<%--<a href="#" class="btn">Read more</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-md-4 col-sm-6">--%>
-<%--<div class="service-wrapper">--%>
-<%--<img src="resources/img/service-icon/ruler.png" alt="Service 2">--%>
-<%--<h3>Curabitur mollis</h3>--%>
-<%--<p>Suspendisse eget libero mi. Fusce ligula orci, vulputate nec elit ultrices, ornare faucibus orci.--%>
-<%--Aenean lectus sapien, vehicula</p>--%>
-<%--<a href="#" class="btn">Read more</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-md-4 col-sm-6">--%>
-<%--<div class="service-wrapper">--%>
-<%--<img src="resources/img/service-icon/box.png" alt="Service 3">--%>
-<%--<h3>Vivamus mattis</h3>--%>
-<%--<p>Phasellus posuere et nisl ac commodo. Nulla facilisi. Sed tincidunt bibendum cursus. Aenean--%>
-<%--vulputate aliquam risus rutrum scelerisque</p>--%>
-<%--<a href="#" class="btn">Read more</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<!-- End Services -->--%>
 
 <!-- Our Clients -->
 <div class="section">
