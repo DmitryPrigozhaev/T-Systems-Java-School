@@ -7,9 +7,9 @@
             <div class="col-footer col-md-4 col-xs-6">
                 <h3>Navigate</h3>
                 <ul class="no-list-style footer-navigate-section">
-                    <li><a href="schedule">Schedule</a></li>
-                    <li><a href="tickets">Tickets</a></li>
-                    <li><a href="faq">FAQ</a></li>
+                    <li><a href="find_train">Find train</a></li>
+                    <li><a href="station_schedule">Station schedule</a></li>
+                    <li><a href="info">Info</a></li>
                 </ul>
             </div>
             <div class="col-footer col-md-4 col-xs-6">

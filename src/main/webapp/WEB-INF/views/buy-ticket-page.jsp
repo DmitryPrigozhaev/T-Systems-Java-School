@@ -27,8 +27,9 @@
                         </div>
                         <div class="panel-body">
                             <h4 style="margin: 10px">${message}</h4>
-                            <button class="btn pull-right success" style="margin-right: 25px">
-                                <a href="schedule">BACK</a></button>
+                            <button class="btn pull-right success" href="find_train" style="margin-right: 25px">
+                                BACK
+                            </button>
                         </div>
                     </div>
                 </c:when>
@@ -39,8 +40,9 @@
                         </div>
                         <div class="panel-body">
                             <h4 style="margin: 10px">${message}</h4>
-                            <button class="btn pull-right success" style="margin-right: 25px">
-                                <a href="account">OK</a></button>
+                            <button class="btn pull-right success" href="account" style="margin-right: 25px">
+                                OK
+                            </button>
                         </div>
                     </div>
                 </c:when>

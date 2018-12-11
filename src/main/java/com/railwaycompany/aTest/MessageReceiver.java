@@ -17,19 +17,19 @@
 //
 //    static final Logger LOG = LoggerFactory.getLogger(MessageReceiver.class);
 //
-//    private static final String ORDER_RESPONSE_QUEUE = "test-222222222222222";
+//    private static final String ORDER_RESPONSE_QUEUE = "test-33333";
 //
 //    @Autowired
 //    StationService stationService;
 //
 //
 //    @JmsListener(destination = ORDER_RESPONSE_QUEUE)
-//    public void receiveMessage(final Message<Station> message) throws JMSException {
+//    public void receiveMessage(final Message<String> message) throws JMSException {
 //        LOG.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //        MessageHeaders headers = message.getHeaders();
 //        LOG.info("Application : headers received : {}", headers);
 //
-//        Station response = message.getPayload();
+//        String response = message.getPayload();
 //        LOG.info("Application : response received : {}", response);
 //
 //        LOG.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++");

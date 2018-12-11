@@ -22,9 +22,9 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-public class ScheduleController {
+public class FindTrainController {
 
-    private static final Logger LOG = Logger.getLogger(ScheduleController.class);
+    private static final Logger LOG = Logger.getLogger(FindTrainController.class);
 
     @Autowired
     UserService userService;
@@ -41,14 +41,13 @@ public class ScheduleController {
     @Autowired
     TrainService trainService;
 
-
-    @GetMapping(value = "schedule")
+    @GetMapping(value = "find_train")
     public String searchTrain(/*ModelMap modelMap*/) {
-        return "schedule";
+        return "find_train";
     }
 
     @ResponseBody
-    @PostMapping(value = "find-schedule", consumes = "application/json")
+    @PostMapping(value = "find_train", consumes = "application/json")
     public List<TrainDto> searchTrain(@RequestBody ScheduleDto scheduleDto) {
 
         Station stationFrom = null;

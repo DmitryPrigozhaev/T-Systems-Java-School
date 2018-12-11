@@ -57,11 +57,11 @@
                 </li>
                 <%-- SCHEDULE --%>
                 <li>
-                    <a href="schedule">Schedule</a>
+                    <a href="find_train">Find train</a>
                 </li>
                 <%-- TICKETS --%>
                 <li>
-                    <a href="tickets">Tickets</a>
+                    <a href="station_schedule">Station schedule</a>
                 </li>
                 <%-- ACCOUNT --%>
                 <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')">

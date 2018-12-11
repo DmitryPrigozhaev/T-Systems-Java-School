@@ -14,7 +14,7 @@ function findScheduleButtonClick() {
     };
 
     $.ajax({
-        url: "find-schedule",
+        url: "find_train",
         contentType: 'application/json',
         method: "POST",
         data: JSON.stringify(sendData)
