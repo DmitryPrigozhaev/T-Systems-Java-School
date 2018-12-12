@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="components/header.jsp"/>
@@ -21,14 +21,13 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <table class="shopping-cart">
-                    <!-- ЗАГОЛОВКИ ТАБЛИЦЫ -->
+                    <!-- Table Head -->
                     <tr>
                         <td>ID</td>
                         <td>Station Name</td>
                         <td class="col-md-2"></td>
                     </tr>
-                    <!-- КОНЕЦ ЗАГОЛОВКОВ -->
-
+                    <%-- Table Body --%>
                     <c:forEach items="${stationList}" var="station">
                         <tr>
                             <td>${station.id}</td>

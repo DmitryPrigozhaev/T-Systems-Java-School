@@ -25,9 +25,7 @@ public class PassengerController {
 
     @GetMapping(value = "admin-all-passengers")
     public String passengerPage(ModelMap modelMap) {
-
         List<TrainDto> trainDtoList = trainService.getAllTrains();
-
         modelMap.addAttribute("trainDtoList", trainDtoList);
         return "admin-all-passengers";
     }

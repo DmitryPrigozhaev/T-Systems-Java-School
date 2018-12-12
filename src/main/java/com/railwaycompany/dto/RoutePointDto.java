@@ -1,8 +1,16 @@
 package com.railwaycompany.dto;
 
+/**
+ * Simple Data Transfer Object for {@link com.railwaycompany.entities.RoutePoint}
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public class RoutePointDto {
 
     private Long id;
+    private Integer trainNumber;
     private String routeName;
     private String stationName;
     private String dateArrival;
@@ -10,6 +18,14 @@ public class RoutePointDto {
 
     public Long getId() {
         return id;
+    }
+
+    public Integer getTrainNumber() {
+        return trainNumber;
+    }
+
+    public void setTrainNumber(Integer trainNumber) {
+        this.trainNumber = trainNumber;
     }
 
     public void setId(Long id) {

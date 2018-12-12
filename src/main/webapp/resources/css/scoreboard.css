@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'scoreboard';
+    src: url('../fonts/digital-7.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.scoreboard {
+    font-family: "scoreboard", serif;
+    font-size: 36px;
+}
+
+.scoreboard-head {
+    font-family: "scoreboard", serif;
+    font-size: 38px;
+
+    margin-bottom: 5px;
+    border-bottom: 2px dotted;
+
+    padding: 10px;
+}
+
+.scoreboard-body {
+    font-family: "scoreboard", serif;
+    font-size: 28px;
+
+    margin-bottom: 5px;
+    border-bottom: 2px dotted;
+
+    padding: 10px;
+}

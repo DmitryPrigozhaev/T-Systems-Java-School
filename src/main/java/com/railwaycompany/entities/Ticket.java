@@ -7,6 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Simple JavaBean object that represent ticket
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "tickets")
 public class Ticket implements Serializable, Comparable<Ticket> {

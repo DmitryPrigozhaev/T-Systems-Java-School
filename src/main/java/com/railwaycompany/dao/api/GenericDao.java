@@ -3,6 +3,13 @@ package com.railwaycompany.dao.api;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Generic interface of Data Access Object
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public interface GenericDao<E extends Serializable> {
 
     void create(E entity);

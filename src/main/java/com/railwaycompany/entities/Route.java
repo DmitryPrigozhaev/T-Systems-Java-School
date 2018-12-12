@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Simple JavaBean object that represent route of {@link Route}
+ * Simple JavaBean object that represent route
  *
  * @author Dmitry Prigozhaev
  * @version 1.0
@@ -25,6 +25,9 @@ public class Route implements Serializable {
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     private List<RoutePoint> routePointList;
+
+    @OneToOne(mappedBy = "route")
+    private Train train;
 
     public Long getId() {
         return id;
@@ -48,5 +51,13 @@ public class Route implements Serializable {
 
     public void setRoutePointList(List<RoutePoint> routePointList) {
         this.routePointList = routePointList;
+    }
+
+    public Train getTrain() {
+        return train;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
     }
 }

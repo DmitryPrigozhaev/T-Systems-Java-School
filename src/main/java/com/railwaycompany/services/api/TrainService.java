@@ -8,6 +8,13 @@ import com.railwaycompany.services.exceptions.TrainWithSuchRouteExistException;
 
 import java.util.List;
 
+/**
+ * Interface of {@link com.railwaycompany.entities.Train} service
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public interface TrainService {
 
     void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException;

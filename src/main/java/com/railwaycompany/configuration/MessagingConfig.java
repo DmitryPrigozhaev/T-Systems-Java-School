@@ -1,33 +1,32 @@
-//package com.railwaycompany.configuration;
-//
-//import java.util.Arrays;
-//
-//import org.apache.activemq.spring.ActiveMQConnectionFactory;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.jms.core.JmsTemplate;
-//
-//@Configuration
-//public class MessagingConfig {
-//
-//    private static final String DEFAULT_BROKER_URL = "tcp://localhost:61616";
-//
-//    private static final String ORDER_QUEUE = "test-5555";
-//
-//    @Bean
-//    public ActiveMQConnectionFactory connectionFactory(){
-//        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
-//        connectionFactory.setBrokerURL(DEFAULT_BROKER_URL);
-//        connectionFactory.setTrustedPackages(Arrays.asList("railwaycompany"));
-//        return connectionFactory;
-//    }
-//
-//    @Bean
-//    public JmsTemplate jmsTemplate(){
-//        JmsTemplate template = new JmsTemplate();
-//        template.setConnectionFactory(connectionFactory());
-//        template.setDefaultDestinationName(ORDER_QUEUE);
-//        return template;
-//    }
-//
-//}
+package com.railwaycompany.configuration;
+
+import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+import javax.jms.ConnectionFactory;
+
+@Configuration
+@PropertySource("classpath:application.properties")
+public class MessagingConfig {
+
+    @Value("${artemis.url}")
+    private String artemisUrl;
+
+    @Value("${artemis.topic}")
+    private String artemisTopic;
+
+    @Value("${artemis.user}")
+    private String artemisUser;
+
+    @Value("${artemis.password}")
+    private String artemisPassword;
+
+    @Bean
+    public ConnectionFactory getConnectionFactory() {
+        return new ActiveMQJMSConnectionFactory(artemisUrl, artemisUser, artemisPassword);
+    }
+
+}

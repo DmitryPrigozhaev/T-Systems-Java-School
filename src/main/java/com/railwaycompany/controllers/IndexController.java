@@ -1,27 +1,20 @@
 package com.railwaycompany.controllers;
 
-import com.railwaycompany.aTest.MessageSenderNew;
+import com.railwaycompany.utils.MessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
 
     @Autowired
-    MessageSenderNew messageSender;
+    MessageSender messageSender;
 
-    @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/", "index"})
     public String getIndexPage() {
         messageSender.sendMessage("test");
         return "index";
     }
-
-//    @RequestMapping(value = {"/", "index"}, method = RequestMethod.POST)
-//    public String searchTrain(@RequestBody ScheduleDto scheduleDto, ModelMap modelMap) {
-//
-//        return "redirect:/find-schedule";
-//    }
 
 }

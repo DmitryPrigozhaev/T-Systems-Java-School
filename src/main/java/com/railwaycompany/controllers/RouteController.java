@@ -2,7 +2,7 @@ package com.railwaycompany.controllers;
 
 import com.railwaycompany.dto.RouteDto;
 import com.railwaycompany.dto.RoutePointDto;
-import com.railwaycompany.entities.Station;
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.services.api.RouteService;
 import com.railwaycompany.services.api.StationService;
 import com.railwaycompany.services.exceptions.RouteDoesNotExistException;
@@ -27,7 +27,7 @@ public class RouteController {
     @Autowired
     private StationService stationService;
 
-    @RequestMapping(value = "admin-all-routes", method = RequestMethod.GET)
+    @GetMapping(value = "admin-all-routes")
     public String getAllRoutes(ModelMap model) {
         List<RouteDto> routeDtoList = routeService.getAllRoutes();
         List<RoutePointDto> routePointsDtoList = routeService.getAllRoutePointsDtoList();
@@ -37,16 +37,16 @@ public class RouteController {
         return "admin-all-routes";
     }
 
-    @RequestMapping(value = "new-route", method = RequestMethod.GET)
+    @GetMapping(value = "new-route")
     public String newRoute(ModelMap model) {
-        List<Station> stationList = stationService.getAllStation();
+        List<StationDto> stationList = stationService.getAllStation();
         model.addAttribute("stationList", stationList);
         model.addAttribute("edit", false);
         return "add_route";
     }
 
     @ResponseBody
-    @RequestMapping(value = "new-route", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = "new-route", consumes = "application/json")
     public List<RoutePointDto> saveRoute(@RequestBody RoutePointDto routePointDto) {
 
         RouteDto routeDto;
@@ -97,7 +97,7 @@ public class RouteController {
             LOG.warn(message, e);
         }
 
-        List<Station> stationList = stationService.getAllStation();
+        List<StationDto> stationList = stationService.getAllStation();
         model.addAttribute("stationList", stationList);
         model.addAttribute("route", routeDto);
         model.addAttribute("routePointList", routePointList);
@@ -105,8 +105,7 @@ public class RouteController {
         return "add_route";
     }
 
-    // TODO вопрос по пересылаемому объекту
-    @RequestMapping(value = {"edit-{name}-route"}, method = RequestMethod.POST)
+    @PostMapping(value = "edit-{name}-route")
     public String updateRoute(@PathVariable String name, RouteDto routeDto, ModelMap model) {
 
         routeService.updateRoute(routeDto);
@@ -115,7 +114,7 @@ public class RouteController {
         return "route-success";
     }
 
-    @RequestMapping(value = {"delete-{name}-route"}, method = RequestMethod.GET)
+    @GetMapping(value = "delete-{name}-route")
     public String deleteRoute(@PathVariable String name) {
         RouteDto routeDto = null;
         try {

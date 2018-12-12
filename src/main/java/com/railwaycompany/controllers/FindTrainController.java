@@ -1,10 +1,6 @@
 package com.railwaycompany.controllers;
 
-import com.railwaycompany.dto.RouteDto;
-import com.railwaycompany.dto.ScheduleDto;
-import com.railwaycompany.dto.TicketDto;
-import com.railwaycompany.dto.TrainDto;
-import com.railwaycompany.entities.Station;
+import com.railwaycompany.dto.*;
 import com.railwaycompany.services.api.*;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.TrainDoesNotExistException;
@@ -27,9 +23,6 @@ public class FindTrainController {
     private static final Logger LOG = Logger.getLogger(FindTrainController.class);
 
     @Autowired
-    UserService userService;
-
-    @Autowired
     StationService stationService;
 
     @Autowired
@@ -42,16 +35,16 @@ public class FindTrainController {
     TrainService trainService;
 
     @GetMapping(value = "find_train")
-    public String searchTrain(/*ModelMap modelMap*/) {
+    public String findTrain(/*ModelMap modelMap*/) {
         return "find_train";
     }
 
     @ResponseBody
     @PostMapping(value = "find_train", consumes = "application/json")
-    public List<TrainDto> searchTrain(@RequestBody ScheduleDto scheduleDto) {
+    public List<TrainDto> findTrain(@RequestBody ScheduleDto scheduleDto) {
 
-        Station stationFrom = null;
-        Station stationTo = null;
+        StationDto stationFrom = null;
+        StationDto stationTo = null;
         Date date = null;
 
         List<TrainDto> trainDtoList = null;
@@ -99,7 +92,7 @@ public class FindTrainController {
 
     @ResponseBody
     @PostMapping(value = "find-ticket", consumes = "application/json")
-    public List<TicketDto> searchTickets(@RequestBody TicketDto ticketDto) {
+    public List<TicketDto> findTickets(@RequestBody TicketDto ticketDto) {
         return ticketService.getAllTicketsByTrainNumberAndCarriageAndStations(
                 ticketDto.getTrainNumber(), ticketDto.getCarriageNumber(), ticketDto.getStationFromName(), ticketDto.getStationToName());
     }

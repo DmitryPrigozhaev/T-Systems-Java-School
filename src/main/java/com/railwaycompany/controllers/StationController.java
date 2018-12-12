@@ -1,6 +1,6 @@
 package com.railwaycompany.controllers;
 
-import com.railwaycompany.entities.Station;
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.services.api.StationService;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.StationWithSuchNameExistException;
@@ -24,21 +24,21 @@ public class StationController {
 
     @GetMapping(value = "admin-all-stations")
     public String getAllStations(ModelMap model) {
-        List<Station> stationList = stationService.getAllStation();
+        List<StationDto> stationList = stationService.getAllStation();
         model.addAttribute("stationList", stationList);
         return "admin-all-stations";
     }
 
     @GetMapping(value = "new-station")
     public String newStation(ModelMap model) {
-        Station station = new Station();
+        StationDto station = new StationDto();
         model.addAttribute("station", station);
         model.addAttribute("edit", false);
         return "add-station";
     }
 
     @PostMapping(value = "new-station")
-    public String saveStation(Station station, ModelMap model) {
+    public String saveStation(StationDto station, ModelMap model) {
 
         try {
             stationService.addStation(station);
@@ -49,14 +49,14 @@ public class StationController {
             model.addAttribute("failure", "Cannot create station: station \"" + station.getName() + "\" already exist");
         }
 
-        station = new Station();
+        station = new StationDto();
         model.addAttribute("station", station);
         return "add-station";
     }
 
     @GetMapping(value = "edit-{name}-station")
     public String editStation(@PathVariable String name, ModelMap model) {
-        Station station = null;
+        StationDto station = null;
         try {
             station = stationService.getStationByName(name);
         } catch (StationDoesNotExistException e) {
@@ -69,7 +69,7 @@ public class StationController {
     }
 
     @PostMapping(value = "edit-{name}-station")
-    public String updateStation(Station station, ModelMap model) {
+    public String updateStation(StationDto station, ModelMap model) {
 
         try {
             stationService.updateStation(station);
@@ -80,13 +80,14 @@ public class StationController {
             model.addAttribute("failure", "Cannot update station \"" + station.getName() + "\": station with such name already exist");
         }
 
+        model.addAttribute("station", station);
         model.addAttribute("edit", true);
         return "add-station";
     }
 
     @GetMapping(value = "delete-{name}-station")
     public String deleteStation(@PathVariable String name) {
-        Station station = null;
+        StationDto station = null;
         try {
             station = stationService.getStationByName(name);
         } catch (StationDoesNotExistException e) {

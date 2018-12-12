@@ -2,13 +2,20 @@ package com.railwaycompany.services.api;
 
 import com.railwaycompany.dto.RouteDto;
 import com.railwaycompany.dto.RoutePointDto;
-import com.railwaycompany.entities.Station;
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.services.exceptions.RouteDoesNotExistException;
 import com.railwaycompany.services.exceptions.RouteWithSuchNameExistException;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 
 import java.util.Date;
 import java.util.List;
+
+/**
+ * Interface of {@link com.railwaycompany.entities.Route} service
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
 
 public interface RouteService {
 
@@ -38,10 +45,10 @@ public interface RouteService {
 
     void deleteRoutePoint(RoutePointDto routePointDto);
 
-    List<RoutePointDto> findRoutePointsDtoByStation(Station stationName);
+    List<RoutePointDto> findRoutePointsDtoByStation(StationDto stationName);
 
-    List<RouteDto> findRouteDtoByStations(Station stationFrom, Station stationTo);
+    List<RouteDto> findRouteDtoByStations(StationDto stationFrom, StationDto stationTo);
 
-    List<RouteDto> findRouteDtoByStationsAndDate(Station stationFrom, Station stationTo, Date date);
+    List<RouteDto> findRouteDtoByStationsAndDate(StationDto stationFrom, StationDto stationTo, Date date);
 
 }

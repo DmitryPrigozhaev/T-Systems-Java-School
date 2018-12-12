@@ -8,6 +8,9 @@ import java.util.Date;
 
 public class DateConverter {
 
+    private DateConverter() {
+    }
+
     private static final Logger LOG = Logger.getLogger(DateConverter.class.getName());
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
@@ -43,6 +46,17 @@ public class DateConverter {
         return datetime;
     }
 
+    public static Date getDateWithoutTime(Date date) {
+        Date dateWithoutTime = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        try {
+            dateWithoutTime = dateFormat.parse(dateFormat.format(date));
+        } catch (ParseException e) {
+            LOG.warn("Cannot parse date \"" + date + "\"", e);
+        }
+        return dateWithoutTime;
+    }
+
     public static boolean hasMoreThanTenMinutes(Date date) {
         if (date != null) {
             long timeLeft = date.getTime() - new Date().getTime();
@@ -50,4 +64,5 @@ public class DateConverter {
         }
         return false;
     }
+
 }

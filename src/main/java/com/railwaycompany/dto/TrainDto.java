@@ -1,5 +1,12 @@
 package com.railwaycompany.dto;
 
+/**
+ * Simple Data Transfer Object for {@link com.railwaycompany.entities.Train}
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public class TrainDto {
 
     private Long id;

@@ -1,4 +1,4 @@
-package com.railwaycompany.aTest;
+package com.railwaycompany.utils;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import javax.jms.*;
 
 @Component
-public class MessageSenderNew {
+public class MessageSender {
 
-    private static final Logger logger = Logger.getLogger(MessageSenderNew.class);
+    private static final Logger logger = Logger.getLogger(MessageSender.class);
 
     @Autowired
     ConnectionFactory connectionFactory;

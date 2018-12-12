@@ -1,5 +1,10 @@
 package com.railwaycompany.dto;
 
+/**
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public class ScheduleDto {
 
     private String stationFromName;

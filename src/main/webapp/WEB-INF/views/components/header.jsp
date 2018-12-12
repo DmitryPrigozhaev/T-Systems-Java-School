@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <base href="http://localhost:8080/railwaycompany/">
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="resources/css/main.css">
     <link rel="stylesheet" href="resources/css/carriage.css">
     <link rel="stylesheet" href="resources/css/bootstrapValidator.css">
+    <link rel="stylesheet" href="resources/css/scoreboard.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="resources/img/train-icon.png" type="image/x-icon">
 

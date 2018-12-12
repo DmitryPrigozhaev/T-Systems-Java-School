@@ -3,6 +3,13 @@ package com.railwaycompany.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Simple JavaBean object that represent train
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "trains")
 public class Train implements Serializable {

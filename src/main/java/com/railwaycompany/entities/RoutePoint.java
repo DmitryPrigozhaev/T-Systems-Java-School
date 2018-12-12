@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Simple JavaBean object that represent role of {@link RoutePoint}
+ * Simple JavaBean object that represent route point of {@link Route}
  *
  * @author Dmitry Prigozhaev
  * @version 1.0

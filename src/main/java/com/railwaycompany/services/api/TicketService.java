@@ -10,6 +10,13 @@ import com.railwaycompany.services.exceptions.InvalidInputDataException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Interface of {@link com.railwaycompany.entities.Ticket} service
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public interface TicketService {
 
     List<TicketDto> buyTicket(TicketDto ticketDto) throws AlreadyRegisteredException, CannotBuyTicketException, InvalidInputDataException;

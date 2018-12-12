@@ -31,7 +31,7 @@ public class BuyTicketController {
     @PostMapping(value = "buy-ticket-page")
     public String buyTicketPage(@ModelAttribute TicketDto ticketDto, Authentication authentication, ModelMap modelMap) {
 
-        String username = null;
+        String username;
         try {
             username = authentication.getName();
         } catch (Exception e) {
@@ -51,7 +51,8 @@ public class BuyTicketController {
 
     @PostMapping(value = "buy-ticket")
     public String buyTicket(@ModelAttribute UserDto userDto,
-                            @ModelAttribute TicketDto ticketDto, ModelMap modelMap) {
+                            @ModelAttribute TicketDto ticketDto,
+                            ModelMap modelMap) {
 
         List<TicketDto> ticketDtoList = null;
         try {

@@ -24,7 +24,7 @@
                     <c:choose>
                         <c:when test="${error}">
                             <div class="panel panel-danger">
-                                <div class="panel-heading">
+                                <div class="panel-body">
                                     <h3 class="panel-title">Invalid email or password</h3>
                                 </div>
                             </div>

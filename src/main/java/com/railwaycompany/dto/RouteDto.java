@@ -2,6 +2,13 @@ package com.railwaycompany.dto;
 
 import java.util.List;
 
+/**
+ * Simple Data Transfer Object for {@link com.railwaycompany.entities.Route}
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public class RouteDto {
 
     private Long id;

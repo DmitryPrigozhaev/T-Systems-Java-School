@@ -22,7 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) {
         if (username != null) {
             User user = userDao.getUserByEmail(username);
             if (user != null) {

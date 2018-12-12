@@ -1,29 +1,33 @@
 package com.railwaycompany.services.api;
 
-import com.railwaycompany.entities.RoutePoint;
-import com.railwaycompany.entities.Station;
+import com.railwaycompany.dto.RoutePointDto;
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.services.exceptions.StationDoesNotExistException;
 import com.railwaycompany.services.exceptions.StationWithSuchNameExistException;
 
+import java.util.Date;
 import java.util.List;
+
+/**
+ * Interface of {@link com.railwaycompany.entities.Station} service
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
 
 public interface StationService {
 
-    void addStation(Station station) throws StationWithSuchNameExistException;
+    void addStation(StationDto stationDto) throws StationWithSuchNameExistException;
 
-    Station getStationByName(String name) throws StationDoesNotExistException;
+    StationDto getStationByName(String name) throws StationDoesNotExistException;
 
-    Station getStationById(long id) throws StationDoesNotExistException;
+    List<StationDto> getAllStation();
 
-    List<Station> getAllStation();
+    List<RoutePointDto> getStationScheduleByStationName(String name, Date date);
 
-    List<RoutePoint> getStationScheduleByStationId(long stationId);
+    void updateStation(StationDto stationDto) throws StationWithSuchNameExistException;
 
-    List<RoutePoint> getStationScheduleByStationName(String name);
-
-    void updateStation(Station station) throws StationWithSuchNameExistException;
-
-    void deleteStation(Station station);
+    void deleteStation(StationDto stationDto);
 
     boolean isExist(String stationName);
 

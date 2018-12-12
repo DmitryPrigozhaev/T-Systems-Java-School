@@ -5,6 +5,7 @@ import com.railwaycompany.dao.api.RoutePointDao;
 import com.railwaycompany.dao.api.StationDao;
 import com.railwaycompany.dto.RouteDto;
 import com.railwaycompany.dto.RoutePointDto;
+import com.railwaycompany.dto.StationDto;
 import com.railwaycompany.entities.Route;
 import com.railwaycompany.entities.RoutePoint;
 import com.railwaycompany.entities.Station;
@@ -96,22 +97,22 @@ public class RouteServiceImpl implements RouteService {
     }
 
     private RoutePointDto constructRoutePointDto(RoutePoint routePoint) {
-        RoutePointDto routeDto = new RoutePointDto();
+        RoutePointDto routePointDto = new RoutePointDto();
 
-        routeDto.setId(routePoint.getId());
-        routeDto.setRouteName(routePoint.getRoute().getName());
-        routeDto.setStationName(routePoint.getStation().getName());
+        routePointDto.setId(routePoint.getId());
+        routePointDto.setRouteName(routePoint.getRoute().getName());
+        routePointDto.setStationName(routePoint.getStation().getName());
         if (routePoint.getDateDeparture() == null) {
-            routeDto.setDateDeparture("");
+            routePointDto.setDateDeparture("");
         } else {
-            routeDto.setDateDeparture(routePoint.getDateDeparture().toString());
+            routePointDto.setDateDeparture(routePoint.getDateDeparture().toString());
         }
         if (routePoint.getDateArrival() == null) {
-            routeDto.setDateArrival("");
+            routePointDto.setDateArrival("");
         } else {
-            routeDto.setDateArrival(routePoint.getDateArrival().toString());
+            routePointDto.setDateArrival(routePoint.getDateArrival().toString());
         }
-        return routeDto;
+        return routePointDto;
     }
 
     @Override
@@ -214,7 +215,7 @@ public class RouteServiceImpl implements RouteService {
         if (!routePointsList.isEmpty()) {
             routePointsDtoList = new ArrayList<>();
             for (RoutePoint routePoint : routePointsList) {
-                routePointsDtoList.add(constructRoutePointDto(routePoint));
+                    routePointsDtoList.add(constructRoutePointDto(routePoint));
             }
         }
         return routePointsDtoList;
@@ -241,18 +242,17 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void deleteRoutePoint(RoutePointDto routePointDto) {
-        // TODO ???????
         RoutePoint routePoint = routePointDao.read(routePointDto.getId());
         routePointDao.delete(routePoint);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<RoutePointDto> findRoutePointsDtoByStation(Station station) {
+    public List<RoutePointDto> findRoutePointsDtoByStation(StationDto stationDto) {
 
         List<RoutePointDto> routePointsDtoList = null;
 
-        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByStationName(station.getName());
+        List<RoutePoint> routePointsList = routePointDao.getRoutePointsByStationName(stationDto.getName());
         if (routePointsList != null && !routePointsList.isEmpty()) {
             routePointsDtoList = new ArrayList<>();
             for (RoutePoint routePoint : routePointsList) {
@@ -264,7 +264,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<RouteDto> findRouteDtoByStations(Station stationFrom, Station stationTo) {
+    public List<RouteDto> findRouteDtoByStations(StationDto stationFrom, StationDto stationTo) {
 
         List<RouteDto> result = null;
 
@@ -288,7 +288,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<RouteDto> findRouteDtoByStationsAndDate(Station stationFrom, Station stationTo, Date date) {
+    public List<RouteDto> findRouteDtoByStationsAndDate(StationDto stationFrom, StationDto stationTo, Date date) {
         List<RouteDto> result = null;
 
         List<RouteDto> routeDtoList = getAllRoutes();

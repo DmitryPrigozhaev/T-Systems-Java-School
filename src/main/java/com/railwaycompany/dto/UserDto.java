@@ -1,5 +1,12 @@
 package com.railwaycompany.dto;
 
+/**
+ * Simple Data Transfer Object for {@link com.railwaycompany.entities.User}
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 public class UserDto {
 
     private String email;

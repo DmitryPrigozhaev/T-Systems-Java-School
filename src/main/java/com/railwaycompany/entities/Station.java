@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * Simple JavaBean object that represent station
+ *
+ * @author Dmitry Prigozhaev
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "stations")
 public class Station implements Serializable {

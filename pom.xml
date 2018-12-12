@@ -91,11 +91,6 @@
         </dependency>
 
         <!-- ActiveMQ -->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.activemq</groupId>-->
-            <!--<artifactId>activemq-spring</artifactId>-->
-            <!--<version>5.15.5</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>artemis-jms-client-all</artifactId>
@@ -143,13 +138,6 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
-        <!-- Slf4j подключен, чтобы не вылетало предупреждение от spring-data-jpa -->
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-nop</artifactId>-->
-            <!--<version>1.7.25</version>-->
-        <!--</dependency>-->
 
         <!-- AspectJ -->
         <!--<dependency>-->
