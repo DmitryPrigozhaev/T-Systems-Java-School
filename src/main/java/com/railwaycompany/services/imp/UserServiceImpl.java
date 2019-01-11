@@ -12,9 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @Transactional(readOnly = false)
 public class UserServiceImpl implements UserService {
@@ -73,32 +70,6 @@ public class UserServiceImpl implements UserService {
             userDto = constructUserDto(user);
         }
         return userDto;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<UserDto> getAllUsersDto() {
-        List<User> userList = userDao.readAll();
-        List<UserDto> userDtoList = null;
-        if (userList != null && !userList.isEmpty()) {
-            userDtoList = new ArrayList<>();
-            for (User user : userList) {
-                userDtoList.add(constructUserDto(user));
-            }
-        }
-        return userDtoList;
-    }
-
-    @Override
-    public void updateUserDto(UserDto userDto) {
-        User user = userDao.getUserByEmail(userDto.getEmail());
-        userDao.update(user);
-    }
-
-    @Override
-    public void deleteUserDto(UserDto userDto) {
-        User user = userDao.getUserByEmail(userDto.getEmail());
-        userDao.delete(user);
     }
 
     @Override

@@ -19,13 +19,9 @@ import java.util.List;
 
 public interface RouteService {
 
-    void addRoute(String name) throws RouteWithSuchNameExistException;
-
     void addRoute(RouteDto routeDto) throws RouteWithSuchNameExistException;
 
     void addRoutePoint(RoutePointDto routePointDto) throws StationDoesNotExistException, RouteDoesNotExistException;
-
-    RouteDto getRouteDtoById(long id) throws RouteDoesNotExistException;
 
     RouteDto getRouteDtoByName(String name) throws RouteDoesNotExistException;
 

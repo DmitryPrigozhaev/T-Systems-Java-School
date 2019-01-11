@@ -19,19 +19,11 @@ public interface TrainService {
 
     void addTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException;
 
-    void addTrain(int number, long routeId, int numberOfCarriages) throws TrainWithSuchNumberExistException;
-
-    TrainDto getTrainDtoById(long id) throws TrainDoesNotExistException;
-
     TrainDto getTrainDtoByNumber(int number) throws TrainDoesNotExistException;
-
-    TrainDto getTrainDtoByRouteId(long routeId) throws TrainDoesNotExistException;
 
     TrainDto getTrainDtoByRouteIdAndStations(long routeId, String stationFromName, String stationToName) throws TrainDoesNotExistException, StationDoesNotExistException;
 
     List<TrainDto> getAllTrains();
-
-    int getNumberOfCarriagesByTrainId(long id) throws TrainDoesNotExistException;
 
     void updateTrain(TrainDto trainDto) throws TrainWithSuchNumberExistException, TrainWithSuchRouteExistException;
 

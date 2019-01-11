@@ -105,50 +105,11 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
-    // todo удалить если не используется
-    @Override
-    public void addTrain(int number, long routeId, int numberOfCarriages) throws TrainWithSuchNumberExistException {
-        Route route = routeDao.read(routeId);
-        Train train = trainDao.getTrainByNumber(number);
-        if (train == null) {
-            train = new Train();
-            train.setNumber(number);
-            train.setRoute(route);
-            train.setNumberOfCarriages(numberOfCarriages);
-            trainDao.create(train);
-        } else {
-            String message = "Train №" + number + " already exist";
-            throw new TrainWithSuchNumberExistException(message);
-        }
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public TrainDto getTrainDtoById(long id) throws TrainDoesNotExistException {
-        Train train = trainDao.read(id);
-        if (train == null) {
-            String message = "Train with id " + id + " does not exist";
-            throw new TrainDoesNotExistException(message);
-        }
-        return constructTrainDto(train);
-    }
-
     @Override
     public TrainDto getTrainDtoByNumber(int number) throws TrainDoesNotExistException {
         Train train = trainDao.getTrainByNumber(number);
         if (train == null) {
             String message = "Train with number " + number + " does not exist";
-            throw new TrainDoesNotExistException(message);
-        }
-        return constructTrainDto(train);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public TrainDto getTrainDtoByRouteId(long routeId) throws TrainDoesNotExistException {
-        Train train = trainDao.getTrainByRouteId(routeId);
-        if (train == null) {
-            String message = "Train with routeId " + routeId + " does not exist";
             throw new TrainDoesNotExistException(message);
         }
         return constructTrainDto(train);
@@ -186,19 +147,6 @@ public class TrainServiceImpl implements TrainService {
             }
         }
         return trainDtoList;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public int getNumberOfCarriagesByTrainId(long id) throws TrainDoesNotExistException {
-        Train train = trainDao.read(id);
-        int numberOfCarriages = -1;
-        if (train != null) numberOfCarriages = train.getNumberOfCarriages();
-        else {
-            String message = "Train with id " + id + " does not exist";
-            throw new TrainDoesNotExistException(message);
-        }
-        return numberOfCarriages;
     }
 
     @Override

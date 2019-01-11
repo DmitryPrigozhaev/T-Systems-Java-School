@@ -76,7 +76,6 @@ function editRoutePointButtonClick() {
 
     }).done(function (result) {
 
-        // todo add function
         console.log(JSON.stringify(result));
 
     }).fail(function (error) {

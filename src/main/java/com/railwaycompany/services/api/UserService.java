@@ -18,11 +18,5 @@ public interface UserService {
 
     UserDto getUserDtoByEmail(String email);
 
-    List<UserDto> getAllUsersDto();
-
-    void updateUserDto(UserDto userDto);
-
-    void deleteUserDto(UserDto userDto);
-
     boolean isUserEmailUnique(String email);
 }

@@ -116,19 +116,6 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void addRoute(String name) throws RouteWithSuchNameExistException {
-        Route route = routeDao.getRouteByName(name);
-        if (route == null) {
-            route = new Route();
-            route.setName(name);
-            routeDao.create(route);
-        } else {
-            String message = "Route \"" + name + "\" is already exist";
-            throw new RouteWithSuchNameExistException(message);
-        }
-    }
-
-    @Override
     public void addRoute(RouteDto routeDto) throws RouteWithSuchNameExistException {
         Route route = routeDao.getRouteByName(routeDto.getName());
         if (route == null) {
@@ -144,16 +131,6 @@ public class RouteServiceImpl implements RouteService {
     public void addRoutePoint(RoutePointDto routePointDto) throws StationDoesNotExistException, RouteDoesNotExistException {
         RoutePoint routePoint = constructRoutePoint(routePointDto);
         routePointDao.create(routePoint);
-    }
-
-    @Override
-    public RouteDto getRouteDtoById(long id) throws RouteDoesNotExistException {
-        Route route = routeDao.read(id);
-        if (route == null) {
-            String message = "Route with id \"" + id + "\" does not exist";
-            throw new RouteDoesNotExistException(message);
-        }
-        return constructRouteDto(route);
     }
 
     @Transactional(readOnly = true)

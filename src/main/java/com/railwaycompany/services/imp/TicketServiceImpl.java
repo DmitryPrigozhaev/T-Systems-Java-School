@@ -59,11 +59,12 @@ public class TicketServiceImpl implements TicketService {
         return ticketDto;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public List<TicketDto> buyTicket(TicketDto ticketDto) throws AlreadyRegisteredException, CannotBuyTicketException, InvalidInputDataException {
 
         // user route definition
-        List<RoutePoint> userRoute = null;
+        List<RoutePoint> userRoute;
         Route route = routeDao.getRouteByName(ticketDto.getRouteName());
         if (route != null) {
             userRoute = new ArrayList<>();
@@ -110,7 +111,7 @@ public class TicketServiceImpl implements TicketService {
         return result;
     }
 
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     TicketDto buyTicketPart(TicketDto ticketDto, Station stationFrom, Station stationTo, Date saleTime, Date dateDeparture)
             throws AlreadyRegisteredException, CannotBuyTicketException {
 
@@ -226,7 +227,7 @@ public class TicketServiceImpl implements TicketService {
         return ticketDtoList;
     }
 
-    // метод возвращает все билеты на вагон по указанному отрезку
+    // returns all tickets for the car in the specified segment
     @Transactional(readOnly = true)
     @Override
     public List<TicketDto> getAllTicketsByTrainNumberAndCarriageAndStations(int trainNumber, int carriageNumber,

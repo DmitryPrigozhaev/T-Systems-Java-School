@@ -73,36 +73,6 @@
     </div>
 </template>
 
-<%--&lt;%&ndash; TEMPLATE FOR SCHEDULE &ndash;%&gt;--%>
-<%--<template id="schedule">--%>
-    <%--<table class="table table-sm scoreboard">--%>
-        <%--<thead>--%>
-        <%--<tr>--%>
-            <%--<th>№</th>--%>
-            <%--<th>Route</th>--%>
-            <%--<th>Arrival</th>--%>
-            <%--<th>Departure</th>--%>
-            <%--<th>Stay</th>--%>
-        <%--</tr>--%>
-        <%--</thead>--%>
-
-        <%--&lt;%&ndash; TABLE BODY&ndash;%&gt;--%>
-        <%--<tbody id="tableBody"></tbody>--%>
-
-    <%--</table>--%>
-<%--</template>--%>
-
-<%--&lt;%&ndash; ROW TEMPLATE FOR SCHEDULE TABLE &ndash;%&gt;--%>
-<%--<template id="tableRow">--%>
-    <%--<tr>--%>
-        <%--<th id="trainNumber" scope="row"></th>--%>
-        <%--<td id="route"></td>--%>
-        <%--<td id="arrival"></td>--%>
-        <%--<td id="departure"></td>--%>
-        <%--<td id="stay"></td>--%>
-    <%--</tr>--%>
-<%--</template>--%>
-
 <script>
     document.getElementById('date').valueAsDate = new Date();
 </script>

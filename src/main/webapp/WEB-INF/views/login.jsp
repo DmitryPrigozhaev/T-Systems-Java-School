@@ -55,7 +55,6 @@
         </div>
 
         <div class="col-md-4 social-login col-md-offset-4">
-            <%--<div class="clearfix"></div>--%>
             <div class="not-member">
                 <p>Not a member? <a href="registration">Register here</a></p>
             </div>

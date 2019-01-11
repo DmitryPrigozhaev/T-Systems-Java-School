@@ -30,13 +30,13 @@
                         </div>
                     </li>
                     <%-- LOGIN / LOGOUT --%>
-                    <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')">
+                    <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_CLIENT')">
                         <li>
                             <i class="glyphicon glyphicon-log-out icon-white"></i>
                             <a href="logout">Logout</a>
                         </li>
                     </sec:authorize>
-                    <sec:authorize access="!(hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER') || hasRole('ROLE_USER'))">
+                    <sec:authorize access="!(hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER') || hasRole('ROLE_CLIENT'))">
                         <li>
                             <i class="glyphicon glyphicon-log-in icon-white"></i>
                             <a href="login">Login</a>
@@ -64,7 +64,7 @@
                     <a href="station_schedule">Station schedule</a>
                 </li>
                 <%-- ACCOUNT --%>
-                <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')">
+                <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_CLIENT')">
                     <li>
                         <a href="account">Account</a>
                     </li>
