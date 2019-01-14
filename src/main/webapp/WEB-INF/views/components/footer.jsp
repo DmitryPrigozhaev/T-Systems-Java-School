@@ -23,16 +23,16 @@
             <div class="col-footer col-md-4 col-xs-6">
                 <h3>Contacts</h3>
                 <p class="contact-us-details">
-                    <b>Address:</b> ----<br/>
-                    <b>Phone:</b> ----<br/>
+                    <b>Address:</b> Some Street, Saint-Petersburg<br/>
+                    <b>Phone:</b> +7 911 036 25 71<br/>
                     <b>Fax:</b> ----<br/>
-                    <b>Email:</b> <a href="mailto:test@railwaycompany.com">test@railwaycompany.com</a>
+                    <b>Email:</b> <a href="mailto:dmitry.prigozhaev@gmail.com">dmitry.prigozhaev@gmail.com</a>
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="footer-copyright">&copy; 2018 Some Railway Company. All rights reserved.</div>
+                <div class="footer-copyright">&copy; 2018-2019 Some Railway Company. All rights reserved.</div>
             </div>
         </div>
     </div>

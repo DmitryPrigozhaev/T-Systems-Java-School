@@ -51,7 +51,6 @@ public class HibernateConfig {
         return properties;
     }
 
-    // TODO sessionFactory должен быть синглтоном?
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
